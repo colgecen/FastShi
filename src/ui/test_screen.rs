@@ -111,11 +111,15 @@ fn start_test(state: &mut TestState, json_data: &str) {
 fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, finger_image: Option<&egui::TextureHandle>) {
     let total_w = ui.available_width();
     let content_w = total_w * 0.6;
+    let side = (total_w - content_w) / 2.0;
     ui.add_space(30.0);
 
-    ui.vertical_centered(|ui| {
-        ui.set_min_width(content_w);
-        ui.add_space(15.0);
+    ui.horizontal(|ui| {
+        ui.add_space(side);
+        ui.vertical(|ui| {
+            ui.set_min_width(content_w);
+            ui.set_max_width(content_w);
+            ui.add_space(15.0);
 
         ui.heading(theme::heading_text("fastshi"));
         ui.add_space(20.0);
@@ -238,6 +242,7 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, finger_
 
         ui.add_space(15.0);
     });
+    });
 }
 
 fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&egui::TextureHandle>) {
@@ -301,11 +306,15 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
     // === EKRAN YERLESIMI ===
     let total_w = ui.available_width();
     let content_w = total_w * 0.6;
+    let side = (total_w - content_w) / 2.0;
 
     ui.add_space(20.0);
 
-    ui.vertical_centered(|ui| {
-        ui.set_min_width(content_w);
+    ui.horizontal(|ui| {
+        ui.add_space(side);
+        ui.vertical(|ui| {
+            ui.set_min_width(content_w);
+            ui.set_max_width(content_w);
 
         // Ust satir: sure + dogruluk
         ui.horizontal(|ui| {
@@ -463,6 +472,7 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
                 });
             });
         });
+    });
     });
 
     if engine.is_finished() {
