@@ -20,21 +20,12 @@ impl Zorluk {
             Zorluk::Zor => "zor",
         }
     }
-
-    pub fn from_str(s: &str) -> Self {
-        match s {
-            "kolay" => Zorluk::Kolay,
-            "orta" => Zorluk::Orta,
-            "zor" => Zorluk::Zor,
-            _ => Zorluk::Orta,
-        }
-    }
 }
 
 pub struct TypingEngine {
-    pub current_word: String,
-    pub typed_so_far: String,
-    pub cursor: usize,
+    pub words: Vec<String>,
+    pub word_index: usize,
+    pub cursor_in_word: usize,
     pub has_error: bool,
     pub dogru_tus: u32,
     pub yanlis_tus: u32,
@@ -44,14 +35,22 @@ pub struct TypingEngine {
     pub sure_saniye: u64,
     pub bitti: bool,
     pub hatali_tuslar: Vec<(char, char)>,
+    pub typed_words: Vec<TypedWord>,
+}
+
+#[derive(Debug, Clone)]
+pub struct TypedWord {
+    pub word: String,
+    pub typed_chars: Vec<Option<char>>,
+    pub completed: bool,
 }
 
 impl TypingEngine {
     pub fn new(total_words: Option<u32>, sure_sn: u64) -> Self {
         Self {
-            current_word: String::new(),
-            typed_so_far: String::new(),
-            cursor: 0,
+            words: Vec::new(),
+            word_index: 0,
+            cursor_in_word: 0,
             has_error: false,
             dogru_tus: 0,
             yanlis_tus: 0,
@@ -61,30 +60,51 @@ impl TypingEngine {
             sure_saniye: sure_sn,
             bitti: false,
             hatali_tuslar: Vec::new(),
+            typed_words: Vec::new(),
         }
     }
 
-    pub fn set_word(&mut self, word: String) {
-        self.current_word = word;
-        self.typed_so_far.clear();
-        self.cursor = 0;
+    pub fn load_words(&mut self, new_words: Vec<String>) {
+        self.words = new_words;
+        self.word_index = 0;
+        self.cursor_in_word = 0;
         self.has_error = false;
+        self.typed_words.clear();
+        for w in &self.words {
+            self.typed_words.push(TypedWord {
+                word: w.clone(),
+                typed_chars: vec![None; w.len()],
+                completed: false,
+            });
+        }
+    }
+
+    pub fn current_word(&self) -> &str {
+        if self.word_index < self.words.len() {
+            &self.words[self.word_index]
+        } else {
+            ""
+        }
     }
 
     pub fn on_key(&mut self, pressed: char) {
         if self.bitti {
             return;
         }
+        if self.word_index >= self.words.len() {
+            return;
+        }
 
-        let expected = self.current_word.chars().nth(self.cursor);
+        let expected = self.current_word().chars().nth(self.cursor_in_word);
         match expected {
             Some(exp) if exp == pressed => {
                 self.has_error = false;
-                self.typed_so_far.push(pressed);
-                self.cursor += 1;
+                self.typed_words[self.word_index].typed_chars[self.cursor_in_word] = Some(pressed);
+                self.cursor_in_word += 1;
                 self.dogru_tus += 1;
 
-                if self.cursor >= self.current_word.len() {
+                if self.cursor_in_word >= self.current_word().len() {
+                    self.typed_words[self.word_index].completed = true;
                     self.words_completed += 1;
                     if let Some(total) = self.total_words {
                         if self.words_completed >= total {
@@ -102,6 +122,30 @@ impl TypingEngine {
         }
     }
 
+    pub fn on_space(&mut self) {
+        if self.bitti {
+            return;
+        }
+        if self.word_index >= self.words.len() {
+            return;
+        }
+
+        if self.cursor_in_word >= self.current_word().len() {
+            self.typed_words[self.word_index].completed = true;
+            self.word_index += 1;
+            self.cursor_in_word = 0;
+            self.has_error = false;
+
+            if self.word_index >= self.words.len() {
+                self.bitti = true;
+            }
+        }
+    }
+
+    pub fn needs_more_words(&self) -> bool {
+        self.word_index + 3 >= self.words.len()
+    }
+
     pub fn is_finished(&self) -> bool {
         if self.bitti {
             return true;
@@ -114,9 +158,5 @@ impl TypingEngine {
 
     pub fn elapsed_secs(&self) -> f64 {
         self.baslama.elapsed().as_secs_f64()
-    }
-
-    pub fn total_tus(&self) -> u32 {
-        self.dogru_tus + self.yanlis_tus
     }
 }
