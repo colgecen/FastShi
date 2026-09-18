@@ -4,6 +4,7 @@ use crate::hand_mode::key_map::Hand;
 use crate::typing::engine::{TestMode, TypingEngine, Zorluk};
 use crate::typing::metrics::Metrics;
 use crate::typing::word_source::WordSource;
+use crate::ui::keyboard_widget::{self, KeyboardWidget};
 use super::theme;
 
 pub struct TestState {
@@ -18,6 +19,7 @@ pub struct TestState {
     pub last_metrics: Option<Metrics>,
     pub test_modu_str: String,
     pub input_buf: String,
+    pub keyboard: KeyboardWidget,
 }
 
 impl Default for TestState {
@@ -34,6 +36,7 @@ impl Default for TestState {
             last_metrics: None,
             test_modu_str: "iki_el".to_string(),
             input_buf: String::new(),
+            keyboard: KeyboardWidget::default(),
         }
     }
 }
@@ -45,13 +48,13 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
             ui.add_space(10.0);
             ui.horizontal(|ui| {
                 if ui
-                    .add(egui::Button::new(theme::button_text("yeniden başla")))
+                    .add(egui::Button::new(theme::button_text("yeniden basla")))
                     .clicked()
                 {
                     start_test(state, json_data);
                 }
                 if ui
-                    .add(egui::Button::new(theme::button_text("menüye dön")))
+                    .add(egui::Button::new(theme::button_text("menuye don")))
                     .clicked()
                 {
                     state.just_finished = false;
@@ -67,7 +70,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
     if !state.started {
         show_setup(ui, state, json_data);
     } else {
-        show_typing(ui, state, json_data);
+        show_typing(ui, state);
     }
 }
 
@@ -98,6 +101,7 @@ fn start_test(state: &mut TestState, json_data: &str) {
     state.just_finished = false;
     state.last_metrics = None;
     state.input_buf.clear();
+    state.keyboard = KeyboardWidget::default();
 
     state.test_modu_str = match state.mode {
         TestMode::TwoHand => "iki_el",
@@ -109,7 +113,7 @@ fn start_test(state: &mut TestState, json_data: &str) {
 
 fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
     ui.heading(theme::heading_text("fastshi"));
-    ui.add_space(20.0);
+    ui.add_space(16.0);
 
     ui.label(theme::sub_heading_text("test modu"));
     ui.horizontal(|ui| {
@@ -121,14 +125,14 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
             let selected = state.mode == mode;
             let btn = egui::Button::new(theme::button_text(label))
                 .selected(selected)
-                .min_size(egui::vec2(100.0, 30.0));
+                .min_size(egui::vec2(90.0, 28.0));
             if ui.add(btn).clicked() {
                 state.mode = mode;
             }
         }
     });
 
-    ui.add_space(10.0);
+    ui.add_space(8.0);
     ui.label(theme::sub_heading_text("zorluk"));
     ui.horizontal(|ui| {
         for (z, label) in [
@@ -139,21 +143,21 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
             let selected = state.zorluk == z;
             let btn = egui::Button::new(theme::button_text(label))
                 .selected(selected)
-                .min_size(egui::vec2(80.0, 30.0));
+                .min_size(egui::vec2(70.0, 28.0));
             if ui.add(btn).clicked() {
                 state.zorluk = z;
             }
         }
     });
 
-    ui.add_space(10.0);
+    ui.add_space(8.0);
     ui.label(theme::sub_heading_text("sure"));
     ui.horizontal(|ui| {
         for sn in [30, 60, 120] {
             let selected = state.sure_secenek == sn && state.kelime_hedef.is_none();
             let btn = egui::Button::new(theme::button_text(&format!("{} sn", sn)))
                 .selected(selected)
-                .min_size(egui::vec2(80.0, 30.0));
+                .min_size(egui::vec2(70.0, 28.0));
             if ui.add(btn).clicked() {
                 state.sure_secenek = sn;
                 state.kelime_hedef = None;
@@ -161,14 +165,14 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
         }
     });
 
-    ui.add_space(10.0);
+    ui.add_space(8.0);
     ui.label(theme::sub_heading_text("kelime sayisi"));
     ui.horizontal(|ui| {
         for k in [25, 50, 100] {
             let selected = state.kelime_hedef == Some(k);
             let btn = egui::Button::new(theme::button_text(&format!("{}", k)))
                 .selected(selected)
-                .min_size(egui::vec2(60.0, 30.0));
+                .min_size(egui::vec2(55.0, 28.0));
             if ui.add(btn).clicked() {
                 state.kelime_hedef = Some(k);
                 state.sure_secenek = 0;
@@ -176,19 +180,8 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
         }
     });
 
-    ui.add_space(20.0);
+    ui.add_space(16.0);
 
-    let hand = match state.mode {
-        TestMode::RightHand => Some(Hand::Right),
-        TestMode::LeftHand => Some(Hand::Left),
-        _ => None,
-    };
-    let mut ws = WordSource::from_json(json_data);
-    ws.filter(hand, state.zorluk.as_str());
-    let available = ws.available_count();
-    ui.label(theme::body_text(&format!("mevcut kelime: {}", available)));
-
-    ui.add_space(10.0);
     let start_label = if let Some(k) = state.kelime_hedef {
         format!("{} kelime basla", k)
     } else {
@@ -198,15 +191,31 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
     if ui
         .add(
             egui::Button::new(theme::button_text(&start_label))
-                .min_size(egui::vec2(200.0, 40.0)),
+                .min_size(egui::vec2(180.0, 36.0)),
         )
         .clicked()
     {
         start_test(state, json_data);
     }
+
+    ui.add_space(16.0);
+
+    // Setup ekraninda da klavye gostergesi
+    let frame = egui::Frame::NONE
+        .fill(theme::DARK_GRAY)
+        .corner_radius(egui::CornerRadius::same(6))
+        .inner_margin(egui::Margin::same(10))
+        .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
+
+    frame.show(ui, |ui| {
+        ui.label(theme::small_text("klavye duzeni — turkce q"));
+        state.keyboard.show(ui);
+        ui.add_space(4.0);
+        keyboard_widget::show_legend(ui);
+    });
 }
 
-fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
+fn show_typing(ui: &mut egui::Ui, state: &mut TestState) {
     let engine = state.engine.as_mut().unwrap();
     let word_source = state.word_source.as_mut().unwrap();
 
@@ -222,7 +231,7 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
         }
     }
 
-    // ust panel: sure / kelime sayaci
+    // ust satir: sure + dogruluk
     ui.horizontal(|ui| {
         let elapsed = engine.elapsed_secs();
         if state.sure_secenek > 0 {
@@ -246,13 +255,13 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
         });
     });
 
-    ui.add_space(8.0);
+    ui.add_space(4.0);
 
-    // Paragraf alani — siyah kutu icinde
+    // Paragraf alani — kucuk kutu
     let frame = egui::Frame::NONE
         .fill(theme::DARK_GRAY)
-        .corner_radius(egui::CornerRadius::same(8))
-        .inner_margin(egui::Margin::same(16))
+        .corner_radius(egui::CornerRadius::same(6))
+        .inner_margin(egui::Margin::same(10))
         .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
     frame.show(ui, |ui| {
@@ -262,14 +271,14 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
         ui.with_layout(layout, |ui| {
             let word_index = engine.word_index;
 
-            for i in word_index..engine.typed_words.len().min(word_index + 30) {
+            for i in word_index..engine.typed_words.len().min(word_index + 20) {
                 let tw = &engine.typed_words[i];
 
                 if i > word_index {
                     ui.label(
                         egui::RichText::new(" ")
                             .family(egui::FontFamily::Name("spacemono".into()))
-                            .size(22.0)
+                            .size(16.0)
                             .color(theme::GRAY),
                     );
                 }
@@ -282,7 +291,9 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
                     } else if i == word_index && ci == engine.cursor_in_word && engine.has_error {
                         egui::Color32::from_rgb(255, 80, 80)
                     } else if i == word_index && ci == engine.cursor_in_word {
-                        egui::Color32::from_rgb(255, 255, 0)
+                        // hedef karakter — parmak rengi ile goster
+                        let finger = keyboard_widget::finger_of(ch);
+                        finger.color()
                     } else if i == word_index {
                         theme::GRAY
                     } else {
@@ -291,7 +302,7 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
 
                     let rt = egui::RichText::new(ch)
                         .family(egui::FontFamily::Name("spacemono".into()))
-                        .size(22.0)
+                        .size(16.0)
                         .color(color);
                     ui.label(rt);
                 }
@@ -299,7 +310,7 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
         });
     });
 
-    ui.add_space(12.0);
+    ui.add_space(6.0);
 
     // Input kutusu
     let response = ui.add(
@@ -308,26 +319,64 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
             .desired_width(ui.available_width())
             .hint_text(theme::small_text("yazmaya baslayin...")),
     );
-
     response.request_focus();
 
-    // Enter veya bosluk ile kelimeyi ilerlet
+    // Input isleme
     let input = state.input_buf.clone();
     if !input.is_empty() {
         if input.ends_with(' ') {
             let yazilan = input.trim_end().to_string();
             for ch in yazilan.chars() {
                 engine.on_key(ch);
+                state.keyboard.add_press(ch.to_string().to_uppercase());
+                // Klavyede hedef tusu goster
+                if let Some(next_ch) = engine.current_word().chars().nth(engine.cursor_in_word) {
+                    state.keyboard.set_highlight(Some(next_ch));
+                } else {
+                    state.keyboard.set_highlight(None);
+                }
             }
             engine.on_space();
             state.input_buf.clear();
         } else {
+            let yazilan = input.clone();
             state.input_buf.clear();
-            for ch in input.chars() {
+            for ch in yazilan.chars() {
                 engine.on_key(ch);
+                state.keyboard.add_press(ch.to_string().to_uppercase());
+            }
+            // Hedef tusu goster
+            if let Some(next_ch) = engine.current_word().chars().nth(engine.cursor_in_word) {
+                state.keyboard.set_highlight(Some(next_ch));
+            } else {
+                state.keyboard.set_highlight(None);
             }
         }
     }
+
+    ui.add_space(6.0);
+
+    // Klavye widget'i + legend
+    let frame = egui::Frame::NONE
+        .fill(theme::DARK_GRAY)
+        .corner_radius(egui::CornerRadius::same(6))
+        .inner_margin(egui::Margin::same(8))
+        .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
+
+    frame.show(ui, |ui| {
+        ui.set_min_width(ui.available_width());
+
+        ui.horizontal(|ui| {
+            ui.vertical(|ui| {
+                state.keyboard.show(ui);
+            });
+
+            // Sag alt: parmak efsanesi
+            ui.with_layout(egui::Layout::bottom_up(egui::Align::RIGHT), |ui| {
+                keyboard_widget::show_legend(ui);
+            });
+        });
+    });
 
     if engine.is_finished() {
         let metrics =
