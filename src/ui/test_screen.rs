@@ -111,136 +111,132 @@ fn start_test(state: &mut TestState, json_data: &str) {
 fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, finger_image: Option<&egui::TextureHandle>) {
     let total_w = ui.available_width();
     let content_w = total_w * 0.6;
-    let side = (total_w - content_w) / 2.0;
     ui.add_space(30.0);
 
-    ui.horizontal(|ui| {
-        ui.add_space(side);
-        ui.vertical(|ui| {
-            ui.set_min_width(content_w);
-            ui.add_space(15.0);
+    ui.vertical_centered(|ui| {
+        ui.set_min_width(content_w);
+        ui.add_space(15.0);
 
-            ui.heading(theme::heading_text("fastshi"));
-            ui.add_space(20.0);
+        ui.heading(theme::heading_text("fastshi"));
+        ui.add_space(20.0);
 
-            ui.label(theme::sub_heading_text("test modu"));
-            ui.horizontal(|ui| {
-                for (mode, label) in [
-                    (TestMode::TwoHand, "iki el"),
-                    (TestMode::RightHand, "sag el"),
-                    (TestMode::LeftHand, "sol el"),
-                ] {
-                    let selected = state.mode == mode;
-                    let btn = egui::Button::new(theme::button_text(label))
-                        .selected(selected)
-                        .min_size(egui::vec2(100.0, 32.0));
-                    if ui.add(btn).clicked() {
-                        state.mode = mode;
-                    }
+        ui.label(theme::sub_heading_text("test modu"));
+        ui.horizontal(|ui| {
+            for (mode, label) in [
+                (TestMode::TwoHand, "iki el"),
+                (TestMode::RightHand, "sag el"),
+                (TestMode::LeftHand, "sol el"),
+            ] {
+                let selected = state.mode == mode;
+                let btn = egui::Button::new(theme::button_text(label))
+                    .selected(selected)
+                    .min_size(egui::vec2(100.0, 32.0));
+                if ui.add(btn).clicked() {
+                    state.mode = mode;
                 }
-            });
-
-            ui.add_space(10.0);
-            ui.label(theme::sub_heading_text("zorluk"));
-            ui.horizontal(|ui| {
-                for (z, label) in [
-                    (Zorluk::Kolay, "kolay"),
-                    (Zorluk::Orta, "orta"),
-                    (Zorluk::Zor, "zor"),
-                ] {
-                    let selected = state.zorluk == z;
-                    let btn = egui::Button::new(theme::button_text(label))
-                        .selected(selected)
-                        .min_size(egui::vec2(80.0, 32.0));
-                    if ui.add(btn).clicked() {
-                        state.zorluk = z;
-                    }
-                }
-            });
-
-            ui.add_space(10.0);
-            ui.label(theme::sub_heading_text("sure"));
-            ui.horizontal(|ui| {
-                for sn in [30, 60, 120] {
-                    let selected = state.sure_secenek == sn && state.kelime_hedef.is_none();
-                    let btn = egui::Button::new(theme::button_text(&format!("{} sn", sn)))
-                        .selected(selected)
-                        .min_size(egui::vec2(80.0, 32.0));
-                    if ui.add(btn).clicked() {
-                        state.sure_secenek = sn;
-                        state.kelime_hedef = None;
-                    }
-                }
-            });
-
-            ui.add_space(10.0);
-            ui.label(theme::sub_heading_text("kelime sayisi"));
-            ui.horizontal(|ui| {
-                for k in [25, 50, 100] {
-                    let selected = state.kelime_hedef == Some(k);
-                    let btn = egui::Button::new(theme::button_text(&format!("{}", k)))
-                        .selected(selected)
-                        .min_size(egui::vec2(60.0, 32.0));
-                    if ui.add(btn).clicked() {
-                        state.kelime_hedef = Some(k);
-                        state.sure_secenek = 0;
-                    }
-                }
-            });
-
-            ui.add_space(24.0);
-
-            let start_label = if let Some(k) = state.kelime_hedef {
-                format!("{} kelime basla", k)
-            } else {
-                format!("{} sn basla", state.sure_secenek)
-            };
-
-            ui.vertical_centered(|ui| {
-                if ui
-                    .add(
-                        egui::Button::new(theme::button_text(&start_label))
-                            .min_size(egui::vec2(200.0, 40.0)),
-                    )
-                    .clicked()
-                {
-                    start_test(state, json_data);
-                }
-            });
-
-            ui.add_space(24.0);
-
-            let frame = egui::Frame::NONE
-                .fill(theme::DARK_GRAY)
-                .corner_radius(egui::CornerRadius::same(6))
-                .inner_margin(egui::Margin::same(10))
-                .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
-
-            frame.show(ui, |ui| {
-                ui.horizontal(|ui| {
-                    ui.vertical(|ui| {
-                        ui.label(theme::small_text("klavye duzeni — turkce q"));
-                        ui.add_space(4.0);
-                        state.keyboard.show(ui);
-                        ui.add_space(4.0);
-                        keyboard_widget::show_legend(ui);
-                    });
-
-                    if let Some(img) = finger_image {
-                        ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
-                            let max_h = 220.0;
-                            let aspect = img.size()[0] as f32 / img.size()[1] as f32;
-                            let desired_h = max_h;
-                            let desired_w = desired_h * aspect;
-                            let sized = egui::load::SizedTexture::new(img.id(), egui::vec2(desired_w, desired_h));
-                            ui.image(egui::ImageSource::Texture(sized));
-                        });
-                    }
-                });
-            });
-
-            ui.add_space(15.0);
+            }
         });
+
+        ui.add_space(10.0);
+        ui.label(theme::sub_heading_text("zorluk"));
+        ui.horizontal(|ui| {
+            for (z, label) in [
+                (Zorluk::Kolay, "kolay"),
+                (Zorluk::Orta, "orta"),
+                (Zorluk::Zor, "zor"),
+            ] {
+                let selected = state.zorluk == z;
+                let btn = egui::Button::new(theme::button_text(label))
+                    .selected(selected)
+                    .min_size(egui::vec2(80.0, 32.0));
+                if ui.add(btn).clicked() {
+                    state.zorluk = z;
+                }
+            }
+        });
+
+        ui.add_space(10.0);
+        ui.label(theme::sub_heading_text("sure"));
+        ui.horizontal(|ui| {
+            for sn in [30, 60, 120] {
+                let selected = state.sure_secenek == sn && state.kelime_hedef.is_none();
+                let btn = egui::Button::new(theme::button_text(&format!("{} sn", sn)))
+                    .selected(selected)
+                    .min_size(egui::vec2(80.0, 32.0));
+                if ui.add(btn).clicked() {
+                    state.sure_secenek = sn;
+                    state.kelime_hedef = None;
+                }
+            }
+        });
+
+        ui.add_space(10.0);
+        ui.label(theme::sub_heading_text("kelime sayisi"));
+        ui.horizontal(|ui| {
+            for k in [25, 50, 100] {
+                let selected = state.kelime_hedef == Some(k);
+                let btn = egui::Button::new(theme::button_text(&format!("{}", k)))
+                    .selected(selected)
+                    .min_size(egui::vec2(60.0, 32.0));
+                if ui.add(btn).clicked() {
+                    state.kelime_hedef = Some(k);
+                    state.sure_secenek = 0;
+                }
+            }
+        });
+
+        ui.add_space(24.0);
+
+        let start_label = if let Some(k) = state.kelime_hedef {
+            format!("{} kelime basla", k)
+        } else {
+            format!("{} sn basla", state.sure_secenek)
+        };
+
+        ui.vertical_centered(|ui| {
+            if ui
+                .add(
+                    egui::Button::new(theme::button_text(&start_label))
+                        .min_size(egui::vec2(200.0, 40.0)),
+                )
+                .clicked()
+            {
+                start_test(state, json_data);
+            }
+        });
+
+        ui.add_space(24.0);
+
+        let frame = egui::Frame::NONE
+            .fill(theme::DARK_GRAY)
+            .corner_radius(egui::CornerRadius::same(6))
+            .inner_margin(egui::Margin::same(10))
+            .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
+
+        frame.show(ui, |ui| {
+            ui.horizontal(|ui| {
+                ui.vertical(|ui| {
+                    ui.label(theme::small_text("klavye duzeni — turkce q"));
+                    ui.add_space(4.0);
+                    state.keyboard.show(ui);
+                    ui.add_space(4.0);
+                    keyboard_widget::show_legend(ui);
+                });
+
+                if let Some(img) = finger_image {
+                    ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
+                        let max_h = 220.0;
+                        let aspect = img.size()[0] as f32 / img.size()[1] as f32;
+                        let desired_h = max_h;
+                        let desired_w = desired_h * aspect;
+                        let sized = egui::load::SizedTexture::new(img.id(), egui::vec2(desired_w, desired_h));
+                        ui.image(egui::ImageSource::Texture(sized));
+                    });
+                }
+            });
+        });
+
+        ui.add_space(15.0);
     });
 }
 
@@ -305,13 +301,10 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
     // === EKRAN YERLESIMI ===
     let total_w = ui.available_width();
     let content_w = total_w * 0.6;
-    let side = (total_w - content_w) / 2.0;
 
     ui.add_space(20.0);
 
-    ui.horizontal(|ui| {
-    ui.add_space(side);
-    ui.vertical(|ui| {
+    ui.vertical_centered(|ui| {
         ui.set_min_width(content_w);
 
         // Ust satir: sure + dogruluk
@@ -470,7 +463,6 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
                 });
             });
         });
-    });
     });
 
     if engine.is_finished() {
