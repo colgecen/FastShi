@@ -109,13 +109,9 @@ fn start_test(state: &mut TestState, json_data: &str) {
 }
 
 fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, finger_image: Option<&egui::TextureHandle>) {
-    let content_w = ui.available_width() * 0.6;
     ui.add_space(30.0);
 
-    ui.allocate_ui_with_layout(
-        egui::vec2(content_w, 0.0),
-        egui::Layout::top_down(egui::Align::Center),
-    |ui| {
+    ui.vertical(|ui| {
         ui.add_space(15.0);
 
         ui.heading(theme::heading_text("fastshi"));
@@ -300,14 +296,9 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
     state.keyboard.cleanup();
 
     // === EKRAN YERLESIMI ===
-    let content_w = ui.available_width() * 0.6;
-
     ui.add_space(20.0);
 
-    ui.allocate_ui_with_layout(
-        egui::vec2(content_w, 0.0),
-        egui::Layout::top_down(egui::Align::Center),
-    |ui| {
+    ui.vertical(|ui| {
 
         // Ust satir: sure + dogruluk
         ui.horizontal(|ui| {
@@ -343,9 +334,8 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
             .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
         frame.show(ui, |ui| {
-            ui.set_min_width(content_w - 32.0);
-
-            let available_width = content_w - 32.0;
+            let available_width = ui.available_width();
+            ui.set_min_width(available_width);
             let space_width = 10.0;
             let word_index = engine.word_index;
 
@@ -444,7 +434,7 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&e
             .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
         kb_frame.show(ui, |ui| {
-            ui.set_min_width(content_w - 32.0);
+            ui.set_min_width(ui.available_width());
 
             ui.horizontal(|ui| {
                 ui.vertical(|ui| {
