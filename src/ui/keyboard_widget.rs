@@ -1,5 +1,6 @@
 use eframe::egui;
 use std::collections::HashMap;
+use std::time::Instant;
 use super::theme;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -30,20 +31,6 @@ impl Finger {
         }
     }
 
-    pub fn label(&self) -> &'static str {
-        match self {
-            Finger::LeftPinky => "sol serce",
-            Finger::LeftRing => "sol yuzuk",
-            Finger::LeftMiddle => "sol orta",
-            Finger::LeftIndex => "sol isaret",
-            Finger::RightIndex => "sag isaret",
-            Finger::RightMiddle => "sag orta",
-            Finger::RightRing => "sag yuzuk",
-            Finger::RightPinky => "sag serce",
-            Finger::Thumb => "basparmak",
-        }
-    }
-
     pub fn label_short(&self) -> &'static str {
         match self {
             Finger::LeftPinky => "L5",
@@ -61,8 +48,6 @@ impl Finger {
 
 pub fn finger_map() -> HashMap<char, Finger> {
     let mut m = HashMap::new();
-
-    // Sayilari
     m.insert('1', Finger::LeftPinky);
     m.insert('2', Finger::LeftRing);
     m.insert('3', Finger::LeftMiddle);
@@ -73,8 +58,6 @@ pub fn finger_map() -> HashMap<char, Finger> {
     m.insert('8', Finger::RightMiddle);
     m.insert('9', Finger::RightRing);
     m.insert('0', Finger::RightPinky);
-
-    // Ust siralar (Q W E R T Y U I O P)
     m.insert('q', Finger::LeftPinky);
     m.insert('w', Finger::LeftRing);
     m.insert('e', Finger::LeftMiddle);
@@ -85,8 +68,8 @@ pub fn finger_map() -> HashMap<char, Finger> {
     m.insert('i', Finger::RightMiddle);
     m.insert('o', Finger::RightRing);
     m.insert('p', Finger::RightPinky);
-
-    // Ort siralar (A S D F G H J K L)
+    m.insert('ğ', Finger::RightPinky);
+    m.insert('ü', Finger::RightPinky);
     m.insert('a', Finger::LeftPinky);
     m.insert('s', Finger::LeftRing);
     m.insert('d', Finger::LeftMiddle);
@@ -96,8 +79,8 @@ pub fn finger_map() -> HashMap<char, Finger> {
     m.insert('j', Finger::RightIndex);
     m.insert('k', Finger::RightMiddle);
     m.insert('l', Finger::RightRing);
-
-    // Alt siralar (Z X C V B N M)
+    m.insert('ş', Finger::RightPinky);
+    m.insert('ı', Finger::RightPinky);
     m.insert('z', Finger::LeftPinky);
     m.insert('x', Finger::LeftRing);
     m.insert('c', Finger::LeftMiddle);
@@ -105,15 +88,8 @@ pub fn finger_map() -> HashMap<char, Finger> {
     m.insert('b', Finger::LeftIndex);
     m.insert('n', Finger::RightIndex);
     m.insert('m', Finger::RightIndex);
-
-    // Turkce ozel
-    m.insert('ğ', Finger::RightPinky);
-    m.insert('ü', Finger::RightPinky);
-    m.insert('ş', Finger::RightPinky);
-    m.insert('i', Finger::RightMiddle);
     m.insert('ö', Finger::RightRing);
     m.insert('ç', Finger::RightPinky);
-
     m
 }
 
@@ -183,15 +159,15 @@ fn keyboard_rows() -> Vec<Vec<KeyDef>> {
 }
 
 pub struct KeyboardWidget {
-    pressed_keys: Vec<String>,
     highlight_key: Option<char>,
+    presses: Vec<(String, Instant)>,
 }
 
 impl Default for KeyboardWidget {
     fn default() -> Self {
         Self {
-            pressed_keys: Vec::new(),
             highlight_key: None,
+            presses: Vec::new(),
         }
     }
 }
@@ -202,20 +178,22 @@ impl KeyboardWidget {
     }
 
     pub fn add_press(&mut self, key: String) {
-        self.pressed_keys.push(key);
-        if self.pressed_keys.len() > 3 {
-            self.pressed_keys.remove(0);
-        }
+        self.presses.push((key, Instant::now()));
     }
 
-    pub fn clear_presses(&mut self) {
-        self.pressed_keys.clear();
+    fn is_pressed(&self, label: &str) -> bool {
+        let now = Instant::now();
+        self.presses.iter().any(|(k, t)| {
+            let same_key = k.to_uppercase() == label.to_uppercase();
+            let fresh = t.elapsed().as_millis() < 200;
+            same_key && fresh
+        })
     }
 
     pub fn show(&self, ui: &mut egui::Ui) {
         let rows = keyboard_rows();
-        let key_width = 32.0;
-        let key_height = 32.0;
+        let key_width = 34.0;
+        let key_height = 34.0;
         let gap = 3.0;
 
         ui.vertical(|ui| {
@@ -235,24 +213,22 @@ impl KeyboardWidget {
                             h.to_ascii_lowercase() == ch.to_ascii_lowercase()
                         }).unwrap_or(false);
 
-                        let is_recently_pressed = self.pressed_keys.iter().any(|pk| {
-                            pk.chars().next().map(|c| c.to_ascii_lowercase() == ch.to_ascii_lowercase()).unwrap_or(false)
-                        });
+                        let is_pressed_now = self.is_pressed(key_def.label);
 
                         let base_color = key_def.finger.color();
-                        let bg = if is_highlighted {
+                        let bg = if is_pressed_now {
+                            egui::Color32::from_rgb(255, 255, 255)
+                        } else if is_highlighted {
                             egui::Color32::from_rgb(
                                 (base_color.r() as u32 * 2 / 3 + 85) as u8,
                                 (base_color.g() as u32 * 2 / 3 + 85) as u8,
                                 (base_color.b() as u32 * 2 / 3 + 85) as u8,
                             )
-                        } else if is_recently_pressed {
-                            egui::Color32::from_rgb(255, 255, 255)
                         } else {
                             base_color
                         };
 
-                        let text_color = if is_recently_pressed {
+                        let text_color = if is_pressed_now {
                             theme::BLACK
                         } else {
                             theme::WHITE
@@ -271,11 +247,6 @@ impl KeyboardWidget {
                             egui::Stroke::new(1.0_f32, theme::GRAY),
                             egui::StrokeKind::Inside,
                         );
-
-                        let text = egui::RichText::new(key_def.label)
-                            .family(egui::FontFamily::Name("spacemono".into()))
-                            .size(12.0)
-                            .color(text_color);
                         painter.text(
                             rect.center(),
                             egui::Align2::CENTER_CENTER,
@@ -298,11 +269,15 @@ impl KeyboardWidget {
                     egui::Sense::hover(),
                 );
                 let painter = ui.painter();
-                let bg = if self.highlight_key == Some(' ') {
+                let space_pressed = self.is_pressed("SPACE");
+                let bg = if space_pressed {
+                    egui::Color32::from_rgb(255, 255, 255)
+                } else if self.highlight_key == Some(' ') {
                     egui::Color32::from_rgb(120, 120, 120)
                 } else {
                     theme::DARK_GRAY
                 };
+                let text_col = if space_pressed { theme::BLACK } else { theme::GRAY };
                 painter.rect_filled(rect, egui::CornerRadius::same(4), bg);
                 painter.rect_stroke(
                     rect,
@@ -315,10 +290,18 @@ impl KeyboardWidget {
                     egui::Align2::CENTER_CENTER,
                     "SPACE",
                     egui::FontId::proportional(11.0),
-                    theme::GRAY,
+                    text_col,
                 );
             });
         });
+
+        // Eski press'leri temizle (>500ms onceki)
+        // Bu show icinde yapilmiyor cunku &self, ama add_press'te cumulative.
+        // Borrows sorunu olmamasi icin temizlik disarda yapilmali.
+    }
+
+    pub fn cleanup(&mut self) {
+        self.presses.retain(|(_, t)| t.elapsed().as_millis() < 500);
     }
 }
 

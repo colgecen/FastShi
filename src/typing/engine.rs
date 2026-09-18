@@ -73,7 +73,7 @@ impl TypingEngine {
         for w in &self.words {
             self.typed_words.push(TypedWord {
                 word: w.clone(),
-                typed_chars: vec![None; w.len()],
+                typed_chars: vec![None; w.chars().count()],
                 completed: false,
             });
         }
@@ -103,7 +103,7 @@ impl TypingEngine {
                 self.cursor_in_word += 1;
                 self.dogru_tus += 1;
 
-                if self.cursor_in_word >= self.current_word().len() {
+                if self.cursor_in_word >= self.current_word().chars().count() {
                     self.typed_words[self.word_index].completed = true;
                     self.words_completed += 1;
                     if let Some(total) = self.total_words {
@@ -130,7 +130,7 @@ impl TypingEngine {
             return;
         }
 
-        if self.cursor_in_word >= self.current_word().len() {
+        if self.cursor_in_word >= self.current_word().chars().count() {
             self.typed_words[self.word_index].completed = true;
             self.word_index += 1;
             self.cursor_in_word = 0;
