@@ -27,8 +27,7 @@ impl TypingApp {
         let config = Config::load();
 
         let json_data =
-            include_str!("../assets/word_lists/genel_tr.json")
-.to_string();
+            include_str!("../assets/word_lists/genel_tr.json").to_string();
 
         Self {
             config,
@@ -53,7 +52,7 @@ impl eframe::App for TypingApp {
                     self.active_tab = Tab::Test;
                 }
 
-                let gecmis_btn = egui::Button::new(theme::button_text("geçmiş"))
+                let gecmis_btn = egui::Button::new(theme::button_text("gecmis"))
                     .selected(self.active_tab == Tab::Gecmis);
                 if ui.add(gecmis_btn).clicked() {
                     self.active_tab = Tab::Gecmis;
@@ -101,9 +100,15 @@ fn configure_fonts(ctx: &egui::Context) {
     let mut fonts = egui::FontDefinitions::default();
 
     fonts.font_data.insert(
-        "orbitron".to_owned(),
+        "rajdhani".to_owned(),
         std::sync::Arc::new(
-            FontData::from_owned(include_bytes!("../assets/fonts/Orbitron.ttf").to_vec()),
+            FontData::from_owned(include_bytes!("../assets/fonts/Rajdhani-SemiBold.ttf").to_vec()),
+        ),
+    );
+    fonts.font_data.insert(
+        "rajdhani_bold".to_owned(),
+        std::sync::Arc::new(
+            FontData::from_owned(include_bytes!("../assets/fonts/Rajdhani-Bold.ttf").to_vec()),
         ),
     );
     fonts.font_data.insert(
@@ -121,9 +126,15 @@ fn configure_fonts(ctx: &egui::Context) {
 
     fonts
         .families
-        .entry(egui::FontFamily::Name("orbitron".into()))
+        .entry(egui::FontFamily::Name("rajdhani".into()))
         .or_default()
-        .insert(0, "orbitron".to_owned());
+        .insert(0, "rajdhani".to_owned());
+
+    fonts
+        .families
+        .entry(egui::FontFamily::Name("rajdhani_bold".into()))
+        .or_default()
+        .insert(0, "rajdhani_bold".to_owned());
 
     fonts
         .families

@@ -38,14 +38,14 @@ pub fn apply_dark_theme(ctx: &egui::Context) {
 
 pub fn heading_text(text: &str) -> egui::RichText {
     egui::RichText::new(text.to_uppercase())
-        .family(egui::FontFamily::Name("orbitron".into()))
+        .family(egui::FontFamily::Name("rajdhani_bold".into()))
         .size(24.0)
         .color(WHITE)
 }
 
 pub fn sub_heading_text(text: &str) -> egui::RichText {
     egui::RichText::new(text.to_uppercase())
-        .family(egui::FontFamily::Name("orbitron".into()))
+        .family(egui::FontFamily::Name("rajdhani".into()))
         .size(18.0)
         .color(WHITE)
 }
@@ -73,7 +73,7 @@ pub fn typing_text(text: &str) -> egui::RichText {
 
 pub fn button_text(text: &str) -> egui::RichText {
     egui::RichText::new(text.to_uppercase())
-        .family(egui::FontFamily::Name("orbitron".into()))
+        .family(egui::FontFamily::Name("rajdhani".into()))
         .size(14.0)
         .color(WHITE)
 }
