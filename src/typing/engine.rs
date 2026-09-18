@@ -130,15 +130,13 @@ impl TypingEngine {
             return;
         }
 
-        if self.cursor_in_word >= self.current_word().chars().count() {
-            self.typed_words[self.word_index].completed = true;
-            self.word_index += 1;
-            self.cursor_in_word = 0;
-            self.has_error = false;
+        self.typed_words[self.word_index].completed = true;
+        self.word_index += 1;
+        self.cursor_in_word = 0;
+        self.has_error = false;
 
-            if self.word_index >= self.words.len() {
-                self.bitti = true;
-            }
+        if self.word_index >= self.words.len() {
+            self.bitti = true;
         }
     }
 

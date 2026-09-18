@@ -11,6 +11,7 @@ pub struct TypingApp {
     test_state: TestState,
     active_tab: Tab,
     json_data: String,
+    finger_image: Option<egui::TextureHandle>,
 }
 
 #[derive(PartialEq)]
@@ -29,17 +30,38 @@ impl TypingApp {
         let json_data =
             include_str!("../assets/word_lists/genel_tr.json").to_string();
 
+        let finger_image = None;
+
         Self {
             config,
             test_state: TestState::default(),
             active_tab: Tab::Test,
             json_data,
+            finger_image,
+        }
+    }
+
+    fn ensure_finger_image(&mut self, ctx: &egui::Context) {
+        if self.finger_image.is_some() {
+            return;
+        }
+        let bytes = include_bytes!("../assets/images/ten-finger.png");
+        let image = image::load_from_memory(bytes).ok();
+        if let Some(img) = image {
+            let size = [img.width() as usize, img.height() as usize];
+            let rgba = img.to_rgba8();
+            let pixels = rgba.into_raw();
+            let color_image = egui::ColorImage::from_rgba_unmultiplied(size, &pixels);
+            let handle = ctx.load_texture("finger_map", color_image, egui::TextureOptions::default());
+            self.finger_image = Some(handle);
         }
     }
 }
 
 impl eframe::App for TypingApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
+        self.ensure_finger_image(ctx);
+
         egui::TopBottomPanel::top("header").show(ctx, |ui| {
             ui.add_space(8.0);
             ui.horizontal(|ui| {
@@ -64,7 +86,12 @@ impl eframe::App for TypingApp {
         egui::CentralPanel::default().show(ctx, |ui| {
             match self.active_tab {
                 Tab::Test => {
-                    crate::ui::test_screen::show(ui, &mut self.test_state, &self.json_data);
+                    crate::ui::test_screen::show(
+                        ui,
+                        &mut self.test_state,
+                        &self.json_data,
+                        self.finger_image.as_ref(),
+                    );
 
                     if self.test_state.just_finished {
                         if let Some(ref metrics) = self.test_state.last_metrics {

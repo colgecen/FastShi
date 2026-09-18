@@ -39,7 +39,7 @@ impl Default for TestState {
     }
 }
 
-pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
+pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, finger_image: Option<&egui::TextureHandle>) {
     if state.just_finished {
         if let Some(ref metrics) = state.last_metrics {
             super::results_screen::show(ui, metrics, &state.test_modu_str, state.sure_secenek);
@@ -66,9 +66,9 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
     }
 
     if !state.started {
-        show_setup(ui, state, json_data);
+        show_setup(ui, state, json_data, finger_image);
     } else {
-        show_typing(ui, state);
+        show_typing(ui, state, finger_image);
     }
 }
 
@@ -108,7 +108,7 @@ fn start_test(state: &mut TestState, json_data: &str) {
     .to_string();
 }
 
-fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
+fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, finger_image: Option<&egui::TextureHandle>) {
     let total_w = ui.available_width();
     let side = total_w * 0.2;
     ui.add_space(30.0);
@@ -214,18 +214,33 @@ fn show_setup(ui: &mut egui::Ui, state: &mut TestState, json_data: &str) {
             .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
         frame.show(ui, |ui| {
-            ui.label(theme::small_text("klavye duzeni — turkce q"));
-            ui.add_space(4.0);
-            state.keyboard.show(ui);
-            ui.add_space(4.0);
-            keyboard_widget::show_legend(ui);
+            ui.horizontal(|ui| {
+                ui.vertical(|ui| {
+                    ui.label(theme::small_text("klavye duzeni — turkce q"));
+                    ui.add_space(4.0);
+                    state.keyboard.show(ui);
+                    ui.add_space(4.0);
+                    keyboard_widget::show_legend(ui);
+                });
+
+                if let Some(img) = finger_image {
+                    ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
+                        let max_h = 220.0;
+                        let aspect = img.size()[0] as f32 / img.size()[1] as f32;
+                        let desired_h = max_h;
+                        let desired_w = desired_h * aspect;
+                        let sized = egui::load::SizedTexture::new(img.id(), egui::vec2(desired_w, desired_h));
+                        ui.image(egui::ImageSource::Texture(sized));
+                    });
+                }
+            });
         });
 
         ui.add_space(side / 4.0);
     });
 }
 
-fn show_typing(ui: &mut egui::Ui, state: &mut TestState) {
+fn show_typing(ui: &mut egui::Ui, state: &mut TestState, finger_image: Option<&egui::TextureHandle>) {
     let engine = state.engine.as_mut().unwrap();
     let word_source = state.word_source.as_mut().unwrap();
 
@@ -251,15 +266,13 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState) {
             match event {
                 egui::Event::Text(text) => {
                     for ch in text.chars() {
-                        if ch == ' ' {
-                            space_pressed = true;
-                        } else if !ch.is_control() {
+                        if !ch.is_control() && ch != ' ' {
                             input_chars.push(ch);
                         }
                     }
                 }
-                egui::Event::Key { key, pressed, .. } => {
-                    if *pressed && *key == egui::Key::Space {
+                egui::Event::Key { key, pressed, repeat, .. } => {
+                    if *pressed && !*repeat && *key == egui::Key::Space {
                         space_pressed = true;
                     }
                 }
@@ -438,7 +451,16 @@ fn show_typing(ui: &mut egui::Ui, state: &mut TestState) {
                     state.keyboard.show(ui);
                 });
 
-                ui.with_layout(egui::Layout::bottom_up(egui::Align::RIGHT), |ui| {
+                ui.with_layout(egui::Layout::right_to_left(egui::Align::TOP), |ui| {
+                    if let Some(img) = finger_image {
+                        let max_h = 180.0;
+                        let aspect = img.size()[0] as f32 / img.size()[1] as f32;
+                        let desired_h = max_h;
+                        let desired_w = desired_h * aspect;
+                        let sized = egui::load::SizedTexture::new(img.id(), egui::vec2(desired_w, desired_h));
+                        ui.image(egui::ImageSource::Texture(sized));
+                    }
+                    ui.add_space(8.0);
                     keyboard_widget::show_legend(ui);
                 });
             });

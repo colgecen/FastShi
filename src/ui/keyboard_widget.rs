@@ -182,7 +182,6 @@ impl KeyboardWidget {
     }
 
     fn is_pressed(&self, label: &str) -> bool {
-        let now = Instant::now();
         self.presses.iter().any(|(k, t)| {
             let same_key = k.to_uppercase() == label.to_uppercase();
             let fresh = t.elapsed().as_millis() < 200;
@@ -306,29 +305,36 @@ impl KeyboardWidget {
 }
 
 pub fn show_legend(ui: &mut egui::Ui) {
-    let fingers = [
-        Finger::LeftPinky,
-        Finger::LeftRing,
-        Finger::LeftMiddle,
-        Finger::LeftIndex,
-        Finger::RightIndex,
-        Finger::RightMiddle,
-        Finger::RightRing,
-        Finger::RightPinky,
-    ];
-
-    ui.horizontal_wrapped(|ui| {
-        for finger in &fingers {
-            let color = finger.color();
-            let (rect, _) = ui.allocate_exact_size(egui::vec2(10.0, 10.0), egui::Sense::hover());
-            ui.painter().rect_filled(rect, egui::CornerRadius::same(2), color);
-            ui.label(
-                egui::RichText::new(finger.label_short())
-                    .family(egui::FontFamily::Name("spacemono".into()))
-                    .size(9.0)
-                    .color(theme::GRAY),
-            );
-            ui.add_space(4.0);
+    ui.vertical(|ui| {
+        ui.label(
+            egui::RichText::new("parmak haritasi")
+                .family(egui::FontFamily::Name("spacemono".into()))
+                .size(9.0)
+                .color(theme::GRAY),
+        );
+        ui.add_space(2.0);
+        let fingers = [
+            (Finger::LeftPinky, "serce (sol)"),
+            (Finger::LeftRing, "yuzuk (sol)"),
+            (Finger::LeftMiddle, "orta (sol)"),
+            (Finger::LeftIndex, "isaret (sol)"),
+            (Finger::RightIndex, "isaret (sag)"),
+            (Finger::RightMiddle, "orta (sag)"),
+            (Finger::RightRing, "yuzuk (sag)"),
+            (Finger::RightPinky, "serce (sag)"),
+        ];
+        for (finger, name) in &fingers {
+            ui.horizontal(|ui| {
+                let color = finger.color();
+                let (rect, _) = ui.allocate_exact_size(egui::vec2(12.0, 12.0), egui::Sense::hover());
+                ui.painter().rect_filled(rect, egui::CornerRadius::same(2), color);
+                ui.label(
+                    egui::RichText::new(*name)
+                        .family(egui::FontFamily::Name("spacemono".into()))
+                        .size(10.0)
+                        .color(theme::LIGHT_GRAY),
+                );
+            });
         }
     });
 }
