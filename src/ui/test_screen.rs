@@ -190,7 +190,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
     // --- Klavye en alta sabitle ---
     let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 8.0 * 2.0;
     let remaining = ui.available_height();
-    let bottom_space = (remaining - kb_height - 24.0).max(0.0);
+    let bottom_space = (remaining - kb_height - 40.0).max(0.0);
     ui.add_space(bottom_space);
 
     let (next_char, dim_hand) = if state.started {
@@ -213,7 +213,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         });
     });
 
-    ui.add_space(24.0);
+    ui.add_space(32.0);
 
     // === KLAVYE GIRISI ===
     // Her zaman dinle — basinca basla
@@ -241,12 +241,19 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
 
     // Harf girisi varsa
     if !input_chars.is_empty() || space_pressed {
-        // Bitmisse veya hic baslamadiysa yeni test baslat
-        if !state.started || state.just_finished {
-            reload_engine(state, json_data);
+        // Bitmisse — ayni kelimelerle devam et (yeni atama)
+        if state.just_finished {
+            if let Some(ref mut engine) = state.engine {
+                engine.reset_for_restart();
+            }
             state.started = true;
             state.just_finished = false;
             state.last_metrics = None;
+        }
+        // Hic baslamadiysa yeni test baslat
+        else if !state.started {
+            reload_engine(state, json_data);
+            state.started = true;
         }
 
         let engine = state.engine.as_mut().unwrap();

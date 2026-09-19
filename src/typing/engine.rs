@@ -157,4 +157,22 @@ impl TypingEngine {
     pub fn elapsed_secs(&self) -> f64 {
         self.baslama.elapsed().as_secs_f64()
     }
+
+    pub fn reset_for_restart(&mut self) {
+        self.word_index = 0;
+        self.cursor_in_word = 0;
+        self.has_error = false;
+        self.dogru_tus = 0;
+        self.yanlis_tus = 0;
+        self.words_completed = 0;
+        self.baslama = std::time::Instant::now();
+        self.bitti = false;
+        self.hatali_tuslar.clear();
+        for tw in &mut self.typed_words {
+            tw.completed = false;
+            for c in &mut tw.typed_chars {
+                *c = None;
+            }
+        }
+    }
 }
