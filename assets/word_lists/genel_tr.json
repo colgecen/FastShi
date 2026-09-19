@@ -3,749 +3,4729 @@
   "klavye_duzeni": "Q",
   "kategori": "genel",
   "kelimeler": [
-    { "kelime": "kalem", "zorluk": "kolay" },
-    { "kelime": "kitap", "zorluk": "kolay" },
-    { "kelime": "masa", "zorluk": "kolay" },
-    { "kelime": "sandalye", "zorluk": "orta" },
-    { "kelime": "bilgisayar", "zorluk": "orta" },
-    { "kelime": "yazılım", "zorluk": "orta" },
-    { "kelime": "telefon", "zorluk": "kolay" },
-    { "kelime": "araba", "zorluk": "kolay" },
-    { "kelime": "ev", "zorluk": "kolay" },
-    { "kelime": "okul", "zorluk": "kolay" },
-    { "kelime": "güneş", "zorluk": "orta" },
-    { "kelime": "deniz", "zorluk": "orta" },
-    { "kelime": "dağ", "zorluk": "kolay" },
-    { "kelime": "nehir", "zorluk": "orta" },
-    { "kelime": "ağaç", "zorluk": "orta" },
-    { "kelime": "çiçek", "zorluk": "orta" },
-    { "kelime": "kuş", "zorluk": "kolay" },
-    { "kelime": "balık", "zorluk": "orta" },
-    { "kelime": "köpek", "zorluk": "orta" },
-    { "kelime": "kedi", "zorluk": "kolay" },
-    { "kelime": "elma", "zorluk": "kolay" },
-    { "kelime": "portakal", "zorluk": "orta" },
-    { "kelime": "üzüm", "zorluk": "orta" },
-    { "kelime": "domates", "zorluk": "orta" },
-    { "kelime": "ekmek", "zorluk": "orta" },
-    { "kelime": "süt", "zorluk": "kolay" },
-    { "kelime": "su", "zorluk": "kolay" },
-    { "kelime": "çay", "zorluk": "kolay" },
-    { "kelime": "kahve", "zorluk": "orta" },
-    { "kelime": "güzel", "zorluk": "orta" },
-    { "kelime": "büyük", "zorluk": "orta" },
-    { "kelime": "küçük", "zorluk": "orta" },
-    { "kelime": "hızlı", "zorluk": "orta" },
-    { "kelime": "yavaş", "zorluk": "orta" },
-    { "kelime": "sıcak", "zorluk": "orta" },
-    { "kelime": "soğuk", "zorluk": "orta" },
-    { "kelime": "uzun", "zorluk": "orta" },
-    { "kelime": "kısa", "zorluk": "orta" },
-    { "kelime": "geniş", "zorluk": "orta" },
-    { "kelime": "dar", "zorluk": "kolay" },
-    { "kelime": "yeni", "zorluk": "kolay" },
-    { "kelime": "eski", "zorluk": "kolay" },
-    { "kelime": "iyi", "zorluk": "kolay" },
-    { "kelime": "kötü", "zorluk": "orta" },
-    { "kelime": "güçlü", "zorluk": "orta" },
-    { "kelime": "mutlu", "zorluk": "orta" },
-    { "kelime": "üzgün", "zorluk": "orta" },
-    { "kelime": "kapı", "zorluk": "kolay" },
-    { "kelime": "pencere", "zorluk": "orta" },
-    { "kelime": "oda", "zorluk": "kolay" },
-    { "kelime": "mutfak", "zorluk": "orta" },
-    { "kelime": "bahçe", "zorluk": "orta" },
-    { "kelime": "sokak", "zorluk": "orta" },
-    { "kelime": "cadde", "zorluk": "orta" },
-    { "kelime": "park", "zorluk": "kolay" },
-    { "kelime": "hastane", "zorluk": "orta" },
-    { "kelime": "tren", "zorluk": "orta" },
-    { "kelime": "otobüs", "zorluk": "orta" },
-    { "kelime": "uçak", "zorluk": "orta" },
-    { "kelime": "gemi", "zorluk": "orta" },
-    { "kelime": "yol", "zorluk": "kolay" },
-    { "kelime": "köprü", "zorluk": "orta" },
-    { "kelime": "orman", "zorluk": "orta" },
-    { "kelime": "göl", "zorluk": "orta" },
-    { "kelime": "şehir", "zorluk": "orta" },
-    { "kelime": "köy", "zorluk": "orta" },
-    { "kelime": "ülke", "zorluk": "orta" },
-    { "kelime": "devlet", "zorluk": "orta" },
-    { "kelime": "hükümet", "zorluk": "orta" },
-    { "kelime": "üniversite", "zorluk": "zor" },
-    { "kelime": "kütüphane", "zorluk": "zor" },
-    { "kelime": "müze", "zorluk": "orta" },
-    { "kelime": "tiyatro", "zorluk": "orta" },
-    { "kelime": "sinema", "zorluk": "orta" },
-    { "kelime": "konser", "zorluk": "orta" },
-    { "kelime": "futbol", "zorluk": "orta" },
-    { "kelime": "yüzme", "zorluk": "orta" },
-    { "kelime": "koşu", "zorluk": "orta" },
-    { "kelime": "tatil", "zorluk": "orta" },
-    { "kelime": "seyahat", "zorluk": "orta" },
-    { "kelime": "harita", "zorluk": "orta" },
-    { "kelime": "hava", "zorluk": "kolay" },
-    { "kelime": "yağmur", "zorluk": "orta" },
-    { "kelime": "kar", "zorluk": "kolay" },
-    { "kelime": "rüzgar", "zorluk": "orta" },
-    { "kelime": "fırtına", "zorluk": "orta" },
-    { "kelime": "gökkuşağı", "zorluk": "zor" },
-    { "kelime": "bulut", "zorluk": "orta" },
-    { "kelime": "parlak", "zorluk": "orta" },
-    { "kelime": "karanlık", "zorluk": "zor" },
-    { "kelime": "ışık", "zorluk": "orta" },
-    { "kelime": "gölge", "zorluk": "orta" },
-    { "kelime": "renk", "zorluk": "orta" },
-    { "kelime": "beyaz", "zorluk": "orta" },
-    { "kelime": "siyah", "zorluk": "orta" },
-    { "kelime": "kırmızı", "zorluk": "orta" },
-    { "kelime": "mavi", "zorluk": "orta" },
-    { "kelime": "yeşil", "zorluk": "orta" },
-    { "kelime": "sarı", "zorluk": "orta" },
-    { "kelime": "turuncu", "zorluk": "orta" },
-    { "kelime": "mor", "zorluk": "orta" },
-    { "kelime": "pembe", "zorluk": "orta" },
-    { "kelime": "kahverengi", "zorluk": "zor" },
-    { "kelime": "gri", "zorluk": "orta" },
-    { "kelime": "altın", "zorluk": "orta" },
-    { "kelime": "gümüş", "zorluk": "orta" },
-    { "kelime": "demir", "zorluk": "orta" },
-    { "kelime": "çelik", "zorluk": "orta" },
-    { "kelime": "cam", "zorluk": "kolay" },
-    { "kelime": "ahşap", "zorluk": "orta" },
-    { "kelime": "taş", "zorluk": "kolay" },
-    { "kelime": "toprak", "zorluk": "orta" },
-    { "kelime": "kum", "zorluk": "kolay" },
-    { "kelime": "çöl", "zorluk": "orta" },
-    { "kelime": "vadi", "zorluk": "orta" },
-    { "kelime": "tepe", "zorluk": "orta" },
-    { "kelime": "sahil", "zorluk": "orta" },
-    { "kelime": "dalga", "zorluk": "orta" },
-    { "kelime": "derin", "zorluk": "orta" },
-    { "kelime": "deprem", "zorluk": "orta" },
-    { "kelime": "yanardağ", "zorluk": "zor" },
-    { "kelime": "kalın", "zorluk": "orta" },
-    { "kelime": "ince", "zorluk": "orta" },
-    { "kelime": "ağır", "zorluk": "orta" },
-    { "kelime": "hafif", "zorluk": "orta" },
-    { "kelime": "sert", "zorluk": "orta" },
-    { "kelime": "yumuşak", "zorluk": "orta" },
-    { "kelime": "temiz", "zorluk": "orta" },
-    { "kelime": "kirli", "zorluk": "orta" },
-    { "kelime": "genç", "zorluk": "orta" },
-    { "kelime": "yaşlı", "zorluk": "orta" },
-    { "kelime": "çocuk", "zorluk": "orta" },
-    { "kelime": "bebek", "zorluk": "orta" },
-    { "kelime": "anne", "zorluk": "kolay" },
-    { "kelime": "baba", "zorluk": "kolay" },
-    { "kelime": "kardeş", "zorluk": "orta" },
-    { "kelime": "aile", "zorluk": "orta" },
-    { "kelime": "arkadaş", "zorluk": "orta" },
-    { "kelime": "öğretmen", "zorluk": "orta" },
-    { "kelime": "öğrenci", "zorluk": "orta" },
-    { "kelime": "doktor", "zorluk": "orta" },
-    { "kelime": "hemşire", "zorluk": "orta" },
-    { "kelime": "mühendis", "zorluk": "zor" },
-    { "kelime": "avukat", "zorluk": "orta" },
-    { "kelime": "polis", "zorluk": "orta" },
-    { "kelime": "asker", "zorluk": "orta" },
-    { "kelime": "pilot", "zorluk": "orta" },
-    { "kelime": "garson", "zorluk": "orta" },
-    { "kelime": "aşçı", "zorluk": "orta" },
-    { "kelime": "terzi", "zorluk": "orta" },
-    { "kelime": "kasap", "zorluk": "orta" },
-    { "kelime": "esnaf", "zorluk": "orta" },
-    { "kelime": "sanatçı", "zorluk": "zor" },
-    { "kelime": "yazar", "zorluk": "orta" },
-    { "kelime": "şair", "zorluk": "orta" },
-    { "kelime": "gazeteci", "zorluk": "zor" },
-    { "kelime": "mimar", "zorluk": "orta" },
-    { "kelime": "bestekar", "zorluk": "zor" },
-    { "kelime": "eczacı", "zorluk": "orta" },
-    { "kelime": "çiftçi", "zorluk": "orta" },
-    { "kelime": "marangoz", "zorluk": "orta" },
-    { "kelime": "boyacı", "zorluk": "orta" },
-    { "kelime": "memur", "zorluk": "orta" },
-    { "kelime": "çalışan", "zorluk": "orta" },
-    { "kelime": "emekli", "zorluk": "orta" },
-    { "kelime": "yüksek", "zorluk": "orta" },
-    { "kelime": "normal", "zorluk": "orta" },
-    { "kelime": "farklı", "zorluk": "orta" },
-    { "kelime": "benzer", "zorluk": "orta" },
-    { "kelime": "aynı", "zorluk": "orta" },
-    { "kelime": "adalet", "zorluk": "orta" },
-    { "kelime": "özgürlük", "zorluk": "zor" },
-    { "kelime": "barış", "zorluk": "orta" },
-    { "kelime": "savaş", "zorluk": "orta" },
-    { "kelime": "dostluk", "zorluk": "orta" },
-    { "kelime": "sevgi", "zorluk": "orta" },
-    { "kelime": "mutluluk", "zorluk": "orta" },
-    { "kelime": "hüzün", "zorluk": "orta" },
-    { "kelime": "korku", "zorluk": "orta" },
-    { "kelime": "güven", "zorluk": "orta" },
-    { "kelime": "umut", "zorluk": "orta" },
-    { "kelime": "başarı", "zorluk": "orta" },
-    { "kelime": "zafer", "zorluk": "orta" },
-    { "kelime": "mücadele", "zorluk": "orta" },
-    { "kelime": "çaba", "zorluk": "orta" },
-    { "kelime": "emek", "zorluk": "orta" },
-    { "kelime": "rahat", "zorluk": "orta" },
-    { "kelime": "huzur", "zorluk": "orta" },
-    { "kelime": "sakinlik", "zorluk": "orta" },
-    { "kelime": "gürültü", "zorluk": "orta" },
-    { "kelime": "sessizlik", "zorluk": "orta" },
-    { "kelime": "müzik", "zorluk": "orta" },
-    { "kelime": "şarkı", "zorluk": "orta" },
-    { "kelime": "dans", "zorluk": "orta" },
-    { "kelime": "söz", "zorluk": "orta" },
-    { "kelime": "konuşma", "zorluk": "orta" },
-    { "kelime": "dil", "zorluk": "orta" },
-    { "kelime": "yazı", "zorluk": "orta" },
-    { "kelime": "okuma", "zorluk": "orta" },
-    { "kelime": "düşünce", "zorluk": "orta" },
-    { "kelime": "fikir", "zorluk": "orta" },
-    { "kelime": "plan", "zorluk": "orta" },
-    { "kelime": "proje", "zorluk": "orta" },
-    { "kelime": "hedef", "zorluk": "orta" },
-    { "kelime": "amaç", "zorluk": "orta" },
-    { "kelime": "istek", "zorluk": "orta" },
-    { "kelime": "talep", "zorluk": "orta" },
-    { "kelime": "ihtiyaç", "zorluk": "orta" },
-    { "kelime": "seçenek", "zorluk": "orta" },
-    { "kelime": "tercih", "zorluk": "orta" },
-    { "kelime": "karar", "zorluk": "orta" },
-    { "kelime": "sonuç", "zorluk": "orta" },
-    { "kelime": "neden", "zorluk": "orta" },
-    { "kelime": "sebep", "zorluk": "orta" },
-    { "kelime": "olay", "zorluk": "orta" },
-    { "kelime": "durum", "zorluk": "orta" },
-    { "kelime": "süreç", "zorluk": "orta" },
-    { "kelime": "aşama", "zorluk": "orta" },
-    { "kelime": "gelişme", "zorluk": "orta" },
-    { "kelime": "değişim", "zorluk": "orta" },
-    { "kelime": "başlangıç", "zorluk": "orta" },
-    { "kelime": "devam", "zorluk": "orta" },
-    { "kelime": "düzen", "zorluk": "orta" },
-    { "kelime": "hata", "zorluk": "orta" },
-    { "kelime": "yanlış", "zorluk": "orta" },
-    { "kelime": "doğru", "zorluk": "orta" },
-    { "kelime": "tam", "zorluk": "orta" },
-    { "kelime": "bütün", "zorluk": "orta" },
-    { "kelime": "parça", "zorluk": "orta" },
-    { "kelime": "bölüm", "zorluk": "orta" },
-    { "kelime": "tüm", "zorluk": "orta" },
-    { "kelime": "her", "zorluk": "orta" },
-    { "kelime": "birçok", "zorluk": "orta" },
-    { "kelime": "çok", "zorluk": "kolay" },
-    { "kelime": "az", "zorluk": "kolay" },
-    { "kelime": "daha", "zorluk": "orta" },
-    { "kelime": "sadece", "zorluk": "orta" },
-    { "kelime": "basit", "zorluk": "orta" },
-    { "kelime": "kolay", "zorluk": "orta" },
-    { "kelime": "zor", "zorluk": "orta" },
-    { "kelime": "güç", "zorluk": "orta" },
-    { "kelime": "kuvvet", "zorluk": "orta" },
-    { "kelime": "enerji", "zorluk": "orta" },
-    { "kelime": "zayıf", "zorluk": "orta" },
-    { "kelime": "hız", "zorluk": "orta" },
-    { "kelime": "erken", "zorluk": "orta" },
-    { "kelime": "geç", "zorluk": "orta" },
-    { "kelime": "sonra", "zorluk": "orta" },
-    { "kelime": "önce", "zorluk": "orta" },
-    { "kelime": "sıra", "zorluk": "orta" },
-    { "kelime": "henüz", "zorluk": "orta" },
-    { "kelime": "artık", "zorluk": "orta" },
-    { "kelime": "hem", "zorluk": "orta" },
-    { "kelime": "veya", "zorluk": "orta" },
-    { "kelime": "eğer", "zorluk": "orta" },
-    { "kelime": "çünkü", "zorluk": "orta" },
-    { "kelime": "böylece", "zorluk": "orta" },
-    { "kelime": "için", "zorluk": "orta" },
-    { "kelime": "üzerinde", "zorluk": "orta" },
-    { "kelime": "altında", "zorluk": "orta" },
-    { "kelime": "yanında", "zorluk": "orta" },
-    { "kelime": "arasında", "zorluk": "orta" },
-    { "kelime": "göre", "zorluk": "orta" },
-    { "kelime": "karşı", "zorluk": "orta" },
-    { "kelime": "rağmen", "zorluk": "orta" },
-    { "kelime": "ile", "zorluk": "orta" },
-    { "kelime": "gibi", "zorluk": "orta" },
-    { "kelime": "kadar", "zorluk": "orta" },
-    { "kelime": "olarak", "zorluk": "orta" },
-    { "kelime": "üzere", "zorluk": "orta" },
-    { "kelime": "oldukça", "zorluk": "orta" },
-    { "kelime": "önemli", "zorluk": "orta" },
-    { "kelime": "değerli", "zorluk": "orta" },
-    { "kelime": "gerekli", "zorluk": "orta" },
-    { "kelime": "faydalı", "zorluk": "orta" },
-    { "kelime": "etkili", "zorluk": "orta" },
-    { "kelime": "başarılı", "zorluk": "orta" },
-    { "kelime": "verimli", "zorluk": "orta" },
-    { "kelime": "pratik", "zorluk": "orta" },
-    { "kelime": "gerçek", "zorluk": "orta" },
-    { "kelime": "olası", "zorluk": "orta" },
-    { "kelime": "mümkün", "zorluk": "orta" },
-    { "kelime": "kesin", "zorluk": "orta" },
-    { "kelime": "açık", "zorluk": "orta" },
-    { "kelime": "kapalı", "zorluk": "orta" },
-    { "kelime": "boş", "zorluk": "orta" },
-    { "kelime": "dolu", "zorluk": "orta" },
-    { "kelime": "alçak", "zorluk": "orta" },
-    { "kelime": "sığ", "zorluk": "orta" },
-    { "kelime": "yüzey", "zorluk": "orta" },
-    { "kelime": "katman", "zorluk": "orta" },
-    { "kelime": "seviye", "zorluk": "orta" },
-    { "kelime": "basamak", "zorluk": "orta" },
-    { "kelime": "dönem", "zorluk": "orta" },
-    { "kelime": "çağ", "zorluk": "orta" },
-    { "kelime": "saat", "zorluk": "orta" },
-    { "kelime": "dakika", "zorluk": "orta" },
-    { "kelime": "saniye", "zorluk": "orta" },
-    { "kelime": "mekan", "zorluk": "orta" },
-    { "kelime": "nokta", "zorluk": "orta" },
-    { "kelime": "çizgi", "zorluk": "orta" },
-    { "kelime": "şekil", "zorluk": "orta" },
-    { "kelime": "biçim", "zorluk": "orta" },
-    { "kelime": "ton", "zorluk": "orta" },
-    { "kelime": "yoğunluk", "zorluk": "orta" },
-    { "kelime": "basınç", "zorluk": "orta" },
-    { "kelime": "mesafe", "zorluk": "orta" },
-    { "kelime": "yakınlık", "zorluk": "orta" },
-    { "kelime": "benzerlik", "zorluk": "orta" },
-    { "kelime": "eşitlik", "zorluk": "orta" },
-    { "kelime": "denge", "zorluk": "orta" },
-    { "kelime": "anlam", "zorluk": "orta" },
-    { "kelime": "değer", "zorluk": "orta" },
-    { "kelime": "önem", "zorluk": "orta" },
-    { "kelime": "ilişki", "zorluk": "orta" },
-    { "kelime": "bağlantı", "zorluk": "orta" },
-    { "kelime": "etki", "zorluk": "orta" },
-    { "kelime": "tepki", "zorluk": "orta" },
-    { "kelime": "strateji", "zorluk": "orta" },
-    { "kelime": "yöntem", "zorluk": "orta" },
-    { "kelime": "araç", "zorluk": "orta" },
-    { "kelime": "kaynak", "zorluk": "orta" },
-    { "kelime": "kapasite", "zorluk": "orta" },
-    { "kelime": "nitelik", "zorluk": "orta" },
-    { "kelime": "kalite", "zorluk": "orta" },
-    { "kelime": "performans", "zorluk": "orta" },
-    { "kelime": "verimlilik", "zorluk": "zor" },
-    { "kelime": "etkinlik", "zorluk": "orta" },
-    { "kelime": "başarı", "zorluk": "orta" },
-    { "kelime": "galibiyet", "zorluk": "orta" },
-    { "kelime": "yenilgi", "zorluk": "orta" },
-    { "kelime": "kazanç", "zorluk": "orta" },
-    { "kelime": "kayıp", "zorluk": "orta" },
-    { "kelime": "fayda", "zorluk": "orta" },
-    { "kelime": "masraf", "zorluk": "orta" },
-    { "kelime": "gelir", "zorluk": "orta" },
-    { "kelime": "kâr", "zorluk": "orta" },
-    { "kelime": "talih", "zorluk": "orta" },
-    { "kelime": "şans", "zorluk": "orta" },
-    { "kelime": "kader", "zorluk": "orta" },
-    { "kelime": "kısmet", "zorluk": "orta" },
-    { "kelime": "umutsuzluk", "zorluk": "zor" },
-    { "kelime": "karamsarlık", "zorluk": "orta" },
-    { "kelime": "pozitif", "zorluk": "orta" },
-    { "kelime": "negatif", "zorluk": "orta" },
-    { "kelime": "olumlu", "zorluk": "orta" },
-    { "kelime": "olumsuz", "zorluk": "orta" },
-    { "kelime": "çirkin", "zorluk": "orta" },
-    { "kelime": "hoş", "zorluk": "orta" },
-    { "kelime": "tatlı", "zorluk": "orta" },
-    { "kelime": "ekşi", "zorluk": "orta" },
-    { "kelime": "acı", "zorluk": "orta" },
-    { "kelime": "tuzlu", "zorluk": "orta" },
-    { "kelime": "lezzetli", "zorluk": "orta" },
-    { "kelime": "gıda", "zorluk": "orta" },
-    { "kelime": "sayılar", "zorluk": "orta" },
-    { "kelime": "hesap", "zorluk": "orta" },
-    { "kelime": "sonuç", "zorluk": "orta" },
-    { "kelime": "toplam", "zorluk": "orta" },
-    { "kelime": "fark", "zorluk": "orta" },
-    { "kelime": "oran", "zorluk": "orta" },
-    { "kelime": "değer", "zorluk": "orta" },
-    { "kelime": "ölçü", "zorluk": "orta" },
-    { "kelime": "miktar", "zorluk": "orta" },
-    { "kelime": "boyut", "zorluk": "orta" },
-    { "kelime": "ağırlık", "zorluk": "orta" },
-    { "kelime": "uzunluk", "zorluk": "orta" },
-    { "kelime": "genişlik", "zorluk": "orta" },
-    { "kelime": "yükseklik", "zorluk": "orta" },
-    { "kelime": "derinlik", "zorluk": "orta" },
-    { "kelime": "hacim", "zorluk": "orta" },
-    { "kelime": "alan", "zorluk": "orta" },
-    { "kelime": "çap", "zorluk": "orta" },
-    { "kelime": "yarıçap", "zorluk": "orta" },
-    { "kelime": "açı", "zorluk": "orta" },
-    { "kelime": "kenar", "zorluk": "orta" },
-    { "kelime": "köşe", "zorluk": "orta" },
-    { "kelime": "köşegen", "zorluk": "orta" },
-    { "kelime": "alan", "zorluk": "orta" },
-    { "kelime": "çevre", "zorluk": "orta" },
-    { "kelime": "merkez", "zorluk": "orta" },
-    { "kelime": "kenar", "zorluk": "orta" },
-    { "kelime": "tepe", "zorluk": "orta" },
-    { "kelime": "taban", "zorluk": "orta" },
-    { "kelime": "yüzey", "zorluk": "orta" },
-    { "kelime": "iç", "zorluk": "kolay" },
-    { "kelime": "dış", "zorluk": "orta" },
-    { "kelime": "üst", "zorluk": "orta" },
-    { "kelime": "alt", "zorluk": "orta" },
-    { "kelime": "sağ", "zorluk": "orta" },
-    { "kelime": "sol", "zorluk": "orta" },
-    { "kelime": "ön", "zorluk": "orta" },
-    { "kelime": "arka", "zorluk": "orta" },
-    { "kelime": "yan", "zorluk": "orta" },
-    { "kelime": "orta", "zorluk": "orta" },
-    { "kelime": "kenar", "zorluk": "orta" },
-    { "kelime": "baş", "zorluk": "orta" },
-    { "kelime": "son", "zorluk": "orta" },
-    { "kelime": "ilk", "zorluk": "orta" },
-    { "kelime": "son", "zorluk": "orta" },
-    { "kelime": "ara", "zorluk": "orta" },
-    { "kelime": "başka", "zorluk": "orta" },
-    { "kelime": "ayrı", "zorluk": "orta" },
-    { "kelime": "özel", "zorluk": "orta" },
-    { "kelime": "genel", "zorluk": "orta" },
-    { "kelime": "kişisel", "zorluk": "orta" },
-    { "kelime": "toplumsal", "zorluk": "orta" },
-    { "kelime": "ulusal", "zorluk": "orta" },
-    { "kelime": "yerel", "zorluk": "orta" },
-    { "kelime": "güncel", "zorluk": "orta" },
-    { "kelime": "geçmiş", "zorluk": "orta" },
-    { "kelime": "gelecek", "zorluk": "orta" },
-    { "kelime": "şimdi", "zorluk": "orta" },
-    { "kelime": "bugün", "zorluk": "orta" },
-    { "kelime": "dün", "zorluk": "orta" },
-    { "kelime": "yarın", "zorluk": "orta" },
-    { "kelime": "sabah", "zorluk": "orta" },
-    { "kelime": "akşam", "zorluk": "orta" },
-    { "kelime": "gece", "zorluk": "orta" },
-    { "kelime": "hafta", "zorluk": "orta" },
-    { "kelime": "yıl", "zorluk": "orta" },
-    { "kelime": "mevsim", "zorluk": "orta" },
-    { "kelime": "ilkbahar", "zorluk": "orta" },
-    { "kelime": "yaz", "zorluk": "orta" },
-    { "kelime": "sonbahar", "zorluk": "orta" },
-    { "kelime": "kış", "zorluk": "orta" },
-    { "kelime": "zaman", "zorluk": "orta" },
-    { "kelime": "an", "zorluk": "kolay" },
-    { "kelime": "hız", "zorluk": "orta" },
-    { "kelime": "hareket", "zorluk": "orta" },
-    { "kelime": "döngü", "zorluk": "orta" },
-    { "kelime": "bitiş", "zorluk": "orta" },
-    { "kelime": "hazırlık", "zorluk": "orta" },
-    { "kelime": "giriş", "zorluk": "orta" },
-    { "kelime": "çıkış", "zorluk": "orta" },
-    { "kelime": "kapı", "zorluk": "kolay" },
-    { "kelime": "duvar", "zorluk": "orta" },
-    { "kelime": "tavan", "zorluk": "orta" },
-    { "kelime": "kat", "zorluk": "orta" },
-    { "kelime": "merdiven", "zorluk": "orta" },
-    { "kelime": "balkon", "zorluk": "orta" },
-    { "kelime": "çatı", "zorluk": "orta" },
-    { "kelime": "temel", "zorluk": "orta" },
-    { "kelime": "avlu", "zorluk": "orta" },
-    { "kelime": "çim", "zorluk": "orta" },
-    { "kelime": "yaprak", "zorluk": "orta" },
-    { "kelime": "dal", "zorluk": "orta" },
-    { "kelime": "kök", "zorluk": "orta" },
-    { "kelime": "tohum", "zorluk": "orta" },
-    { "kelime": "meyve", "zorluk": "orta" },
-    { "kelime": "sebze", "zorluk": "orta" },
-    { "kelime": "tarla", "zorluk": "orta" },
-    { "kelime": "hasat", "zorluk": "orta" },
-    { "kelime": "yaşam", "zorluk": "orta" },
-    { "kelime": "doğa", "zorluk": "orta" },
-    { "kelime": "evren", "zorluk": "orta" },
-    { "kelime": "dünya", "zorluk": "orta" },
-    { "kelime": "ay", "zorluk": "kolay" },
-    { "kelime": "yıldız", "zorluk": "orta" },
-    { "kelime": "gezegen", "zorluk": "orta" },
-    { "kelime": "galaksi", "zorluk": "zor" },
-    { "kelime": "uzay", "zorluk": "orta" },
-    { "kelime": "roket", "zorluk": "orta" },
-    { "kelime": "uydu", "zorluk": "orta" },
-    { "kelime": "teleskop", "zorluk": "zor" },
-    { "kelime": "keşif", "zorluk": "orta" },
-    { "kelime": "araştırma", "zorluk": "orta" },
-    { "kelime": "deney", "zorluk": "orta" },
-    { "kelime": "test", "zorluk": "orta" },
-    { "kelime": "analiz", "zorluk": "orta" },
-    { "kelime": "veri", "zorluk": "orta" },
-    { "kelime": "bilgi", "zorluk": "orta" },
-    { "kelime": "teknoloji", "zorluk": "orta" },
-    { "kelime": "bilim", "zorluk": "orta" },
-    { "kelime": "sanat", "zorluk": "orta" },
-    { "kelime": "kültür", "zorluk": "orta" },
-    { "kelime": "tarih", "zorluk": "orta" },
-    { "kelime": "matematik", "zorluk": "orta" },
-    { "kelime": "fizik", "zorluk": "orta" },
-    { "kelime": "kimya", "zorluk": "orta" },
-    { "kelime": "biyoloji", "zorluk": "orta" },
-    { "kelime": "edebiyat", "zorluk": "orta" },
-    { "kelime": "felsefe", "zorluk": "orta" },
-    { "kelime": "ekonomi", "zorluk": "orta" },
-    { "kelime": "sağlık", "zorluk": "orta" },
-    { "kelime": "eğlence", "zorluk": "orta" },
-    { "kelime": "iş", "zorluk": "kolay" },
-    { "kelime": "çalışma", "zorluk": "orta" },
-    { "kelime": "üretim", "zorluk": "orta" },
-    { "kelime": "fiyat", "zorluk": "orta" },
-    { "kelime": "bütçe", "zorluk": "orta" },
-    { "kelime": "yatırım", "zorluk": "orta" },
-    { "kelime": "ticaret", "zorluk": "orta" },
-    { "kelime": "sanayi", "zorluk": "orta" },
-    { "kelime": "tarım", "zorluk": "orta" },
-    { "kelime": "enerji", "zorluk": "orta" },
-    { "kelime": "elektrik", "zorluk": "orta" },
-    { "kelime": "petrol", "zorluk": "orta" },
-    { "kelime": "kömür", "zorluk": "orta" },
-    { "kelime": "çevre", "zorluk": "orta" },
-    { "kelime": "kirlilik", "zorluk": "orta" },
-    { "kelime": "temizlik", "zorluk": "orta" },
-    { "kelime": "hijyen", "zorluk": "orta" },
-    { "kelime": "hastalık", "zorluk": "orta" },
-    { "kelime": "tedavi", "zorluk": "orta" },
-    { "kelime": "ilaç", "zorluk": "orta" },
-    { "kelime": "ameliyat", "zorluk": "orta" },
-    { "kelime": "muayene", "zorluk": "orta" },
-    { "kelime": "kontrol", "zorluk": "orta" },
-    { "kelime": "gözlem", "zorluk": "orta" },
-    { "kelime": "teşhis", "zorluk": "orta" },
-    { "kelime": "koruma", "zorluk": "orta" },
-    { "kelime": "güvenlik", "zorluk": "orta" },
-    { "kelime": "tehlike", "zorluk": "orta" },
-    { "kelime": "kaza", "zorluk": "orta" },
-    { "kelime": "kurtarma", "zorluk": "orta" },
-    { "kelime": "yardım", "zorluk": "orta" },
-    { "kelime": "destek", "zorluk": "orta" },
-    { "kelime": "toplum", "zorluk": "orta" },
-    { "kelime": "vatandaş", "zorluk": "orta" },
-    { "kelime": "millet", "zorluk": "orta" },
-    { "kelime": "bayrak", "zorluk": "orta" },
-    { "kelime": "uluslararası", "zorluk": "zor" },
-    { "kelime": "evrensel", "zorluk": "orta" },
-    { "kelime": "yerel", "zorluk": "orta" },
-    { "kelime": "bölgesel", "zorluk": "orta" },
-    { "kelime": "güncel", "zorluk": "orta" },
-    { "kelime": "bugün", "zorluk": "orta" },
-    { "kelime": "dün", "zorluk": "orta" },
-    { "kelime": "yarın", "zorluk": "orta" },
-    { "kelime": "sabah", "zorluk": "orta" },
-    { "kelime": "akşam", "zorluk": "orta" },
-    { "kelime": "gece", "zorluk": "orta" },
-    { "kelime": "hafta", "zorluk": "orta" },
-    { "kelime": "ay", "zorluk": "kolay" },
-    { "kelime": "yıl", "zorluk": "orta" },
-    { "kelime": "mevsim", "zorluk": "orta" },
-    { "kelime": "zaman", "zorluk": "orta" },
-    { "kelime": "an", "zorluk": "kolay" },
-    { "kelime": "mekan", "zorluk": "orta" },
-    { "kelime": "yer", "zorluk": "orta" },
-    { "kelime": "konum", "zorluk": "orta" },
-    { "kelime": "nokta", "zorluk": "orta" },
-    { "kelime": "çizgi", "zorluk": "orta" },
-    { "kelime": "şekil", "zorluk": "orta" },
-    { "kelime": "renk", "zorluk": "orta" },
-    { "kelime": "ışık", "zorluk": "orta" },
-    { "kelime": "sıcaklık", "zorluk": "orta" },
-    { "kelime": "hız", "zorluk": "orta" },
-    { "kelime": "yön", "zorluk": "orta" },
-    { "kelime": "mesafe", "zorluk": "orta" },
-    { "kelime": "fark", "zorluk": "orta" },
-    { "kelime": "denge", "zorluk": "orta" },
-    { "kelime": "anlam", "zorluk": "orta" },
-    { "kelime": "değer", "zorluk": "orta" },
-    { "kelime": "ilişki", "zorluk": "orta" },
-    { "kelime": "etki", "zorluk": "orta" },
-    { "kelime": "sonuç", "zorluk": "orta" },
-    { "kelime": "neden", "zorluk": "orta" },
-    { "kelime": "amaç", "zorluk": "orta" },
-    { "kelime": "hedef", "zorluk": "orta" },
-    { "kelime": "plan", "zorluk": "orta" },
-    { "kelime": "yöntem", "zorluk": "orta" },
-    { "kelime": "araç", "zorluk": "orta" },
-    { "kelime": "kaynak", "zorluk": "orta" },
-    { "kelime": "kalite", "zorluk": "orta" },
-    { "kelime": "başarı", "zorluk": "orta" },
-    { "kelime": "kazanç", "zorluk": "orta" },
-    { "kelime": "kayıp", "zorluk": "orta" },
-    { "kelime": "fayda", "zorluk": "orta" },
-    { "kelime": "gelir", "zorluk": "orta" },
-    { "kelime": "şans", "zorluk": "orta" },
-    { "kelime": "kader", "zorluk": "orta" },
-    { "kelime": "umut", "zorluk": "orta" },
-    { "kelime": "pozitif", "zorluk": "orta" },
-    { "kelime": "olumlu", "zorluk": "orta" },
-    { "kelime": "tatlı", "zorluk": "orta" },
-    { "kelime": "lezzetli", "zorluk": "orta" },
-    { "kelime": "hesap", "zorluk": "orta" },
-    { "kelime": "toplam", "zorluk": "orta" },
-    { "kelime": "oran", "zorluk": "orta" },
-    { "kelime": "boyut", "zorluk": "orta" },
-    { "kelime": "ağırlık", "zorluk": "orta" },
-    { "kelime": "uzunluk", "zorluk": "orta" },
-    { "kelime": "hacim", "zorluk": "orta" },
-    { "kelime": "alan", "zorluk": "orta" },
-    { "kelime": "açı", "zorluk": "orta" },
-    { "kelime": "kenar", "zorluk": "orta" },
-    { "kelime": "köşe", "zorluk": "orta" },
-    { "kelime": "çevre", "zorluk": "orta" },
-    { "kelime": "merkez", "zorluk": "orta" },
-    { "kelime": "taban", "zorluk": "orta" },
-    { "kelime": "iç", "zorluk": "kolay" },
-    { "kelime": "dış", "zorluk": "orta" },
-    { "kelime": "üst", "zorluk": "orta" },
-    { "kelime": "alt", "zorluk": "orta" },
-    { "kelime": "sağ", "zorluk": "orta" },
-    { "kelime": "sol", "zorluk": "orta" },
-    { "kelime": "ön", "zorluk": "orta" },
-    { "kelime": "arka", "zorluk": "orta" },
-    { "kelime": "yan", "zorluk": "orta" },
-    { "kelime": "baş", "zorluk": "orta" },
-    { "kelime": "son", "zorluk": "orta" },
-    { "kelime": "ilk", "zorluk": "orta" },
-    { "kelime": "ara", "zorluk": "orta" },
-    { "kelime": "başka", "zorluk": "orta" },
-    { "kelime": "özel", "zorluk": "orta" },
-    { "kelime": "genel", "zorluk": "orta" },
-    { "kelime": "kişisel", "zorluk": "orta" },
-    { "kelime": "ulusal", "zorluk": "orta" },
-    { "kelime": "yerel", "zorluk": "orta" },
-    { "kelime": "güncel", "zorluk": "orta" },
-    { "kelime": "geçmiş", "zorluk": "orta" },
-    { "kelime": "gelecek", "zorluk": "orta" },
-    { "kelime": "şimdi", "zorluk": "orta" },
-    { "kelime": "bugün", "zorluk": "orta" },
-    { "kelime": "sabah", "zorluk": "orta" },
-    { "kelime": "akşam", "zorluk": "orta" },
-    { "kelime": "gece", "zorluk": "orta" },
-    { "kelime": "hafta", "zorluk": "orta" },
-    { "kelime": "yıl", "zorluk": "orta" },
-    { "kelime": "mevsim", "zorluk": "orta" },
-    { "kelime": "zaman", "zorluk": "orta" },
-    { "kelime": "mekan", "zorluk": "orta" },
-    { "kelime": "yer", "zorluk": "orta" },
-    { "kelime": "konum", "zorluk": "orta" },
-    { "kelime": "nokta", "zorluk": "orta" },
-    { "kelime": "çizgi", "zorluk": "orta" },
-    { "kelime": "şekil", "zorluk": "orta" },
-    { "kelime": "renk", "zorluk": "orta" },
-    { "kelime": "ışık", "zorluk": "orta" },
-    { "kelime": "hız", "zorluk": "orta" },
-    { "kelime": "yön", "zorluk": "orta" },
-    { "kelime": "mesafe", "zorluk": "orta" },
-    { "kelime": "fark", "zorluk": "orta" },
-    { "kelime": "denge", "zorluk": "orta" },
-    { "kelime": "anlam", "zorluk": "orta" },
-    { "kelime": "değer", "zorluk": "orta" },
-    { "kelime": "ilişki", "zorluk": "orta" },
-    { "kelime": "etki", "zorluk": "orta" },
-    { "kelime": "sonuç", "zorluk": "orta" },
-    { "kelime": "neden", "zorluk": "orta" },
-    { "kelime": "amaç", "zorluk": "orta" },
-    { "kelime": "hedef", "zorluk": "orta" },
-    { "kelime": "plan", "zorluk": "orta" },
-    { "kelime": "yöntem", "zorluk": "orta" },
-    { "kelime": "araç", "zorluk": "orta" },
-    { "kelime": "kaynak", "zorluk": "orta" },
-    { "kelime": "kalite", "zorluk": "orta" },
-    { "kelime": "başarı", "zorluk": "orta" },
-    { "kelime": "kazanç", "zorluk": "orta" },
-    { "kelime": "kayıp", "zorluk": "orta" },
-    { "kelime": "fayda", "zorluk": "orta" },
-    { "kelime": "gelir", "zorluk": "orta" },
-    { "kelime": "şans", "zorluk": "orta" },
-    { "kelime": "kader", "zorluk": "orta" },
-    { "kelime": "umut", "zorluk": "orta" },
-    { "kelime": "pozitif", "zorluk": "orta" },
-    { "kelime": "olumlu", "zorluk": "orta" },
-    { "kelime": "tatlı", "zorluk": "orta" },
-    { "kelime": "lezzetli", "zorluk": "orta" },
-    { "kelime": "hesap", "zorluk": "orta" },
-    { "kelime": "toplam", "zorluk": "orta" },
-    { "kelime": "oran", "zorluk": "orta" },
-    { "kelime": "boyut", "zorluk": "orta" },
-    { "kelime": "ağırlık", "zorluk": "orta" },
-    { "kelime": "uzunluk", "zorluk": "orta" },
-    { "kelime": "hacim", "zorluk": "orta" },
-    { "kelime": "alan", "zorluk": "orta" },
-    { "kelime": "açı", "zorluk": "orta" },
-    { "kelime": "kenar", "zorluk": "orta" },
-    { "kelime": "köşe", "zorluk": "orta" },
-    { "kelime": "çevre", "zorluk": "orta" },
-    { "kelime": "merkez", "zorluk": "orta" },
-    { "kelime": "taban", "zorluk": "orta" },
-    { "kelime": "iç", "zorluk": "kolay" },
-    { "kelime": "dış", "zorluk": "orta" },
-    { "kelime": "üst", "zorluk": "orta" },
-    { "kelime": "alt", "zorluk": "orta" },
-    { "kelime": "sağ", "zorluk": "orta" },
-    { "kelime": "sol", "zorluk": "orta" },
-    { "kelime": "ön", "zorluk": "orta" },
-    { "kelime": "arka", "zorluk": "orta" },
-    { "kelime": "yan", "zorluk": "orta" },
-    { "kelime": "baş", "zorluk": "orta" },
-    { "kelime": "son", "zorluk": "orta" },
-    { "kelime": "ilk", "zorluk": "orta" },
-    { "kelime": "ara", "zorluk": "orta" },
-    { "kelime": "başka", "zorluk": "orta" },
-    { "kelime": "özel", "zorluk": "orta" },
-    { "kelime": "genel", "zorluk": "orta" },
-    { "kelime": "kişisel", "zorluk": "orta" },
-    { "kelime": "ulusal", "zorluk": "orta" },
-    { "kelime": "yerel", "zorluk": "orta" },
-    { "kelime": "güncel", "zorluk": "orta" },
-    { "kelime": "geçmiş", "zorluk": "orta" },
-    { "kelime": "gelecek", "zorluk": "orta" },
-    { "kelime": "şimdi", "zorluk": "orta" },
-    { "kelime": "bugün", "zorluk": "orta" },
-    { "kelime": "sabah", "zorluk": "orta" },
-    { "kelime": "akşam", "zorluk": "orta" },
-    { "kelime": "gece", "zorluk": "orta" },
-    { "kelime": "hafta", "zorluk": "orta" },
-    { "kelime": "yıl", "zorluk": "orta" },
-    { "kelime": "mevsim", "zorluk": "orta" },
-    { "kelime": "zaman", "zorluk": "orta" },
-    { "kelime": "mekan", "zorluk": "orta" },
-    { "kelime": "yer", "zorluk": "orta" },
-    { "kelime": "konum", "zorluk": "orta" },
-    { "kelime": "nokta", "zorluk": "orta" },
-    { "kelime": "çizgi", "zorluk": "orta" },
-    { "kelime": "şekil", "zorluk": "orta" },
-    { "kelime": "renk", "zorluk": "orta" },
-    { "kelime": "ışık", "zorluk": "orta" },
-    { "kelime": "hız", "zorluk": "orta" },
-    { "kelime": "yön", "zorluk": "orta" },
-    { "kelime": "mesafe", "zorluk": "orta" },
-    { "kelime": "fark", "zorluk": "orta" },
-    { "kelime": "denge", "zorluk": "orta" },
-    { "kelime": "anlam", "zorluk": "orta" },
-    { "kelime": "değer", "zorluk": "orta" },
-    { "kelime": "ilişki", "zorluk": "orta" },
-    { "kelime": "etki", "zorluk": "orta" },
-    { "kelime": "sonuç", "zorluk": "orta" },
-    { "kelime": "neden", "zorluk": "orta" },
-    { "kelime": "amaç", "zorluk": "orta" },
-    { "kelime": "hedef", "zorluk": "orta" },
-    { "kelime": "plan", "zorluk": "orta" },
-    { "kelime": "yöntem", "zorluk": "orta" },
-    { "kelime": "araç", "zorluk": "orta" },
-    { "kelime": "kaynak", "zorluk": "orta" },
-    { "kelime": "kalite", "zorluk": "orta" },
-    { "kelime": "başarı", "zorluk": "orta" },
-    { "kelime": "kazanç", "zorluk": "orta" },
-    { "kelime": "kayıp", "zorluk": "orta" },
-    { "kelime": "fayda", "zorluk": "orta" },
-    { "kelime": "gelir", "zorluk": "orta" },
-    { "kelime": "şans", "zorluk": "orta" },
-    { "kelime": "kader", "zorluk": "orta" },
-    { "kelime": "umut", "zorluk": "orta" },
-    { "kelime": "pozitif", "zorluk": "orta" },
-    { "kelime": "olumlu", "zorluk": "orta" },
-    { "kelime": "tatlı", "zorluk": "orta" },
-    { "kelime": "lezzetli", "zorluk": "orta" }
+    {
+      "kelime": "kalem",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "kitap",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "masa",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "sandalye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bilgisayar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yazılım",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "telefon",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "araba",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "ev",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "okul",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "güneş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "deniz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dağ",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "nehir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ağaç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çiçek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kuş",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "balık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "köpek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kedi",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "elma",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "portakal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üzüm",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "domates",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ekmek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "süt",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "su",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "çay",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "kahve",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güzel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "büyük",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "küçük",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hızlı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yavaş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sıcak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "soğuk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "uzun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kısa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "geniş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dar",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "yeni",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "eski",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "iyi",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "kötü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güçlü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mutlu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üzgün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kapı",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "pencere",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "oda",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "mutfak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bahçe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sokak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "cadde",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "park",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "hastane",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tren",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "otobüs",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "uçak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gemi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yol",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "köprü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "orman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "göl",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şehir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "köy",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ülke",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "devlet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hükümet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üniversite",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kütüphane",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "müze",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tiyatro",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sinema",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "konser",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "futbol",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yüzme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "koşu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tatil",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "seyahat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "harita",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hava",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "yağmur",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kar",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "rüzgar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fırtına",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gökkuşağı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bulut",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "parlak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karanlık",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "ışık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gölge",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "renk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "beyaz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "siyah",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kırmızı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mavi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yeşil",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sarı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "turuncu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mor",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pembe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kahverengi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "gri",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "altın",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gümüş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "demir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çelik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "cam",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "ahşap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "taş",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "toprak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kum",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "çöl",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vadi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tepe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sahil",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dalga",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "derin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "deprem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yanardağ",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kalın",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ince",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ağır",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hafif",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sert",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yumuşak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "temiz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kirli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "genç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yaşlı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çocuk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bebek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anne",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "baba",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "kardeş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "aile",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "arkadaş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "öğretmen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "öğrenci",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "doktor",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hemşire",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mühendis",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "avukat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "polis",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "asker",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pilot",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "garson",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "aşçı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "terzi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kasap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "esnaf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sanatçı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "yazar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şair",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gazeteci",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "mimar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bestekar",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "eczacı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çiftçi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "marangoz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "boyacı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "memur",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çalışan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "emekli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yüksek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "normal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "farklı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "benzer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "aynı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "adalet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "özgürlük",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "barış",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "savaş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dostluk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sevgi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mutluluk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hüzün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "korku",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güven",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "umut",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "başarı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "zafer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mücadele",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çaba",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "emek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "rahat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "huzur",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sakinlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gürültü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sessizlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "müzik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şarkı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dans",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "söz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "konuşma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dil",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yazı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "okuma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "düşünce",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fikir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "plan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "proje",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hedef",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "amaç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "istek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "talep",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ihtiyaç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "seçenek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tercih",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sonuç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "neden",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sebep",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "olay",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "durum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "süreç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "aşama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gelişme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "değişim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "başlangıç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "devam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "düzen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hata",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yanlış",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "doğru",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bütün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "parça",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bölüm",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tüm",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "her",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "birçok",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çok",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "az",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "daha",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sadece",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "basit",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kolay",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "zor",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kuvvet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "enerji",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "zayıf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hız",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "erken",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "geç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sonra",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "önce",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sıra",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "henüz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "artık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "veya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eğer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çünkü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "böylece",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "için",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üzerinde",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "altında",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yanında",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "arasında",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "göre",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karşı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "rağmen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ile",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gibi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kadar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "olarak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üzere",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "oldukça",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "önemli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "değerli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gerekli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "faydalı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "etkili",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "başarılı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "verimli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pratik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gerçek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "olası",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mümkün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kesin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "açık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kapalı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "boş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dolu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alçak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sığ",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yüzey",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "katman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "seviye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "basamak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dönem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çağ",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "saat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dakika",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "saniye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mekan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nokta",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çizgi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şekil",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "biçim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ton",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yoğunluk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "basınç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mesafe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yakınlık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "benzerlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eşitlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "denge",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anlam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "değer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "önem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ilişki",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bağlantı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "etki",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tepki",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "strateji",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yöntem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "araç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaynak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kapasite",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nitelik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kalite",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "performans",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "verimlilik",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "etkinlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "galibiyet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yenilgi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kazanç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kayıp",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fayda",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "masraf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gelir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kâr",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "talih",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şans",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kader",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kısmet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "umutsuzluk",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "karamsarlık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pozitif",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "negatif",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "olumlu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "olumsuz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çirkin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hoş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tatlı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ekşi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "acı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tuzlu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lezzetli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gıda",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sayılar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hesap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "toplam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fark",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "oran",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ölçü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "miktar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "boyut",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ağırlık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "uzunluk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "genişlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yükseklik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "derinlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hacim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yarıçap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "açı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kenar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "köşe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "köşegen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çevre",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "merkez",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "taban",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "iç",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "dış",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üst",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sağ",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sol",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ön",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "arka",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "orta",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "baş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "son",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ilk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ara",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "başka",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ayrı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "özel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "genel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kişisel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "toplumsal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ulusal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yerel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güncel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "geçmiş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gelecek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şimdi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bugün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yarın",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sabah",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "akşam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gece",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hafta",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yıl",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mevsim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ilkbahar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yaz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sonbahar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kış",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "zaman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "an",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "hareket",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "döngü",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bitiş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hazırlık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "giriş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çıkış",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "duvar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tavan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "merdiven",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "balkon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çatı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "temel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "avlu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yaprak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kök",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tohum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "meyve",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sebze",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tarla",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hasat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yaşam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "doğa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "evren",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dünya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ay",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "yıldız",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gezegen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "galaksi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "uzay",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "roket",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "uydu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "teleskop",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "keşif",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "araştırma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "deney",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "test",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "analiz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "veri",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bilgi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "teknoloji",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bilim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sanat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kültür",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tarih",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "matematik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fizik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kimya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "biyoloji",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "edebiyat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "felsefe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ekonomi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sağlık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eğlence",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "iş",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "çalışma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "üretim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fiyat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bütçe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yatırım",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ticaret",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sanayi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tarım",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "elektrik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "petrol",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kömür",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kirlilik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "temizlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hijyen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hastalık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tedavi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ilaç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ameliyat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "muayene",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kontrol",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gözlem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "teşhis",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "koruma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güvenlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tehlike",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaza",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kurtarma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yardım",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "destek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "toplum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vatandaş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "millet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bayrak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "uluslararası",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "evrensel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bölgesel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "konum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sıcaklık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yön",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pilav",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "çorba",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "salata",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "biber",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "soğan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tavuk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "peynir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yoğurt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tereyağı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "zeytinyağı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "reçel",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pasta",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "börek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "simit",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lahmacun",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "pide",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kebap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "döner",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mantı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sigara böreği",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bazlama",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "yufka",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çiğ köfte",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "ayran",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "limonata",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şalgam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "meyve suyu",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "su biberi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "tarçın",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karabiber",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kimyon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kekik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nane",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "maydanoz",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "dereotu",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "taze soğan",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "at",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "inek",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "koyun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "keçi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tavşan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fare",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kartal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güvercin",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "baykuş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yürek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaplumbağa",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "yunus",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "balina",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "aslan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaplan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ayı",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "kurt",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "tilki",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eskimo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çita",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "zebra",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fil",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "zürafa",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "maymun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "penguen",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "papağan",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "karga",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "leylek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "flamingo",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "ördek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaz",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "karınca",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "arı",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "kelebek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "örümcek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yılan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kertenkele",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kurbağa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "solucan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "salyangoz",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "ressam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "berber",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kuaför",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "muhasebeci",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "俳優",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "spiker",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "savcı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hakim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mürteci",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "dişçi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "veteriner",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kaptan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şoför",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nakliyeci",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "taksi sürücü",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kaportacı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "elektrikçi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "tesisatçı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "heykeltıraş",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "müzisyen",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "oyuncu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dansçı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şarkıcı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gitarist",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "piyanist",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "editör",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "televizyon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "buzdolabı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "çamaşır makinesi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bulaşık makinesi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "klima",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ısıtıcı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "fırın",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mikrodalga",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "tüp",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "ampul",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anahtar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "priz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kablo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fiş",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "pil",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "şarj",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ekran",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "klavye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yazıcı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tarayıcı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "hoparlör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kulaklık",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "mikrofon",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kamera",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tablet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "laptop",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sunucu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "modem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "router",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "disk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bellek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "işlemci",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "ekran kartı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "koltuk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kanepe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yatak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yastık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "battaniye",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "çarşaf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "perde",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "halı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "galoş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "terlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ayakkabı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "giysi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "elbise",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pantolon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gömlek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ceket",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mont",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "şapka",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "atkı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eldiven",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çorap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kemer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "takı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yüzük",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kolye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bileklik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "küpe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gözlük",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şemsiye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çanta",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bulvar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kavşak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "trafik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "döner kavşak",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "otopark",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "benzinlik",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "taksi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dolmuş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vapur",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "iskele",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "liman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "havalimanı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "gar",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "peron",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bilet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "turnike",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "asansör",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yürüyen merdiven",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "rampa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şelale",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mağara",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "buzul",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "göktaşı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "çam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "meşe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çınar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kavak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "söğüt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ardıç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kestane",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ceviz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ıhlamur",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kayın",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ladin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kosif",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "karaçam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sarıçam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gri kurt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alageyik",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "karaca",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ayi",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "vaşak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "porsuk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sansar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pine",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kirpi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yarasa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "buğday",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "arpa",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "pirinç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mısır",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yulaf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fasulye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mercimek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nohut",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şeker",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tuz",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "un",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "yağ",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "sirke",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "limon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "greyfurt",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "mandalina",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "muz",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "çilek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karpuz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kavun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vişne",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kiraz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "erik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şeftali",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kayısı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "incir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nar",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "hurma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kuru erik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kuru üzüm",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "badem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fındık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "antep fıstığı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "yörünge",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kütle",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ivme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sürtünme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "direnç",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "devre",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "voltaj",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "akım",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kapasitör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bobin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "transformatör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "diod",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "transistör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "entegre",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "mikroişlemci",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "dosya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "klasör",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "program",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "uygulama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "motor",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şanzıman",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "fren",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "debriyaj",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "direksiyon",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "tekerlek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "basketbol",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "voleybol",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "tenis",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "masa tenisi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "badminton",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "golf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kayak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "buz pateni",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kızak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sörf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yelken",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kano",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kürek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bisiklet",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "motorsiklet",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "boks",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "güreş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "judo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karate",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tekvando",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kung fu",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "halter",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "atletizm",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "atlama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tişört",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kazak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hırka",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "svaeter",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaban",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "trençkot",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "yağmurluk",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "yelek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şort",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "etek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tayt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eşofman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pijama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gecelik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "babet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "topuklu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sneaker",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bot",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "çizme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "beret",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bere",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "takke",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şal",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "eşarp",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kravat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "papyon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "cüzdan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anahtarlık",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "broş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "doğrama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kavurma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "haşlama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kaynatma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pişirme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fırınlama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ızgara",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "buharda",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "muhallebi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "keşkül",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "baklava",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "künefe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kadayıf",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "trileçe",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "profiterol",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "supangle",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "panna cotta",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "cheesecake",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "waffle",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "crepe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pankek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "krep",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "omlet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "menemen",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sucuklu yumurta",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "haşlanmış yumurta",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "istanbul",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ankara",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "izmir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bursa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "antalya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "adana",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "konya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gaziantep",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kayseri",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "trabzon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "samsun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mersin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "erzurum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "diyarbakır",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "malatya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "erzincan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "van",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "hakkari",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şırnak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mardin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "batman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "siirt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kilis",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "osmaniye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kahramanmaraş",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "nevşehir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kırşehir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "aksaray",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "niğde",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kırıkkale",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çankırı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kastamonu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sinop",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ordu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "giresun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "rize",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "artvin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gümüşhane",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bayburt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bingöl",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "elazığ",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tunceli",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sivas",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yozgat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çorum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "amasya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tokat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "muş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bitlis",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ığdır",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ardahan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kars",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "Ağrı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "adıyaman",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "hatay",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "londra",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "paris",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "roma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "berlin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "madrid",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "amsterdam",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "viyana",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "prag",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "budapeşte",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "varşova",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "moskova",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "piykin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "seul",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tokyo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pekin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bangkok",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "singapur",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "dubai",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kahire",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kap revenge",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "new york",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "los angeles",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "san francisco",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "chicago",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "miami",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "toronto",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sidney",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "melbourne",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "buenos aires",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "meksiko",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "rio de janeiro",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "krem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bej",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bordo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lacivert",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "haki",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fuşya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mint",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lila",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vizon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şampanya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bronz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bakır",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "levha",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "krom",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gitar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "piyano",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "keman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "viyola",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "cello",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kontrbas",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "flüt",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "klarnet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "saksafon",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "trompet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "trombon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kornu",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "davul",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "darbuka",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tambur",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "oud",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bağlama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "saz",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "ney",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "zurna",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "balaban",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "duduk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "akordeon",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "org",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "harmonika",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "marimba",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ksilofon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vibrafon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bateri",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "zil",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çember",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tympani",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "vazo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tablo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ayna",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mum",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "abajur",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "avize",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lamba",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sehpa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dolap",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çekmece",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "raflık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "askılık",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ayakkabılık",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "komodin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şifonyer",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "gümüşlük",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "konsol",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "buffet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bar",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "tezgah",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lavabo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "klozet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "duşakabin",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "küvet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "banyo dolabı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "roman",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hikaye",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şiir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "deneme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mektup",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "günlük",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "otobiyografi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "biyografi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "eleştiri",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "inceleme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "makale",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "münazarat",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "monografi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "ansiklopedi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "sözlük",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lugat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "masal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eşlik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "destand",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "folklor",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mitoloji",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "efsane",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "rivayet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anekdot",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fıkra",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karikatür",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gravür",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "litografi",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "fresk",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mozaik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "saray",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kale",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "camii",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kilise",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sinagog",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mabet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tapınak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "piramit",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sütun",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kubbe",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "minare",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "şadırvan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "çardak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kamelya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sundurma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "veranda",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kalp",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "akciğer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "beyin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karaciğer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "böbrek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dalak",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pankreas",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tiroid",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "omurga",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "eklem",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kas",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "tendon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bağ",
+      "zorluk": "kolay"
+    },
+    {
+      "kelime": "damar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sinir",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "omurilik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "retina",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kornea",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "adrenalin",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "endorfin",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "serotonin",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "dopamin",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "antikor",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alyuvar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "akyuvar",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "trombosit",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "plazma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "antibiyotik",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "vitamin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "mineral",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "protein",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "karbonhidrat",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "lif",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "metabolizma",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "hormon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "enzim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "probiyotik",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kolon",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kiriş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "perde duvar",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kaplama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "yalıtım",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "döşeme",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "parke",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "seramik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fayans",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alçı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "boya",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "badana",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tesisat",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kombi",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "radyatör",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "petek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kalorifer",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ısı pompası",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ısı yalıtımı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "çatı kaplaması",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "diferansiyel",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "süspansiyon",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "amortisör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "marş",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "alternatör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "distribütör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "bujiler",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "enjektör",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "turbo",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "egzoz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "silecek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "far",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sinyal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "dikiz aynası",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kaput",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bagaj",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "lastik",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "jant",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vites",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "fren pedalı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "gaz pedalı",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "emniyet kemeri",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "airbag",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kask",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "ibadethane",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "cami",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "manastır",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "papaz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "rahip",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "haham",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "imam",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "müezzin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "vaiz",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "piskopos",
+      "zorluk": "zor"
+    },
+    {
+      "kelime": "kardinal",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "papa",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "hacı",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "pilgrim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "örf",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "adet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "gelenek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "görenek",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "düğün",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "nişan",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "sünnet",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kına",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "bayram",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "kutlama",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "tören",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "merasim",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "cenaze",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "defin",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anma",
+      "zorluk": "orta"
+    },
+    {
+      "kelime": "anıt",
+      "zorluk": "orta"
+    }
   ]
 }

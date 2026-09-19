@@ -316,6 +316,26 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
     });
     ui.add_space(bottom_pad);
 
+    // Her frame'de kelime doldur
+    if state.started {
+        if let Some(ref mut engine) = state.engine {
+            if engine.needs_more_words() {
+                if let Some(ref mut ws) = state.word_source {
+                    let new_words: Vec<String> = (0..100).map(|_| ws.next_word()).collect();
+                    engine.words.extend(new_words);
+                    for w in engine.words[engine.typed_words.len()..].iter().cloned() {
+                        let char_count = w.chars().count();
+                        engine.typed_words.push(crate::typing::engine::TypedWord {
+                            word: w,
+                            typed_chars: vec![None; char_count],
+                            completed: false,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     // Harf girisi varsa
     if !input_chars.is_empty() || space_pressed {
         if let Some(s) = sound {
@@ -419,8 +439,10 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
 
     let inner_margin_w = 20.0_f32;
     let content_w = container_w - inner_margin_w * 2.0;
-    let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 16.0;
-    let total_height = kb_height;
+    let line_height = 30.0_f32;
+    let padding_top_bottom = 24.0_f32;
+    let max_lines = 6usize;
+    let total_height = line_height * max_lines as f32 + padding_top_bottom;
 
     let (alloc_rect, _) = ui.allocate_exact_size(
         egui::vec2(container_w, total_height),
@@ -450,15 +472,16 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
         ui.set_max_width(content_w);
 
         let available_width = content_w;
-        let space_width = 8.0;
+        let space_width = measure_word_width(ui, " ") * 1.5;
         let word_index = engine.word_index;
-        let max_lines = 5;
+        let line_height = 30.0_f32;
+        let max_lines = 6usize;
 
         let mut lines: Vec<Vec<usize>> = Vec::new();
         let mut current_line: Vec<usize> = Vec::new();
         let mut current_width = 0.0_f32;
 
-        for i in word_index..engine.typed_words.len().min(word_index + 40) {
+        for i in word_index..engine.typed_words.len().min(word_index + 80) {
             let tw = &engine.typed_words[i];
             let word_pixel_width = measure_word_width(ui, &tw.word);
 
@@ -491,8 +514,6 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
 
         let painter = ui.painter().clone();
         let mut y_offset = 0.0_f32;
-        let line_height = 30.0_f32;
-        let space_width = measure_word_width(ui, " ");
 
         for line in lines.iter() {
             let mut x_offset = 0.0_f32;

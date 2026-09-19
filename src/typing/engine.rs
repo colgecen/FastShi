@@ -106,11 +106,6 @@ impl TypingEngine {
                 if self.cursor_in_word >= self.current_word().chars().count() {
                     self.typed_words[self.word_index].completed = true;
                     self.words_completed += 1;
-                    if let Some(total) = self.total_words {
-                        if self.words_completed >= total {
-                            self.bitti = true;
-                        }
-                    }
                 }
             }
             Some(exp) => {
@@ -134,24 +129,14 @@ impl TypingEngine {
         self.word_index += 1;
         self.cursor_in_word = 0;
         self.has_error = false;
-
-        if self.word_index >= self.words.len() {
-            self.bitti = true;
-        }
     }
 
     pub fn needs_more_words(&self) -> bool {
-        self.word_index + 3 >= self.words.len()
+        self.word_index + 50 >= self.words.len()
     }
 
     pub fn is_finished(&self) -> bool {
-        if self.bitti {
-            return true;
-        }
-        if self.sure_saniye > 0 {
-            return self.baslama.elapsed().as_secs() >= self.sure_saniye;
-        }
-        false
+        self.bitti
     }
 
     pub fn elapsed_secs(&self) -> f64 {
