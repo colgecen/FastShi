@@ -174,7 +174,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
     ui.horizontal(|ui| {
         ui.add_space(left_pad);
         ui.allocate_ui(egui::vec2(target_w, 0.0), |ui| {
-            show_typing_area(ui, state);
+            show_typing_area(ui, state, target_w);
         });
     });
 
@@ -331,7 +331,7 @@ fn reload_engine(state: &mut TestState, json_data: &str) {
     init_engine(state, json_data);
 }
 
-fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState) {
+fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) {
     let engine = state.engine.as_ref().unwrap();
 
     let frame = egui::Frame::NONE
@@ -341,7 +341,8 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState) {
         .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
     frame.show(ui, |ui| {
-        let available_width = ui.available_width();
+        let available_width = container_w - 40.0; // inner_margin 20*2
+        ui.set_min_width(available_width);
         let space_width = 8.0;
         let word_index = engine.word_index;
         let max_lines = 3;
