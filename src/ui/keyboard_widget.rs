@@ -331,8 +331,8 @@ pub fn finger_map() -> std::collections::HashMap<char, Finger> {
     m.insert('b', Finger::LeftIndex);
     m.insert('n', Finger::RightIndex);
     m.insert('m', Finger::RightIndex);
-    m.insert('ö', Finger::RightRing);
-    m.insert('ç', Finger::RightPinky);
+    m.insert('ö', Finger::RightMiddle);
+    m.insert('ç', Finger::RightRing);
     m
 }
 
