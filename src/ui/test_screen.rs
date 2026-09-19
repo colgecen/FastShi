@@ -166,10 +166,11 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
 
     ui.add_space(4.0);
 
-    // === YAZI ALANI (her zaman gorunur, kelimeler her zaman visible) ===
+    // === YAZI ALANI + KLAVYE — hep aynı hesapla merkezle ===
     let target_w = ui.available_width() * 0.6;
     let left_pad = (ui.available_width() - target_w) / 2.0;
 
+    // --- Yazı alanı ---
     ui.horizontal(|ui| {
         ui.add_space(left_pad);
         ui.allocate_ui(egui::vec2(target_w, 0.0), |ui| {
@@ -186,11 +187,10 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         });
     }
 
-    // === KLAVYE (en alta sabitle) ===
-    // Klavye yüksekliği: 5 satır * 52px + 4 satır aralığı * 4px + 2 * 8px padding = 292px
+    // --- Klavye en alta sabitle ---
     let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 8.0 * 2.0;
     let remaining = ui.available_height();
-    let bottom_space = (remaining - kb_height - 16.0).max(0.0);
+    let bottom_space = (remaining - kb_height - 24.0).max(0.0);
     ui.add_space(bottom_space);
 
     let (next_char, dim_hand) = if state.started {
