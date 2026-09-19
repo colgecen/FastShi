@@ -325,9 +325,9 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         show_typing_area(ui, state, kw);
     });
 
-    // Parmak adı — kelime kutucuğu ile klavye arasında, üstten/alttan eşit ortalanmış, aşırı büyük
+    // Parmak adı — kelime kutucuğu ile klavye arasında, üstten/alttan eşit ortalanmış, aşırı büyük (iki katı)
     let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 16.0;
-    let finger_height = 48.0;
+    let finger_height = 72.0;
     let remaining = ui.available_height();
     let bottom_pad = side_pad / 2.0;
     // kelime kutusu ile klavye arasındaki boşluğu parmak etiketi ortalayacak şekilde böl
@@ -354,7 +354,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
                     ui.label(
                         egui::RichText::new(finger_text)
                             .family(egui::FontFamily::Name("rajdhani_bold".into()))
-                            .size(32.0)
+                            .size(64.0)
                             .color(theme::WHITE),
                     );
                 });
