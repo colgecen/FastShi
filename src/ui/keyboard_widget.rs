@@ -125,6 +125,10 @@ fn row5() -> Vec<Key> {
 }
 
 pub fn draw_keyboard(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Hand>) {
+    draw_keyboard_sized(ui, active_key, dim_hand, None);
+}
+
+pub fn draw_keyboard_sized(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Hand>, width: Option<f32>) {
     let row_height = 52.0;
     let row_gap = 4.0;
     let key_gap = 3.0;
@@ -133,7 +137,7 @@ pub fn draw_keyboard(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Han
     let rows: [Vec<Key>; 5] = [row1(), row2(), row3(), row4(), row5()];
 
     let total_height = row_height * 5.0 + row_gap * 4.0 + padding * 2.0;
-    let total_width = ui.available_width();
+    let total_width = width.unwrap_or_else(|| ui.available_width());
 
     let (alloc_rect, _) = ui.allocate_exact_size(
         Vec2::new(total_width, total_height),

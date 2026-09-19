@@ -166,18 +166,15 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
 
     ui.add_space(4.0);
 
-    // === YAZI ALANI ===
-    ui.vertical_centered(|ui| {
-        let target_w = ui.available_width() * 0.6;
-        show_typing_area(ui, state, target_w);
-    });
+    // === YAZI ALANI + KLAVYE ===
+    let w = ui.available_width();
+    let kw = w * 0.6;
 
-    // Baslamadıysa altına ipucu yazısı
+    show_typing_area(ui, state, kw);
+
     if !state.started && !state.just_finished {
         ui.add_space(4.0);
-        ui.vertical_centered(|ui| {
-            ui.label(theme::small_text("yazmaya baslamak icin herhangi bir harfe basin"));
-        });
+        ui.label(theme::small_text("yazmaya baslamak icin herhangi bir harfe basin"));
     }
 
     // --- Klavye ---
@@ -194,12 +191,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         (None, None)
     };
 
-    ui.vertical_centered(|ui| {
-        let target_w = ui.available_width() * 0.6;
-        ui.allocate_ui(egui::vec2(target_w, 0.0), |ui| {
-            keyboard_widget::draw_keyboard(ui, next_char, dim_hand);
-        });
-    });
+    keyboard_widget::draw_keyboard_sized(ui, next_char, dim_hand, Some(kw));
 
     ui.add_space(8.0);
 
@@ -322,8 +314,6 @@ fn reload_engine(state: &mut TestState, json_data: &str) {
 fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) {
     let engine = state.engine.as_ref().unwrap();
 
-    let inner_w = container_w - 40.0; // inner_margin 20*2
-
     let frame = egui::Frame::NONE
         .fill(theme::DARK_GRAY)
         .corner_radius(egui::CornerRadius::same(6))
@@ -331,9 +321,8 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
         .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
     frame.show(ui, |ui| {
-        ui.set_min_width(inner_w);
-        ui.set_max_width(inner_w);
-        let available_width = inner_w;
+        let available_width = container_w - 40.0;
+        ui.set_width(available_width);
         let space_width = 8.0;
         let word_index = engine.word_index;
         let max_lines = 3;
