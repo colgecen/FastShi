@@ -250,7 +250,17 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
     };
     let next_char = if state.started {
         let engine = state.engine.as_ref().unwrap();
-        engine.current_word().chars().nth(engine.cursor_in_word)
+        let word = engine.current_word();
+        let len = word.chars().count();
+        if engine.cursor_in_word < len {
+            word.chars().nth(engine.cursor_in_word)
+        } else {
+            // kelime bitti, sıradaki tuş boşluk -> başparmak
+            Some(' ')
+        }
+    } else if let Some(engine) = state.engine.as_ref() {
+        // henüz başlamadıysa ilk harfin parmağını göster
+        engine.current_word().chars().next()
     } else {
         None
     };
@@ -315,7 +325,16 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         show_typing_area(ui, state, kw);
     });
 
-    // Parmak adı — kelime kutucuğu ile klavye arasında, büyük harflerle, harf gizle/göster mantığı gibi
+    // Parmak adı — kelime kutucuğu ile klavye arasında, üstten/alttan eşit ortalanmış, aşırı büyük
+    let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 16.0;
+    let finger_height = 48.0;
+    let remaining = ui.available_height();
+    let bottom_pad = side_pad / 2.0;
+    // kelime kutusu ile klavye arasındaki boşluğu parmak etiketi ortalayacak şekilde böl
+    let gap = (remaining - kb_height - bottom_pad - finger_height).max(0.0);
+    let top_gap = gap / 2.0;
+    let bottom_gap = gap - top_gap;
+    ui.add_space(top_gap);
     {
         let finger_text = if state.show_finger {
             if let Some(ch) = next_char {
@@ -327,31 +346,22 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         } else {
             "".to_string()
         };
-        // Her zaman 20px yükseklik ayır ki klavye zıplamasın
-        ui.add_space(8.0);
         let avail = ui.available_width();
-        let (rect, _) = ui.allocate_exact_size(egui::vec2(avail, 20.0), egui::Sense::hover());
+        let (rect, _) = ui.allocate_exact_size(egui::vec2(avail, finger_height), egui::Sense::hover());
         if !finger_text.is_empty() {
             ui.allocate_new_ui(egui::UiBuilder::new().max_rect(rect), |ui| {
                 ui.centered_and_justified(|ui| {
                     ui.label(
                         egui::RichText::new(finger_text)
                             .family(egui::FontFamily::Name("rajdhani_bold".into()))
-                            .size(14.0)
+                            .size(32.0)
                             .color(theme::WHITE),
                     );
                 });
             });
         }
-        ui.add_space(4.0);
     }
-
-    // Klavye: en alta sabit, tam ortada
-    let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 16.0;
-    let remaining = ui.available_height();
-    let bottom_pad = side_pad / 2.0;
-    let bottom_space = (remaining - kb_height - bottom_pad).max(0.0);
-    ui.add_space(bottom_space);
+    ui.add_space(bottom_gap);
 
     let (kb_alloc, _) = ui.allocate_exact_size(egui::vec2(total_w, kb_height), egui::Sense::hover());
     let centered_kb_rect = egui::Rect::from_min_size(
