@@ -1,6 +1,7 @@
 mod app;
 mod config;
 mod hand_mode;
+mod sound;
 mod storage;
 mod typing;
 mod ui;
@@ -28,7 +29,7 @@ fn main() -> eframe::Result {
 }
 
 fn load_icon() -> Option<egui::IconData> {
-    let bytes = include_bytes!("../assets/images/FastShi.png");
+    let bytes = include_bytes!("../assets/images/FastShi_32.png");
     let img = image::load_from_memory(bytes).ok()?;
     let rgba = img.to_rgba8();
     let (w, h) = rgba.dimensions();

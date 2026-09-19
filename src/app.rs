@@ -11,6 +11,8 @@ pub struct TypingApp {
     test_state: TestState,
     json_data: String,
     finger_image: Option<egui::TextureHandle>,
+    logo_image: Option<egui::TextureHandle>,
+    sound: Option<crate::sound::SoundManager>,
 }
 
 impl TypingApp {
@@ -30,6 +32,8 @@ impl TypingApp {
             test_state: TestState::default(),
             json_data,
             finger_image,
+            logo_image: None,
+            sound: crate::sound::SoundManager::new(),
         }
     }
 
@@ -48,11 +52,28 @@ impl TypingApp {
             self.finger_image = Some(handle);
         }
     }
+
+    fn ensure_logo_image(&mut self, ctx: &egui::Context) {
+        if self.logo_image.is_some() {
+            return;
+        }
+        let bytes = include_bytes!("../assets/images/FastShi.png");
+        let image = image::load_from_memory(bytes).ok();
+        if let Some(img) = image {
+            let size = [img.width() as usize, img.height() as usize];
+            let rgba = img.to_rgba8();
+            let pixels = rgba.into_raw();
+            let color_image = egui::ColorImage::from_rgba_unmultiplied(size, &pixels);
+            let handle = ctx.load_texture("logo", color_image, egui::TextureOptions::default());
+            self.logo_image = Some(handle);
+        }
+    }
 }
 
 impl eframe::App for TypingApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         self.ensure_finger_image(ctx);
+        self.ensure_logo_image(ctx);
 
         egui::CentralPanel::default().show(ctx, |ui| {
             crate::ui::test_screen::show(
@@ -60,6 +81,8 @@ impl eframe::App for TypingApp {
                 &mut self.test_state,
                 &self.json_data,
                 self.finger_image.as_ref(),
+                self.logo_image.as_ref(),
+                self.sound.as_ref(),
             );
 
             if self.test_state.just_finished {
