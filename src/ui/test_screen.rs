@@ -57,6 +57,36 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         show_history_window(ui.ctx(), &mut state.show_history);
     }
 
+    // === SES KONTROLÜ (en üstte, YouTube tarzı seviye göstergesi) ===
+    ui.horizontal(|ui| {
+        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+            if let Some(snd) = sound {
+                // yüzde göstergesi
+                ui.label(theme::small_text(&format!("%{}", (snd.volume() * 100.0) as i32)));
+                let mut vol = snd.volume();
+                let slider = egui::Slider::new(&mut vol, 0.0..=1.0)
+                    .show_value(false)
+                    .trailing_fill(true);
+                let resp = ui.add_sized(egui::vec2(120.0, 16.0), slider);
+                if resp.changed() {
+                    snd.set_volume(vol);
+                }
+                let icon = if snd.is_muted() {
+                    "🔇"
+                } else if snd.volume() < 0.5 {
+                    "🔈"
+                } else {
+                    "🔊"
+                };
+                if ui.small_button(icon).clicked() {
+                    snd.toggle_mute();
+                }
+                ui.label(theme::small_text("ses"));
+            } else {
+                ui.label(theme::small_text("ses kapali"));
+            }
+        });
+    });
     ui.add_space(6.0);
 
     // === AYARLAR (kompakt tek satir) ===

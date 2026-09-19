@@ -8,6 +8,9 @@ pub struct SoundManager {
     click_samples: Vec<f32>,
     space_samples: Vec<f32>,
     sample_rate: u32,
+    volume: std::cell::Cell<f32>,
+    prev_volume: std::cell::Cell<f32>,
+    muted: std::cell::Cell<bool>,
 }
 
 fn generate_click(sample_rate: u32) -> Vec<f32> {
@@ -58,11 +61,68 @@ impl SoundManager {
             click_samples: generate_click(sample_rate),
             space_samples: generate_space(sample_rate),
             sample_rate,
+            volume: std::cell::Cell::new(0.5),
+            prev_volume: std::cell::Cell::new(0.5),
+            muted: std::cell::Cell::new(false),
         })
     }
 
+    pub fn set_volume(&self, v: f32) {
+        let v = v.clamp(0.0, 1.0);
+        self.volume.set(v);
+        if v == 0.0 {
+            self.muted.set(true);
+        } else {
+            self.muted.set(false);
+            self.prev_volume.set(v);
+        }
+    }
+
+    pub fn volume(&self) -> f32 {
+        if self.muted.get() {
+            0.0
+        } else {
+            self.volume.get()
+        }
+    }
+
+    pub fn raw_volume(&self) -> f32 {
+        self.volume.get()
+    }
+
+    pub fn is_muted(&self) -> bool {
+        self.muted.get() || self.volume.get() == 0.0
+    }
+
+    pub fn toggle_mute(&self) {
+        if self.muted.get() || self.volume.get() == 0.0 {
+            // açılınca kaldığı yerden devam et
+            let prev = self.prev_volume.get();
+            let restore = if prev == 0.0 { 0.5 } else { prev };
+            self.volume.set(restore);
+            self.muted.set(false);
+        } else {
+            self.prev_volume.set(self.volume.get());
+            self.volume.set(0.0);
+            self.muted.set(true);
+        }
+    }
+
+    fn effective_volume(&self) -> f32 {
+        if self.muted.get() {
+            0.0
+        } else {
+            self.volume.get()
+        }
+    }
+
     pub fn play_key(&self) {
+        let vol = self.effective_volume();
+        if vol == 0.0 {
+            return;
+        }
         if let Ok(sink) = Sink::try_new(&self.handle) {
+            sink.set_volume(vol);
             let buffer = SamplesBuffer::new(1, self.sample_rate, self.click_samples.clone());
             sink.append(buffer);
             sink.detach();
@@ -70,7 +130,12 @@ impl SoundManager {
     }
 
     pub fn play_space(&self) {
+        let vol = self.effective_volume();
+        if vol == 0.0 {
+            return;
+        }
         if let Ok(sink) = Sink::try_new(&self.handle) {
+            sink.set_volume(vol);
             let buffer = SamplesBuffer::new(1, self.sample_rate, self.space_samples.clone());
             sink.append(buffer);
             sink.detach();
