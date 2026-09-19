@@ -1,7 +1,248 @@
-use eframe::egui;
-use std::collections::HashMap;
-use std::time::Instant;
-use super::theme;
+use eframe::egui::{Align2, Color32, CornerRadius, FontId, Pos2, Rect, Stroke, StrokeKind, Ui, Vec2};
+
+pub const C_GREEN: Color32 = Color32::from_rgb(172, 237, 16);
+pub const C_LAVENDER: Color32 = Color32::from_rgb(192, 211, 255);
+pub const C_CREAM: Color32 = Color32::from_rgb(252, 247, 197);
+pub const C_RED: Color32 = Color32::from_rgb(252, 53, 76);
+pub const C_TEAL: Color32 = Color32::from_rgb(10, 191, 188);
+pub const C_TAN: Color32 = Color32::from_rgb(219, 156, 92);
+pub const C_PINK: Color32 = Color32::from_rgb(237, 192, 236);
+pub const C_ORANGE: Color32 = Color32::from_rgb(255, 98, 0);
+pub const C_INDIGO: Color32 = Color32::from_rgb(77, 56, 209);
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum Hand {
+    Left,
+    Right,
+}
+
+#[derive(Clone, Copy)]
+pub struct Key {
+    pub id: Option<char>,
+    pub bottom: &'static str,
+    pub top: Option<&'static str>,
+    pub color: Color32,
+    pub width: f32,
+    pub hand: Option<Hand>,
+}
+
+const fn k(
+    id: Option<char>,
+    bottom: &'static str,
+    top: Option<&'static str>,
+    color: Color32,
+    width: f32,
+    hand: Option<Hand>,
+) -> Key {
+    Key { id, bottom, top, color, width, hand }
+}
+
+fn row1() -> Vec<Key> {
+    vec![
+        k(None, "\"", Some("é"), C_GREEN, 1.0, None),
+        k(Some('1'), "1", Some("!"), C_GREEN, 1.0, Some(Hand::Left)),
+        k(Some('2'), "2", Some("'"), C_LAVENDER, 1.0, Some(Hand::Left)),
+        k(Some('3'), "3", Some("^"), C_CREAM, 1.0, Some(Hand::Left)),
+        k(Some('4'), "4", Some("+"), C_RED, 1.0, Some(Hand::Left)),
+        k(Some('5'), "5", Some("%"), C_RED, 1.0, Some(Hand::Left)),
+        k(Some('6'), "6", Some("&"), C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('7'), "7", Some("/"), C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('8'), "8", Some("("), C_TAN, 1.0, Some(Hand::Right)),
+        k(Some('9'), "9", Some(")"), C_PINK, 1.0, Some(Hand::Right)),
+        k(Some('0'), "0", Some("="), C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, "*", Some("?"), C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, "_", Some("-"), C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, "Delete", None, C_ORANGE, 1.75, None),
+    ]
+}
+
+fn row2() -> Vec<Key> {
+    vec![
+        k(None, "Tab", None, C_GREEN, 1.5, None),
+        k(Some('q'), "Q", None, C_GREEN, 1.0, Some(Hand::Left)),
+        k(Some('w'), "W", None, C_LAVENDER, 1.0, Some(Hand::Left)),
+        k(Some('e'), "E", None, C_CREAM, 1.0, Some(Hand::Left)),
+        k(Some('r'), "R", None, C_RED, 1.0, Some(Hand::Left)),
+        k(Some('t'), "T", None, C_RED, 1.0, Some(Hand::Left)),
+        k(Some('y'), "Y", None, C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('u'), "U", None, C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('i'), "I", None, C_TAN, 1.0, Some(Hand::Right)),
+        k(Some('o'), "O", None, C_PINK, 1.0, Some(Hand::Right)),
+        k(Some('p'), "P", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(Some('ğ'), "Ğ", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(Some('ü'), "Ü", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, "Enter", None, C_ORANGE, 1.75, None),
+    ]
+}
+
+fn row3() -> Vec<Key> {
+    vec![
+        k(None, "Caps Lock", None, C_GREEN, 1.75, None),
+        k(Some('a'), "A", None, C_GREEN, 1.0, Some(Hand::Left)),
+        k(Some('s'), "S", None, C_LAVENDER, 1.0, Some(Hand::Left)),
+        k(Some('d'), "D", None, C_CREAM, 1.0, Some(Hand::Left)),
+        k(Some('f'), "F", None, C_RED, 1.0, Some(Hand::Left)),
+        k(Some('g'), "G", None, C_RED, 1.0, Some(Hand::Left)),
+        k(Some('h'), "H", None, C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('j'), "J", None, C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('k'), "K", None, C_TAN, 1.0, Some(Hand::Right)),
+        k(Some('l'), "L", None, C_PINK, 1.0, Some(Hand::Right)),
+        k(Some('ş'), "Ş", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(Some('i'), "İ", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, ";", None, C_ORANGE, 1.0, Some(Hand::Right)),
+    ]
+}
+
+fn row4() -> Vec<Key> {
+    vec![
+        k(None, "Shift", None, C_GREEN, 1.75, None),
+        k(None, "<", Some(">"), C_GREEN, 1.0, Some(Hand::Left)),
+        k(Some('z'), "Z", None, C_GREEN, 1.0, Some(Hand::Left)),
+        k(Some('x'), "X", None, C_LAVENDER, 1.0, Some(Hand::Left)),
+        k(Some('c'), "C", None, C_CREAM, 1.0, Some(Hand::Left)),
+        k(Some('v'), "V", None, C_RED, 1.0, Some(Hand::Left)),
+        k(Some('b'), "B", None, C_RED, 1.0, Some(Hand::Left)),
+        k(Some('n'), "N", None, C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('m'), "M", None, C_TEAL, 1.0, Some(Hand::Right)),
+        k(Some('ö'), "Ö", None, C_TAN, 1.0, Some(Hand::Right)),
+        k(Some('ç'), "Ç", None, C_PINK, 1.0, Some(Hand::Right)),
+        k(None, ":", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, "Shift", None, C_ORANGE, 1.75, None),
+    ]
+}
+
+fn row5() -> Vec<Key> {
+    vec![
+        k(None, "Ctrl", None, C_GREEN, 1.25, None),
+        k(None, "Alt", None, C_GREEN, 1.25, None),
+        k(None, "Cmd", None, C_INDIGO, 1.25, None),
+        k(Some(' '), "", None, C_INDIGO, 6.5, None),
+        k(None, "Cmd", None, C_INDIGO, 1.25, None),
+        k(None, "Alt Gr", None, C_PINK, 1.25, None),
+        k(None, "Start", None, C_ORANGE, 1.25, None),
+        k(None, "Ctrl", None, C_ORANGE, 1.25, None),
+    ]
+}
+
+pub fn draw_keyboard(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Hand>) {
+    let row_height = 52.0;
+    let row_gap = 4.0;
+    let key_gap = 3.0;
+    let padding = 8.0;
+
+    let rows: [Vec<Key>; 5] = [row1(), row2(), row3(), row4(), row5()];
+
+    let total_height = row_height * 5.0 + row_gap * 4.0 + padding * 2.0;
+    let total_width = ui.available_width();
+
+    let (alloc_rect, _) = ui.allocate_exact_size(
+        Vec2::new(total_width, total_height),
+        egui::Sense::hover(),
+    );
+
+    let origin = Pos2::new(alloc_rect.min.x + padding, alloc_rect.min.y + padding);
+    let draw_width = total_width - padding * 2.0;
+    let mut y = origin.y;
+
+    let mut enter_rect: Option<Rect> = None;
+    let mut row3_y_range: Option<(f32, f32)> = None;
+
+    for (row_idx, row) in rows.iter().enumerate() {
+        let total_units: f32 = row.iter().map(|k| k.width).sum();
+        let gap_total = key_gap * (row.len() as f32 - 1.0);
+        let unit = (draw_width - gap_total) / total_units;
+
+        let mut x = origin.x;
+        for key in row {
+            let w = key.width * unit;
+            let rect = Rect::from_min_size(Pos2::new(x, y), Vec2::new(w, row_height));
+            draw_key(ui, rect, key, active_key, dim_hand);
+
+            if row_idx == 1 && key.bottom == "Enter" {
+                enter_rect = Some(rect);
+            }
+            x += w + key_gap;
+        }
+
+        if row_idx == 2 {
+            row3_y_range = Some((y, y + row_height));
+        }
+
+        y += row_height + row_gap;
+    }
+
+    if let (Some(er), Some((y0, y1))) = (enter_rect, row3_y_range) {
+        let ext = Rect::from_min_max(Pos2::new(er.min.x, y0), Pos2::new(er.max.x, y1));
+        ui.painter().rect_filled(ext, CornerRadius::same(4), C_ORANGE);
+    }
+}
+
+fn draw_key(
+    ui: &mut Ui,
+    rect: Rect,
+    key: &Key,
+    active_key: Option<char>,
+    dim_hand: Option<Hand>,
+) {
+    let is_active = key.id.map_or(false, |c| Some(c) == active_key);
+
+    let dimmed = match (dim_hand, key.hand) {
+        (Some(dim), Some(kh)) => dim == kh,
+        _ => false,
+    };
+
+    let mut fill = key.color;
+    if dimmed {
+        let gray = 200;
+        fill = Color32::from_rgb(
+            ((fill.r() as u16 + gray) / 2) as u8,
+            ((fill.g() as u16 + gray) / 2) as u8,
+            ((fill.b() as u16 + gray) / 2) as u8,
+        );
+    }
+
+    let rounding = CornerRadius::same(5);
+    ui.painter().rect_filled(rect, rounding, fill);
+
+    if is_active {
+        ui.painter().rect_stroke(rect, rounding, Stroke::new(3.0_f32, Color32::WHITE), StrokeKind::Inside);
+    } else {
+        ui.painter()
+            .rect_stroke(rect, rounding, Stroke::new(1.0_f32, Color32::from_gray(210)), StrokeKind::Inside);
+    }
+
+    let text_color = if dimmed {
+        Color32::from_gray(120)
+    } else {
+        Color32::BLACK
+    };
+
+    if let Some(top) = key.top {
+        ui.painter().text(
+            Pos2::new(rect.min.x + 4.0, rect.min.y + 3.0),
+            Align2::LEFT_TOP,
+            top,
+            FontId::proportional(11.0),
+            text_color,
+        );
+        ui.painter().text(
+            Pos2::new(rect.max.x - 4.0, rect.max.y - 3.0),
+            Align2::RIGHT_BOTTOM,
+            key.bottom,
+            FontId::proportional(15.0),
+            text_color,
+        );
+    } else {
+        let font_size = if key.bottom.chars().count() > 3 { 12.0 } else { 18.0 };
+        ui.painter().text(
+            rect.center(),
+            Align2::CENTER_CENTER,
+            key.bottom,
+            FontId::proportional(font_size),
+            text_color,
+        );
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Finger {
@@ -17,37 +258,23 @@ pub enum Finger {
 }
 
 impl Finger {
-    pub fn color(&self) -> egui::Color32 {
+    pub fn color(&self) -> Color32 {
         match self {
-            Finger::LeftPinky => egui::Color32::from_rgb(220, 50, 50),
-            Finger::LeftRing => egui::Color32::from_rgb(230, 130, 30),
-            Finger::LeftMiddle => egui::Color32::from_rgb(230, 200, 30),
-            Finger::LeftIndex => egui::Color32::from_rgb(50, 180, 50),
-            Finger::RightIndex => egui::Color32::from_rgb(30, 180, 200),
-            Finger::RightMiddle => egui::Color32::from_rgb(50, 100, 220),
-            Finger::RightRing => egui::Color32::from_rgb(130, 50, 200),
-            Finger::RightPinky => egui::Color32::from_rgb(180, 50, 180),
-            Finger::Thumb => egui::Color32::from_rgb(150, 150, 150),
-        }
-    }
-
-    pub fn label_short(&self) -> &'static str {
-        match self {
-            Finger::LeftPinky => "L5",
-            Finger::LeftRing => "L4",
-            Finger::LeftMiddle => "L3",
-            Finger::LeftIndex => "L2",
-            Finger::RightIndex => "R2",
-            Finger::RightMiddle => "R3",
-            Finger::RightRing => "R4",
-            Finger::RightPinky => "R5",
-            Finger::Thumb => "TH",
+            Finger::LeftPinky => C_GREEN,
+            Finger::LeftRing => C_LAVENDER,
+            Finger::LeftMiddle => C_CREAM,
+            Finger::LeftIndex => C_RED,
+            Finger::RightIndex => C_TEAL,
+            Finger::RightMiddle => C_TAN,
+            Finger::RightRing => C_PINK,
+            Finger::RightPinky => C_ORANGE,
+            Finger::Thumb => C_INDIGO,
         }
     }
 }
 
-pub fn finger_map() -> HashMap<char, Finger> {
-    let mut m = HashMap::new();
+pub fn finger_map() -> std::collections::HashMap<char, Finger> {
+    let mut m = std::collections::HashMap::new();
     m.insert('1', Finger::LeftPinky);
     m.insert('2', Finger::LeftRing);
     m.insert('3', Finger::LeftMiddle);
@@ -80,7 +307,6 @@ pub fn finger_map() -> HashMap<char, Finger> {
     m.insert('k', Finger::RightMiddle);
     m.insert('l', Finger::RightRing);
     m.insert('ş', Finger::RightPinky);
-    m.insert('ı', Finger::RightPinky);
     m.insert('z', Finger::LeftPinky);
     m.insert('x', Finger::LeftRing);
     m.insert('c', Finger::LeftMiddle);
@@ -96,245 +322,4 @@ pub fn finger_map() -> HashMap<char, Finger> {
 pub fn finger_of(c: char) -> Finger {
     let map = finger_map();
     *map.get(&c).unwrap_or(&Finger::Thumb)
-}
-
-struct KeyDef {
-    label: &'static str,
-    finger: Finger,
-}
-
-fn keyboard_rows() -> Vec<Vec<KeyDef>> {
-    vec![
-        vec![
-            KeyDef { label: "1", finger: Finger::LeftPinky },
-            KeyDef { label: "2", finger: Finger::LeftRing },
-            KeyDef { label: "3", finger: Finger::LeftMiddle },
-            KeyDef { label: "4", finger: Finger::LeftIndex },
-            KeyDef { label: "5", finger: Finger::LeftIndex },
-            KeyDef { label: "6", finger: Finger::RightIndex },
-            KeyDef { label: "7", finger: Finger::RightIndex },
-            KeyDef { label: "8", finger: Finger::RightMiddle },
-            KeyDef { label: "9", finger: Finger::RightRing },
-            KeyDef { label: "0", finger: Finger::RightPinky },
-        ],
-        vec![
-            KeyDef { label: "Q", finger: Finger::LeftPinky },
-            KeyDef { label: "W", finger: Finger::LeftRing },
-            KeyDef { label: "E", finger: Finger::LeftMiddle },
-            KeyDef { label: "R", finger: Finger::LeftIndex },
-            KeyDef { label: "T", finger: Finger::LeftIndex },
-            KeyDef { label: "Y", finger: Finger::RightIndex },
-            KeyDef { label: "U", finger: Finger::RightIndex },
-            KeyDef { label: "I", finger: Finger::RightMiddle },
-            KeyDef { label: "O", finger: Finger::RightRing },
-            KeyDef { label: "P", finger: Finger::RightPinky },
-            KeyDef { label: "Ğ", finger: Finger::RightPinky },
-            KeyDef { label: "Ü", finger: Finger::RightPinky },
-        ],
-        vec![
-            KeyDef { label: "A", finger: Finger::LeftPinky },
-            KeyDef { label: "S", finger: Finger::LeftRing },
-            KeyDef { label: "D", finger: Finger::LeftMiddle },
-            KeyDef { label: "F", finger: Finger::LeftIndex },
-            KeyDef { label: "G", finger: Finger::LeftIndex },
-            KeyDef { label: "H", finger: Finger::RightIndex },
-            KeyDef { label: "J", finger: Finger::RightIndex },
-            KeyDef { label: "K", finger: Finger::RightMiddle },
-            KeyDef { label: "L", finger: Finger::RightRing },
-            KeyDef { label: "Ş", finger: Finger::RightPinky },
-            KeyDef { label: "İ", finger: Finger::RightPinky },
-        ],
-        vec![
-            KeyDef { label: "Z", finger: Finger::LeftPinky },
-            KeyDef { label: "X", finger: Finger::LeftRing },
-            KeyDef { label: "C", finger: Finger::LeftMiddle },
-            KeyDef { label: "V", finger: Finger::LeftIndex },
-            KeyDef { label: "B", finger: Finger::LeftIndex },
-            KeyDef { label: "N", finger: Finger::RightIndex },
-            KeyDef { label: "M", finger: Finger::RightIndex },
-            KeyDef { label: "Ö", finger: Finger::RightRing },
-            KeyDef { label: "Ç", finger: Finger::RightPinky },
-        ],
-    ]
-}
-
-pub struct KeyboardWidget {
-    highlight_key: Option<char>,
-    presses: Vec<(String, Instant)>,
-}
-
-impl Default for KeyboardWidget {
-    fn default() -> Self {
-        Self {
-            highlight_key: None,
-            presses: Vec::new(),
-        }
-    }
-}
-
-impl KeyboardWidget {
-    pub fn set_highlight(&mut self, key: Option<char>) {
-        self.highlight_key = key;
-    }
-
-    pub fn add_press(&mut self, key: String) {
-        self.presses.push((key, Instant::now()));
-    }
-
-    fn is_pressed(&self, label: &str) -> bool {
-        self.presses.iter().any(|(k, t)| {
-            let same_key = k.to_uppercase() == label.to_uppercase();
-            let fresh = t.elapsed().as_millis() < 200;
-            same_key && fresh
-        })
-    }
-
-    pub fn show(&self, ui: &mut egui::Ui) {
-        let rows = keyboard_rows();
-        let key_width = 34.0;
-        let key_height = 34.0;
-        let gap = 3.0;
-
-        ui.vertical(|ui| {
-            for (row_idx, row) in rows.iter().enumerate() {
-                let indent = match row_idx {
-                    0 => 0.0,
-                    1 => 0.0,
-                    2 => key_width * 0.5,
-                    3 => key_width * 1.2,
-                    _ => 0.0,
-                };
-                ui.horizontal(|ui| {
-                    ui.add_space(indent);
-                    for key_def in row {
-                        let ch = key_def.label.chars().next().unwrap();
-                        let is_highlighted = self.highlight_key.map(|h| {
-                            h.to_ascii_lowercase() == ch.to_ascii_lowercase()
-                        }).unwrap_or(false);
-
-                        let is_pressed_now = self.is_pressed(key_def.label);
-
-                        let base_color = key_def.finger.color();
-                        let bg = if is_pressed_now {
-                            egui::Color32::from_rgb(255, 255, 255)
-                        } else if is_highlighted {
-                            egui::Color32::from_rgb(
-                                (base_color.r() as u32 * 2 / 3 + 85) as u8,
-                                (base_color.g() as u32 * 2 / 3 + 85) as u8,
-                                (base_color.b() as u32 * 2 / 3 + 85) as u8,
-                            )
-                        } else {
-                            base_color
-                        };
-
-                        let text_color = if is_pressed_now {
-                            theme::BLACK
-                        } else {
-                            theme::WHITE
-                        };
-
-                        let (rect, _response) = ui.allocate_exact_size(
-                            egui::vec2(key_width, key_height),
-                            egui::Sense::hover(),
-                        );
-
-                        let painter = ui.painter();
-                        painter.rect_filled(rect, egui::CornerRadius::same(4), bg);
-                        painter.rect_stroke(
-                            rect,
-                            egui::CornerRadius::same(4),
-                            egui::Stroke::new(1.0_f32, theme::GRAY),
-                            egui::StrokeKind::Inside,
-                        );
-                        painter.text(
-                            rect.center(),
-                            egui::Align2::CENTER_CENTER,
-                            key_def.label,
-                            egui::FontId::proportional(12.0),
-                            text_color,
-                        );
-
-                        ui.add_space(gap);
-                    }
-                });
-                ui.add_space(gap);
-            }
-
-            // Space bar
-            ui.horizontal(|ui| {
-                ui.add_space(key_width * 1.2);
-                let (rect, _response) = ui.allocate_exact_size(
-                    egui::vec2(key_width * 6.0, key_height),
-                    egui::Sense::hover(),
-                );
-                let painter = ui.painter();
-                let space_pressed = self.is_pressed("SPACE");
-                let bg = if space_pressed {
-                    egui::Color32::from_rgb(255, 255, 255)
-                } else if self.highlight_key == Some(' ') {
-                    egui::Color32::from_rgb(120, 120, 120)
-                } else {
-                    theme::DARK_GRAY
-                };
-                let text_col = if space_pressed { theme::BLACK } else { theme::GRAY };
-                painter.rect_filled(rect, egui::CornerRadius::same(4), bg);
-                painter.rect_stroke(
-                    rect,
-                    egui::CornerRadius::same(4),
-                    egui::Stroke::new(1.0_f32, theme::GRAY),
-                    egui::StrokeKind::Inside,
-                );
-                painter.text(
-                    rect.center(),
-                    egui::Align2::CENTER_CENTER,
-                    "SPACE",
-                    egui::FontId::proportional(11.0),
-                    text_col,
-                );
-            });
-        });
-
-        // Eski press'leri temizle (>500ms onceki)
-        // Bu show icinde yapilmiyor cunku &self, ama add_press'te cumulative.
-        // Borrows sorunu olmamasi icin temizlik disarda yapilmali.
-    }
-
-    pub fn cleanup(&mut self) {
-        self.presses.retain(|(_, t)| t.elapsed().as_millis() < 500);
-    }
-}
-
-pub fn show_legend(ui: &mut egui::Ui) {
-    ui.vertical(|ui| {
-        ui.label(
-            egui::RichText::new("parmak haritasi")
-                .family(egui::FontFamily::Name("spacemono".into()))
-                .size(9.0)
-                .color(theme::GRAY),
-        );
-        ui.add_space(2.0);
-        let fingers = [
-            (Finger::LeftPinky, "serce (sol)"),
-            (Finger::LeftRing, "yuzuk (sol)"),
-            (Finger::LeftMiddle, "orta (sol)"),
-            (Finger::LeftIndex, "isaret (sol)"),
-            (Finger::RightIndex, "isaret (sag)"),
-            (Finger::RightMiddle, "orta (sag)"),
-            (Finger::RightRing, "yuzuk (sag)"),
-            (Finger::RightPinky, "serce (sag)"),
-        ];
-        for (finger, name) in &fingers {
-            ui.horizontal(|ui| {
-                let color = finger.color();
-                let (rect, _) = ui.allocate_exact_size(egui::vec2(12.0, 12.0), egui::Sense::hover());
-                ui.painter().rect_filled(rect, egui::CornerRadius::same(2), color);
-                ui.label(
-                    egui::RichText::new(*name)
-                        .family(egui::FontFamily::Name("spacemono".into()))
-                        .size(10.0)
-                        .color(theme::LIGHT_GRAY),
-                );
-            });
-        }
-    });
 }
