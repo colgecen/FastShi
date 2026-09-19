@@ -70,8 +70,8 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             .selected(selected)
             .min_size(egui::vec2(60.0, 24.0));
             if ui.add(btn).clicked() {
-                state.mode = mode;
-                if state.started || state.just_finished {
+                if state.mode != mode {
+                    state.mode = mode;
                     reload_engine(state, json_data);
                 }
             }
@@ -89,8 +89,8 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             .selected(selected)
             .min_size(egui::vec2(50.0, 24.0));
             if ui.add(btn).clicked() {
-                state.zorluk = z;
-                if state.started || state.just_finished {
+                if state.zorluk != z {
+                    state.zorluk = z;
                     reload_engine(state, json_data);
                 }
             }
@@ -104,9 +104,10 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             .selected(selected)
             .min_size(egui::vec2(45.0, 24.0));
             if ui.add(btn).clicked() {
+                let needs_reload = state.sure_secenek != sn || state.kelime_hedef.is_some();
                 state.sure_secenek = sn;
                 state.kelime_hedef = None;
-                if state.started || state.just_finished {
+                if needs_reload {
                     reload_engine(state, json_data);
                 }
             }
@@ -120,9 +121,10 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             .selected(selected)
             .min_size(egui::vec2(40.0, 24.0));
             if ui.add(btn).clicked() {
+                let needs_reload = state.kelime_hedef != Some(k) || state.sure_secenek != 0;
                 state.kelime_hedef = Some(k);
                 state.sure_secenek = 0;
-                if state.started || state.just_finished {
+                if needs_reload {
                     reload_engine(state, json_data);
                 }
             }
@@ -229,17 +231,17 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
     let kw = total_w * 0.6;
     let side_pad = (total_w - kw) / 2.0;
 
-    let (next_char, dim_hand) = if state.started {
+    // dim_hand her zaman moda göre: sağ el seçince sol kaybolsun, sol seçince sağ kaybolsun, iki elde geri gelsin
+    let dim_hand = match state.mode {
+        TestMode::RightHand => Some(keyboard_widget::Hand::Left),
+        TestMode::LeftHand => Some(keyboard_widget::Hand::Right),
+        _ => None,
+    };
+    let next_char = if state.started {
         let engine = state.engine.as_ref().unwrap();
-        let nc = engine.current_word().chars().nth(engine.cursor_in_word);
-        let dh = match state.mode {
-            TestMode::RightHand => Some(keyboard_widget::Hand::Left),
-            TestMode::LeftHand => Some(keyboard_widget::Hand::Right),
-            _ => None,
-        };
-        (nc, dh)
+        engine.current_word().chars().nth(engine.cursor_in_word)
     } else {
-        (None, None)
+        None
     };
 
     // === KLAVYE GIRISI ===
@@ -283,10 +285,13 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
         state.pressed_key = None;
     }
 
-    let kb_active_key = if state.show_next_key {
+    // Tuşa basınca beyaz/karşıt renk: basılı tuş öncelikli, yoksa sıradaki harf
+    let kb_active_key = if state.pressed_key.is_some() {
+        state.pressed_key
+    } else if state.show_next_key {
         next_char
     } else {
-        state.pressed_key
+        None
     };
     ui.ctx().request_repaint();
 

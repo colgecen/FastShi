@@ -39,7 +39,7 @@ const fn k(
 
 fn row1() -> Vec<Key> {
     vec![
-        k(None, "\"", Some("é"), C_GREEN, 1.0, None),
+        k(None, "\"", Some("é"), C_GREEN, 1.0, Some(Hand::Left)),
         k(Some('1'), "1", Some("!"), C_GREEN, 1.0, Some(Hand::Left)),
         k(Some('2'), "2", Some("'"), C_LAVENDER, 1.0, Some(Hand::Left)),
         k(Some('3'), "3", Some("^"), C_CREAM, 1.0, Some(Hand::Left)),
@@ -52,13 +52,13 @@ fn row1() -> Vec<Key> {
         k(Some('0'), "0", Some("="), C_ORANGE, 1.0, Some(Hand::Right)),
         k(None, "*", Some("?"), C_ORANGE, 1.0, Some(Hand::Right)),
         k(None, "_", Some("-"), C_ORANGE, 1.0, Some(Hand::Right)),
-        k(None, "Delete", None, C_ORANGE, 1.75, None),
+        k(None, "Delete", None, C_ORANGE, 1.75, Some(Hand::Right)),
     ]
 }
 
 fn row2() -> Vec<Key> {
     vec![
-        k(None, "Tab", None, C_GREEN, 1.5, None),
+        k(None, "Tab", None, C_GREEN, 1.5, Some(Hand::Left)),
         k(Some('q'), "Q", None, C_GREEN, 1.0, Some(Hand::Left)),
         k(Some('w'), "W", None, C_LAVENDER, 1.0, Some(Hand::Left)),
         k(Some('e'), "E", None, C_CREAM, 1.0, Some(Hand::Left)),
@@ -66,18 +66,18 @@ fn row2() -> Vec<Key> {
         k(Some('t'), "T", None, C_RED, 1.0, Some(Hand::Left)),
         k(Some('y'), "Y", None, C_TEAL, 1.0, Some(Hand::Right)),
         k(Some('u'), "U", None, C_TEAL, 1.0, Some(Hand::Right)),
-        k(Some('i'), "I", None, C_TAN, 1.0, Some(Hand::Right)),
+        k(Some('ı'), "I", None, C_TAN, 1.0, Some(Hand::Right)),
         k(Some('o'), "O", None, C_PINK, 1.0, Some(Hand::Right)),
         k(Some('p'), "P", None, C_ORANGE, 1.0, Some(Hand::Right)),
         k(Some('ğ'), "Ğ", None, C_ORANGE, 1.0, Some(Hand::Right)),
         k(Some('ü'), "Ü", None, C_ORANGE, 1.0, Some(Hand::Right)),
-        k(None, "Enter", None, C_ORANGE, 1.75, None),
+        k(None, "Enter", None, C_ORANGE, 1.75, Some(Hand::Right)),
     ]
 }
 
 fn row3() -> Vec<Key> {
     vec![
-        k(None, "Caps Lock", None, C_GREEN, 1.75, None),
+        k(None, "Caps Lock", None, C_GREEN, 1.75, Some(Hand::Left)),
         k(Some('a'), "A", None, C_GREEN, 1.0, Some(Hand::Left)),
         k(Some('s'), "S", None, C_LAVENDER, 1.0, Some(Hand::Left)),
         k(Some('d'), "D", None, C_CREAM, 1.0, Some(Hand::Left)),
@@ -89,13 +89,13 @@ fn row3() -> Vec<Key> {
         k(Some('l'), "L", None, C_PINK, 1.0, Some(Hand::Right)),
         k(Some('ş'), "Ş", None, C_ORANGE, 1.0, Some(Hand::Right)),
         k(Some('i'), "İ", None, C_ORANGE, 1.0, Some(Hand::Right)),
-        k(None, ";", None, C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, ",", Some(";"), C_ORANGE, 1.0, Some(Hand::Right)),
     ]
 }
 
 fn row4() -> Vec<Key> {
     vec![
-        k(None, "Shift", None, C_GREEN, 1.75, None),
+        k(None, "Shift", None, C_GREEN, 1.75, Some(Hand::Left)),
         k(None, "<", Some(">"), C_GREEN, 1.0, Some(Hand::Left)),
         k(Some('z'), "Z", None, C_GREEN, 1.0, Some(Hand::Left)),
         k(Some('x'), "X", None, C_LAVENDER, 1.0, Some(Hand::Left)),
@@ -106,21 +106,21 @@ fn row4() -> Vec<Key> {
         k(Some('m'), "M", None, C_TEAL, 1.0, Some(Hand::Right)),
         k(Some('ö'), "Ö", None, C_TAN, 1.0, Some(Hand::Right)),
         k(Some('ç'), "Ç", None, C_PINK, 1.0, Some(Hand::Right)),
-        k(None, ":", None, C_ORANGE, 1.0, Some(Hand::Right)),
-        k(None, "Shift", None, C_ORANGE, 1.75, None),
+        k(None, ".", Some(":"), C_ORANGE, 1.0, Some(Hand::Right)),
+        k(None, "Shift", None, C_ORANGE, 1.75, Some(Hand::Right)),
     ]
 }
 
 fn row5() -> Vec<Key> {
     vec![
-        k(None, "Ctrl", None, C_GREEN, 1.25, None),
-        k(None, "Alt", None, C_GREEN, 1.25, None),
-        k(None, "Cmd", None, C_INDIGO, 1.25, None),
+        k(None, "Ctrl", None, C_GREEN, 1.25, Some(Hand::Left)),
+        k(None, "Alt", None, C_GREEN, 1.25, Some(Hand::Left)),
+        k(None, "Cmd", None, C_INDIGO, 1.25, Some(Hand::Left)),
         k(Some(' '), "", None, C_INDIGO, 6.5, None),
-        k(None, "Cmd", None, C_INDIGO, 1.25, None),
-        k(None, "Alt Gr", None, C_PINK, 1.25, None),
-        k(None, "Start", None, C_ORANGE, 1.25, None),
-        k(None, "Ctrl", None, C_ORANGE, 1.25, None),
+        k(None, "Cmd", None, C_INDIGO, 1.25, Some(Hand::Right)),
+        k(None, "Alt Gr", None, C_PINK, 1.25, Some(Hand::Right)),
+        k(None, "Start", None, C_ORANGE, 1.25, Some(Hand::Right)),
+        k(None, "Ctrl", None, C_ORANGE, 1.25, Some(Hand::Right)),
     ]
 }
 
@@ -148,10 +148,10 @@ pub fn draw_keyboard_sized(ui: &mut Ui, active_key: Option<char>, dim_hand: Opti
     let draw_width = total_width - padding * 2.0;
     let mut y = origin.y;
 
-    let mut enter_rect: Option<Rect> = None;
-    let mut row3_y_range: Option<(f32, f32)> = None;
-
-    for (row_idx, row) in rows.iter().enumerate() {
+    // L-şekilli Enter uzantısı tuşları kapatıyordu (Ş yanındaki İ ve , tuşunu örtüyordu)
+    // Bu yüzden uzantıyı tamamen kaldırdık — Enter artık sadece 1 satırlık düz tuş.
+    // Eğer L-şekil istenirse, extension tuşların *altında* çizilmeli, üstünde değil.
+    for row in rows.iter() {
         let total_units: f32 = row.iter().map(|k| k.width).sum();
         let gap_total = key_gap * (row.len() as f32 - 1.0);
         let unit = (draw_width - gap_total) / total_units;
@@ -161,23 +161,10 @@ pub fn draw_keyboard_sized(ui: &mut Ui, active_key: Option<char>, dim_hand: Opti
             let w = key.width * unit;
             let rect = Rect::from_min_size(Pos2::new(x, y), Vec2::new(w, row_height));
             draw_key(ui, rect, key, active_key, dim_hand);
-
-            if row_idx == 1 && key.bottom == "Enter" {
-                enter_rect = Some(rect);
-            }
             x += w + key_gap;
         }
 
-        if row_idx == 2 {
-            row3_y_range = Some((y, y + row_height));
-        }
-
         y += row_height + row_gap;
-    }
-
-    if let (Some(er), Some((y0, y1))) = (enter_rect, row3_y_range) {
-        let ext = Rect::from_min_max(Pos2::new(er.min.x, y0), Pos2::new(er.max.x, y1));
-        ui.painter().rect_filled(ext, CornerRadius::same(4), C_ORANGE);
     }
 }
 
@@ -190,33 +177,42 @@ fn draw_key(
 ) {
     let is_active = key.id.map_or(false, |c| Some(c) == active_key);
 
+    // Boşluk tuşu her zaman görünür
+    let is_space = key.id == Some(' ');
+
     let dimmed = match (dim_hand, key.hand) {
-        (Some(dim), Some(kh)) => dim == kh,
+        (Some(dim), Some(kh)) if !is_space => dim == kh,
         _ => false,
     };
 
-    let mut fill = key.color;
-    if dimmed {
-        let gray = 200;
-        fill = Color32::from_rgb(
-            ((fill.r() as u16 + gray) / 2) as u8,
-            ((fill.g() as u16 + gray) / 2) as u8,
-            ((fill.b() as u16 + gray) / 2) as u8,
-        );
-    }
+    // Aktif tuş dimlenmiş olsa bile görünür kalmalı (beyaz vurgu); boşluk asla gizlenmez
+    let hidden = dimmed && !is_active && !is_space;
 
     let rounding = CornerRadius::same(5);
-    ui.painter().rect_filled(rect, rounding, fill);
 
-    if is_active {
-        ui.painter().rect_stroke(rect, rounding, Stroke::new(3.0_f32, Color32::WHITE), StrokeKind::Inside);
-    } else {
-        ui.painter()
-            .rect_stroke(rect, rounding, Stroke::new(1.0_f32, Color32::from_gray(210)), StrokeKind::Inside);
+    if hidden {
+        // Tuş tamamen kaybolsun: arka planla aynı (panel siyah), yazı yok, çerçeve yok
+        // Görsel kaybolma için transparent yerine panel rengine yakın koyu dolgu
+        // ancak tamamen görünmez yapmak için sadece çerçevesiz transparent kullanıyoruz
+        // Burada hafif koyu dolgu kullanıp yazı çizmemek kaybolma hissi verir.
+        // En temiz: fill TRANSPARENT + stroke TRANSPARENT + yazı yok.
+        ui.painter().rect_filled(rect, rounding, Color32::TRANSPARENT);
+        // Yazı çizme — kaybolsun
+        return;
     }
 
-    let text_color = if dimmed {
-        Color32::from_gray(120)
+    // Aktif tuş: kendi renginin karşıtı olarak beyaz dolgu + siyah yazı
+    let fill = if is_active {
+        Color32::WHITE
+    } else {
+        key.color
+    };
+
+    ui.painter().rect_filled(rect, rounding, fill);
+    // border istenmiyor — hiç stroke çizme
+
+    let text_color = if is_active {
+        Color32::BLACK
     } else {
         Color32::BLACK
     };
@@ -297,6 +293,7 @@ pub fn finger_map() -> std::collections::HashMap<char, Finger> {
     m.insert('y', Finger::RightIndex);
     m.insert('u', Finger::RightIndex);
     m.insert('i', Finger::RightMiddle);
+    m.insert('ı', Finger::RightMiddle);
     m.insert('o', Finger::RightRing);
     m.insert('p', Finger::RightPinky);
     m.insert('ğ', Finger::RightPinky);
@@ -311,6 +308,8 @@ pub fn finger_map() -> std::collections::HashMap<char, Finger> {
     m.insert('k', Finger::RightMiddle);
     m.insert('l', Finger::RightRing);
     m.insert('ş', Finger::RightPinky);
+    m.insert(',', Finger::RightPinky);
+    m.insert('.', Finger::RightPinky);
     m.insert('z', Finger::LeftPinky);
     m.insert('x', Finger::LeftRing);
     m.insert('c', Finger::LeftMiddle);
