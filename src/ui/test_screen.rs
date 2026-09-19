@@ -21,6 +21,7 @@ pub struct TestState {
     pub test_modu_str: String,
     pub show_history: bool,
     pub show_next_key: bool,
+    pub show_finger: bool,
     pub pressed_key: Option<char>,
 }
 
@@ -39,6 +40,7 @@ impl Default for TestState {
             test_modu_str: "iki_el".to_string(),
             show_history: false,
             show_next_key: true,
+            show_finger: true,
             pressed_key: None,
         }
     }
@@ -138,6 +140,15 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             .min_size(egui::vec2(80.0, 24.0));
         if ui.add(harf_btn).clicked() {
             state.show_next_key = !state.show_next_key;
+        }
+
+        ui.add_space(8.0);
+        let parmak_label = if state.show_finger { "parmak: goster" } else { "parmak: gizle" };
+        let parmak_btn = egui::Button::new(theme::button_text(parmak_label))
+            .selected(state.show_finger)
+            .min_size(egui::vec2(90.0, 24.0));
+        if ui.add(parmak_btn).clicked() {
+            state.show_finger = !state.show_finger;
         }
 
         ui.add_space(8.0);
@@ -303,6 +314,37 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
 
         show_typing_area(ui, state, kw);
     });
+
+    // Parmak adı — kelime kutucuğu ile klavye arasında, büyük harflerle, harf gizle/göster mantığı gibi
+    {
+        let finger_text = if state.show_finger {
+            if let Some(ch) = next_char {
+                let f = keyboard_widget::finger_of(ch);
+                f.display_name().to_string()
+            } else {
+                "".to_string()
+            }
+        } else {
+            "".to_string()
+        };
+        // Her zaman 20px yükseklik ayır ki klavye zıplamasın
+        ui.add_space(8.0);
+        let avail = ui.available_width();
+        let (rect, _) = ui.allocate_exact_size(egui::vec2(avail, 20.0), egui::Sense::hover());
+        if !finger_text.is_empty() {
+            ui.allocate_new_ui(egui::UiBuilder::new().max_rect(rect), |ui| {
+                ui.centered_and_justified(|ui| {
+                    ui.label(
+                        egui::RichText::new(finger_text)
+                            .family(egui::FontFamily::Name("rajdhani_bold".into()))
+                            .size(14.0)
+                            .color(theme::WHITE),
+                    );
+                });
+            });
+        }
+        ui.add_space(4.0);
+    }
 
     // Klavye: en alta sabit, tam ortada
     let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 16.0;

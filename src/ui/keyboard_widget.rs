@@ -271,6 +271,20 @@ impl Finger {
             Finger::Thumb => C_INDIGO,
         }
     }
+
+    pub fn display_name(&self) -> &'static str {
+        match self {
+            Finger::LeftPinky => "SOL SERÇE",
+            Finger::LeftRing => "SOL YÜZÜK",
+            Finger::LeftMiddle => "SOL ORTA",
+            Finger::LeftIndex => "SOL İŞARET",
+            Finger::RightIndex => "SAĞ İŞARET",
+            Finger::RightMiddle => "SAĞ ORTA",
+            Finger::RightRing => "SAĞ YÜZÜK",
+            Finger::RightPinky => "SAĞ SERÇE",
+            Finger::Thumb => "BAŞPARMAK",
+        }
+    }
 }
 
 pub fn finger_map() -> std::collections::HashMap<char, Finger> {
