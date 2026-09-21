@@ -3,6 +3,12 @@ name = "typing_trainer"
 version = "0.1.0"
 edition = "2021"
 
+[profile.release]
+strip = true
+lto = true
+opt-level = "s"
+codegen-units = 1
+
 [dependencies]
 eframe = "0.31"
 egui = "0.31"
