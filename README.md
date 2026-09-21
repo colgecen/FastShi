@@ -24,7 +24,7 @@ masaüstü uygulaması. Tek el modu, WPM/CPM istatistikleri ve yerel kelime hazn
 
 ```bash
 # Depoyu klonlayın
-git clone https://github.com/KULLANICI_ADI/FastShi.git
+git clone https://github.com/colgecen/FastShi.git
 cd FastShi
 
 # Derleyin ve çalıştırın
