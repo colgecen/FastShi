@@ -1,37 +1,71 @@
-# Hızlı Yazım Antrenörü (10 Parmak / Tek El Modlu) — Proje Prompt'u
+# FastShi — Hızlı Yazım Antrenörü
 
-Bu klasör, **Rust** ile geliştirilecek, Türkçe QWERTY (Q klavye) düzeninde 10 parmak hızlı
-yazım eğitimi veren bir **masaüstü uygulaması** için hazırlanmış geliştirme dokümanlarını içerir.
-Bu dosyaları doğrudan bir kodlama asistanına (Claude Code, Cursor, vb.) "bu spesifikasyona göre
-uygulamayı kur" diyerek verebilirsin.
+Türkçe Q klavye düzeninde 10 parmak hızlı yazım becerisini geliştirmek için geliştirilmiş
+masaüstü uygulaması. Tek el modu, WPM/CPM istatistikleri ve yerel kelime haznesi desteği sunar.
 
-## Dosyalar
+## Özellikler
 
-| Dosya | İçerik |
-|---|---|
-| `README.md` | Bu dosya — genel prompt ve proje özeti |
-| `REQUIREMENTS.md` | Fonksiyonel/fonksiyonel olmayan gereksinimler, kullanıcı akışları |
-| `ARCHITECTURE.md` | Teknoloji seçimleri, modül yapısı, klasör iskeleti |
-| `DATA_MODEL.md` | Kelime haznesi formatı, istatistik ve sonuç veri modelleri |
-| `HAND_MAPPING.md` | Türkçe Q klavyede sol/sağ el tuş haritası ve tek-el modu mantığı |
-| `ROADMAP.md` | Geliştirme aşamaları (milestone'lar) |
-| `WORKFLOW.md` | Her görev sonrası test/build/commit kuralları (Türkçe conventional commit) |
+- Turkish Q klavye düzeninde yazım pratiği
+- Süreli veya kelime sayılı test modları
+- Sol el / sağ el / iki el modu
+- WPM, CPM ve doğruluk oranı istatistikleri
+- Yerel kelime haznesi (çevrimdışı çalışır)
+- SQLite ile kalıcı istatistik depolama
+- Koyu/açık tema desteği
 
-## Tek Cümlelik Özet (Prompt)
+## Teknolojiler
 
-> Rust ile yazılmış, Türkçe Q klavye düzenine göre 10 parmak hızlı yazım öğreten bir masaüstü
-> uygulaması geliştir. Uygulama, binlerce kelimelik yerel bir kelime haznesi barındırsın; süreli
-> (zaman sınırlı) yazım testleri yapabilsin; kullanıcı isterse sadece **sağ el** veya sadece
-> **sol el** ile pratik yapabileceği bir mod sunsun (klavye, seçilen ele göre sadece o elin
-> kullandığı tuşlardan oluşan kelimeleri göstersin); WPM/CPM, doğruluk oranı, hatalı tuş
-> istatistikleri gibi metrikleri hesaplayıp göstersin; sonuçları yerel olarak (SQLite veya JSON)
-> saklasın.
+- [Rust](https://www.rust-lang.org/)
+- [egui / eframe](https://github.com/emilk/egui) — immediate-mode GUI
+- [rusqlite](https://github.com/rusqlite/rusqlite) — SQLite bağımlılığı
+- [serde / serde_json](https://serde.rs/) — JSON serileştirme
 
-## Nasıl Kullanılır
+## Kurulum
 
-1. Bu klasördeki tüm `.md` dosyalarını bir kodlama asistanına (ör. Claude Code) ver.
-2. "Bu dokümanlara göre Rust projesini `cargo new` ile oluştur ve `ROADMAP.md`'deki 1. aşamadan
-   başla; her görev sonunda `WORKFLOW.md`'deki adımları uygula (test → build → Türkçe conventional
-   commit)" diyerek geliştirmeye başlat.
-3. Her görev bittikçe `WORKFLOW.md`'deki test/build/commit adımları uygulanır, sonra
-   `ROADMAP.md`'deki bir sonraki maddeye geçilir.
+```bash
+# Depoyu klonlayın
+git clone https://github.com/KULLANICI_ADI/FastShi.git
+cd FastShi
+
+# Derleyin ve çalıştırın
+cargo run
+```
+
+## Proje Yapısı
+
+```
+FastShi/
+├── assets/word_lists/    # Kelime haznesi dosyaları (JSON)
+├── src/
+│   ├── main.rs           # Uygulama giriş noktası
+│   ├── app.rs            # Ana uygulama döngüsü
+│   ├── typing/           # Yazım motoru ve metrikler
+│   ├── hand_mode/        # Sol/sağ el filtresi
+│   ├── storage/          # SQLite depolama
+│   ├── ui/               # Arayüz ekranları
+│   └── config.rs         # Kullanıcı ayarları
+├── ARCHITECTURE.md       # Mimari kararlar
+├── DATA_MODEL.md         # Veri modeli tanımları
+├── HAND_MAPPING.md       # Tuş haritası
+├── REQUIREMENTS.md       # Gereksinimler
+└── ROADMAP.md            # Geliştirme yol haritası
+```
+
+## Geliştirme
+
+Geliştirme süreci ve kurallar için `ROADMAP.md` dosyasına bakın.
+
+```bash
+# Testleri çalıştırın
+cargo test
+
+# Derlemeyi kontrol edin
+cargo build
+
+# Lint kontrolü
+cargo clippy
+```
+
+## Lisans
+
+Bu proje [MIT Lisansı](LICENSE) altında dağıtılır.

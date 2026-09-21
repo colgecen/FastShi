@@ -30,37 +30,14 @@ uygulanmalıdır.
 
 ## 2. Kelime Filtreleme Mantığı
 
-```rust
-enum Hand { Left, Right }
-
-fn hand_of_char(c: char) -> Option<Hand> {
-    match c.to_ascii_lowercase() {
-        'q' | 'w' | 'e' | 'r' | 't' |
-        'a' | 's' | 'd' | 'f' | 'g' |
-        'z' | 'x' | 'c' | 'v' | 'b' => Some(Hand::Left),
-
-        'y' | 'u' | 'i' | 'o' | 'p' | 'ğ' | 'ü' |
-        'h' | 'j' | 'k' | 'l' | 'ş' | 'i' /* dotless İ ayrı ele dikkat */ |
-        'n' | 'm' | 'ö' | 'ç' => Some(Hand::Right),
-
-        _ => None, // boşluk, noktalama, rakamlarda ayrı ele göre değerlendirilebilir
-    }
-}
-
-fn word_is_single_hand(word: &str, hand: &Hand) -> bool {
-    word.chars().all(|c| {
-        match hand_of_char(c) {
-            Some(h) => std::mem::discriminant(&h) == std::mem::discriminant(hand),
-            None => true, // harf olmayan karakterleri yok say
-        }
-    })
-}
-```
+Her karakter için `hand_of_char` fonksiyonu ile hangi ele ait olduğu belirlenir. Bir kelimenin
+belirli bir ele ait olup olmadığı, kelimedeki tüm harflerin aynı ele ait olup olmadığı kontrol
+edilerek bulunur. Harf olmayan karakterler (boşluk, noktalama, rakamlar) filtreleme dışı bırakılır.
 
 > Türkçe'de büyük/küçük İ-I ayrımına dikkat: `İ` (noktalı büyük İ) ve `i` sağ elde, `I` (noktasız
 > büyük I) ve `ı` sol elde değerlendirilmelidir — bunlar Unicode'da farklı karakterlerdir, `to_lowercase()`
-> Türkçe kurallarına göre çalışmayabilir (Rust'ın standart `to_ascii_lowercase` bunu doğru yapmaz).
-> Bu yüzden Türkçe'ye özgü büyük/küçük harf dönüşümü elle (özel bir eşleme tablosuyla) yapılmalı.
+> Türkçe kurallarına göre çalışmayabilir. Bu yüzden Türkçe'ye özgü büyük/küçük harf dönüşümü
+> elle (özel bir eşleme tablosuyla) yapılmalıdır.
 
 ## 3. Kelime Bulunamazsa Yedek Plan
 
