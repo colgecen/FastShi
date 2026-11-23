@@ -823,8 +823,13 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
         let mut current_line: Vec<usize> = Vec::new();
         let mut current_width = 0.0_f32;
 
-        for i in word_index..engine.typed_words.len().min(word_index + 80) {
-            let tw = &engine.typed_words[i];
+        for (i, tw) in engine
+            .typed_words
+            .iter()
+            .enumerate()
+            .skip(word_index)
+            .take(80)
+        {
             let word_pixel_width = measure_word_width(ui, &tw.word);
 
             if i > word_index {
