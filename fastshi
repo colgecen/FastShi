@@ -379,6 +379,12 @@ linux_targz() {
 linux_rpm() {
   local arch="$1"
   local top="$STAGE/rpm-$arch"
+  local rpm_version rpm_release
+  rpm_version="${VERSION%%-*}"
+  rpm_release="1"
+  if [ "$VERSION" != "$rpm_version" ]; then
+    rpm_release="0.${VERSION#*-}"
+  fi
   command -v rpmbuild >/dev/null 2>&1 || die "rpmbuild not found (sudo dnf install rpm-build)."
   rm -rf "$top"
   mkdir -p "$top"/{BUILD,RPMS,SOURCES,SPECS,SRPMS} "$DIST"
@@ -398,8 +404,8 @@ DESKTOP
   cat > "$top/SPECS/$APP.spec" << SPEC
 %global debug_package %{nil}
 Name: $APP
-Version: $VERSION
-Release: 1
+Version: $rpm_version
+Release: $rpm_release
 Summary: $SUMMARY
 License: $LICENSE_ID
 BuildArch: $arch
