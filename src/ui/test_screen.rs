@@ -470,12 +470,9 @@ fn show_settings_panel(
             ui.label(theme::sub_heading_text("ses"));
             ui.add_space(10.0);
             if let Some(snd) = sound {
-                let avail = ui.available_width();
-                let bar_w = (avail * 0.8).clamp(140.0, 220.0);
-                let side_pad = ((avail - bar_w) / 2.0).max(0.0);
+                let bar_w = ui.available_width();
 
                 ui.horizontal(|ui| {
-                    ui.add_space(side_pad);
                     ui.spacing_mut().slider_width = bar_w;
                     let mut vol = snd.volume();
                     let slider = egui::Slider::new(&mut vol, 0.0..=1.0)
@@ -487,7 +484,6 @@ fn show_settings_panel(
                 });
                 ui.add_space(8.0);
                 ui.horizontal(|ui| {
-                    ui.add_space(side_pad);
                     let icon = if snd.is_muted() {
                         "🔇"
                     } else if snd.volume() < 0.5 {
