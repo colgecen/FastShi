@@ -3,14 +3,66 @@ name: Release
 on:
   push:
     tags:
-      - "v*"
+      - "v*.*.*"
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-windows:
-    name: Windows Build
+  linux-x86_64:
+    name: Linux x86_64
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libxkbcommon-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev rpm imagemagick curl
+
+      - name: Build Linux assets
+        shell: bash
+        run: |
+          chmod +x fastshi
+          VERSION="${GITHUB_REF_NAME#v}" ./fastshi --build linux "appimage targz rpm" x86_64
+
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-x86_64
+          path: build/dist/*
+
+  linux-aarch64:
+    name: Linux aarch64
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libxkbcommon-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev rpm imagemagick curl
+
+      - name: Build Linux assets
+        shell: bash
+        run: |
+          chmod +x fastshi
+          VERSION="${GITHUB_REF_NAME#v}" ./fastshi --build linux "appimage targz rpm" aarch64
+
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-aarch64
+          path: build/dist/*
+
+  windows-x86_64:
+    name: Windows x86_64
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,104 +70,84 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Cache cargo
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
+      - name: Build Windows asset
+        shell: bash
+        run: |
+          chmod +x fastshi
+          VERSION="${GITHUB_REF_NAME#v}" ./fastshi --build windows exe x86_64
 
-      - name: Build release
-        run: cargo build --release --verbose
-
-      - name: Upload artifact
+      - name: Upload assets
         uses: actions/upload-artifact@v4
         with:
-          name: typing-trainer-windows
-          path: target/release/typing_trainer.exe
+          name: windows-x86_64
+          path: build/dist/*
 
-  build-linux:
-    name: Linux Build
+  windows-arm64:
+    name: Windows arm64
+    runs-on: windows-11-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Windows asset
+        shell: bash
+        run: |
+          chmod +x fastshi
+          VERSION="${GITHUB_REF_NAME#v}" ./fastshi --build windows exe aarch64
+
+      - name: Upload assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-arm64
+          path: build/dist/*
+
+  source:
+    name: Source archive
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache cargo
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-
-      - name: Install dependencies
+      - name: Create source archive
+        shell: bash
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libasound2-dev libxkbcommon-dev libxcb-render0-dev libxcb-shape0-dev libxcb-xfixes0-dev
+          VERSION="${GITHUB_REF_NAME#v}"
+          mkdir -p build/dist
+          git archive --format=tar.gz --prefix="fastshi-$VERSION/" \
+            -o "build/dist/fastshi-$VERSION-source.tar.gz" HEAD
 
-      - name: Build release
-        run: cargo build --release --verbose
-
-      - name: Upload artifact
+      - name: Upload assets
         uses: actions/upload-artifact@v4
         with:
-          name: typing-trainer-linux
-          path: target/release/typing_trainer
-
-  build-macos:
-    name: macOS Build
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache cargo
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
-
-      - name: Build release
-        run: cargo build --release --verbose
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: typing-trainer-macos
-          path: target/release/typing_trainer
+          name: source
+          path: build/dist/*
 
   release:
     name: Create Release
-    needs: [build-windows, build-linux, build-macos]
+    needs: [linux-x86_64, linux-aarch64, windows-x86_64, windows-arm64, source]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
+        with:
+          path: release
+          merge-multiple: true
+
+      - name: Generate SHA256SUMS
+        shell: bash
+        run: |
+          cd release
+          rm -f SHA256SUMS
+          sha256sum -- * > SHA256SUMS
+          cat SHA256SUMS
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          name: ${{ github.ref_name }}
           generate_release_notes: true
-          files: |
-            typing-trainer-windows/typing_trainer.exe
-            typing-trainer-linux/typing_trainer
-            typing-trainer-macos/typing_trainer
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          files: release/*
