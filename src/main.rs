@@ -11,7 +11,7 @@ fn main() -> eframe::Result {
 
     let mut viewport = egui::ViewportBuilder::default()
         .with_inner_size([1440.0, 900.0])
-        .with_fullscreen(true)
+        .with_maximized(true)
         .with_title("FastShi");
 
     if let Some(icon) = icon_data {
