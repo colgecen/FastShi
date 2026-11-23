@@ -85,7 +85,7 @@ impl eframe::App for TypingApp {
                 self.sound.as_ref(),
             );
 
-            if self.test_state.just_finished {
+            if self.test_state.just_finished && !self.test_state.result_saved {
                 if let Some(ref metrics) = self.test_state.last_metrics {
                     let db = Database::open();
                     let result = TestResult {
@@ -102,6 +102,8 @@ impl eframe::App for TypingApp {
                         zorluk: self.test_state.zorluk.as_str().to_string(),
                     };
                     db.kaydet(&result);
+                    self.test_state.result_saved = true;
+                    self.test_state.refresh_history();
                 }
             }
         });

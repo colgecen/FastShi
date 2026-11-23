@@ -2,11 +2,42 @@ use eframe::egui;
 
 use crate::hand_mode::key_map::Hand;
 use crate::storage::db::Database;
+use crate::storage::models::TestResult;
 use crate::typing::engine::{TestMode, TypingEngine, Zorluk};
 use crate::typing::metrics::Metrics;
 use crate::typing::word_source::WordSource;
 use crate::ui::keyboard_widget;
 use super::theme;
+
+const LAYOUT_MARGIN: f32 = 14.0;
+const LAYOUT_GAP: f32 = 14.0;
+const TYPING_LINE_HEIGHT: f32 = 30.0;
+const TYPING_MAX_LINES: usize = 6;
+const TYPING_BOX_HEIGHT: f32 = TYPING_LINE_HEIGHT * TYPING_MAX_LINES as f32 + 24.0;
+const FINGER_HEIGHT: f32 = 72.0;
+const KEYBOARD_ROW_HEIGHT: f32 = 52.0;
+const KEYBOARD_HEIGHT: f32 = KEYBOARD_ROW_HEIGHT * 5.0 + 4.0 * 4.0 + 16.0;
+const CENTER_GAP: f32 = 30.0;
+const TYPING_WIDTH_RATIO: f32 = 0.60;
+
+struct ColumnLayout {
+    card_w: f32,
+    card_h: f32,
+    center_w: f32,
+}
+
+fn column_layout(avail: egui::Vec2) -> ColumnLayout {
+    let card_w = (avail.x * 0.17).clamp(230.0, 300.0);
+    let card_h = (avail.y - LAYOUT_MARGIN * 2.0).max(360.0);
+    let center_w =
+        (avail.x - card_w * 2.0 - LAYOUT_GAP * 2.0 - LAYOUT_MARGIN * 2.0).max(320.0);
+
+    ColumnLayout {
+        card_w,
+        card_h,
+        center_w,
+    }
+}
 
 pub struct TestState {
     pub engine: Option<TypingEngine>,
@@ -19,10 +50,12 @@ pub struct TestState {
     pub just_finished: bool,
     pub last_metrics: Option<Metrics>,
     pub test_modu_str: String,
-    pub show_history: bool,
     pub show_next_key: bool,
     pub show_finger: bool,
     pub pressed_key: Option<char>,
+    pub history: Vec<TestResult>,
+    pub history_loaded: bool,
+    pub result_saved: bool,
 }
 
 impl Default for TestState {
@@ -38,224 +71,42 @@ impl Default for TestState {
             just_finished: false,
             last_metrics: None,
             test_modu_str: "iki_el".to_string(),
-            show_history: false,
             show_next_key: true,
             show_finger: true,
             pressed_key: None,
+            history: Vec::new(),
+            history_loaded: false,
+            result_saved: false,
         }
     }
 }
 
-pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_image: Option<&egui::TextureHandle>, _logo_image: Option<&egui::TextureHandle>, sound: Option<&crate::sound::SoundManager>) {
+impl TestState {
+    pub fn refresh_history(&mut self) {
+        self.history = Database::open().getir_tum();
+        self.history_loaded = true;
+    }
+}
+
+pub fn show(
+    ui: &mut egui::Ui,
+    state: &mut TestState,
+    json_data: &str,
+    _finger_image: Option<&egui::TextureHandle>,
+    _logo_image: Option<&egui::TextureHandle>,
+    sound: Option<&crate::sound::SoundManager>,
+) {
     // Her zaman kelimeleri yuklu tut — eger engine yoksa baslat
     if state.engine.is_none() {
         init_engine(state, json_data);
     }
 
-    // Gecmis popup
-    if state.show_history {
-        show_history_window(ui.ctx(), &mut state.show_history);
+    if !state.history_loaded {
+        state.refresh_history();
     }
 
-    // === SES KONTROLÜ (en üstte, YouTube tarzı seviye göstergesi) ===
-    ui.horizontal(|ui| {
-        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-            if let Some(snd) = sound {
-                // yüzde göstergesi
-                ui.label(theme::small_text(&format!("%{}", (snd.volume() * 100.0) as i32)));
-                let mut vol = snd.volume();
-                let slider = egui::Slider::new(&mut vol, 0.0..=1.0)
-                    .show_value(false)
-                    .trailing_fill(true);
-                let resp = ui.add_sized(egui::vec2(120.0, 16.0), slider);
-                if resp.changed() {
-                    snd.set_volume(vol);
-                }
-                let icon = if snd.is_muted() {
-                    "🔇"
-                } else if snd.volume() < 0.5 {
-                    "🔈"
-                } else {
-                    "🔊"
-                };
-                if ui.small_button(icon).clicked() {
-                    snd.toggle_mute();
-                }
-                ui.label(theme::small_text("ses"));
-            } else {
-                ui.label(theme::small_text("ses kapali"));
-            }
-        });
-    });
-    ui.add_space(6.0);
-
-    // === AYARLAR (kompakt tek satir) ===
-    ui.horizontal_wrapped(|ui| {
-        ui.label(theme::sub_heading_text("mod"));
-        for (mode, label) in [
-            (TestMode::TwoHand, "iki el"),
-                          (TestMode::RightHand, "sag el"),
-                          (TestMode::LeftHand, "sol el"),
-        ] {
-            let selected = state.mode == mode;
-            let btn = egui::Button::new(theme::button_text(label))
-            .selected(selected)
-            .min_size(egui::vec2(60.0, 24.0));
-            if ui.add(btn).clicked() {
-                if state.mode != mode {
-                    state.mode = mode;
-                    reload_engine(state, json_data);
-                }
-            }
-        }
-
-        ui.add_space(8.0);
-        ui.label(theme::sub_heading_text("zorluk"));
-        for (z, label) in [
-            (Zorluk::Kolay, "kolay"),
-                          (Zorluk::Orta, "orta"),
-                          (Zorluk::Zor, "zor"),
-        ] {
-            let selected = state.zorluk == z;
-            let btn = egui::Button::new(theme::button_text(label))
-            .selected(selected)
-            .min_size(egui::vec2(50.0, 24.0));
-            if ui.add(btn).clicked() {
-                if state.zorluk != z {
-                    state.zorluk = z;
-                    reload_engine(state, json_data);
-                }
-            }
-        }
-
-        ui.add_space(8.0);
-        ui.label(theme::sub_heading_text("sure"));
-        for sn in [30, 60, 120] {
-            let selected = state.sure_secenek == sn && state.kelime_hedef.is_none();
-            let btn = egui::Button::new(theme::button_text(&format!("{}sn", sn)))
-            .selected(selected)
-            .min_size(egui::vec2(45.0, 24.0));
-            if ui.add(btn).clicked() {
-                let needs_reload = state.sure_secenek != sn || state.kelime_hedef.is_some();
-                state.sure_secenek = sn;
-                state.kelime_hedef = None;
-                if needs_reload {
-                    reload_engine(state, json_data);
-                }
-            }
-        }
-
-        ui.add_space(8.0);
-        ui.label(theme::sub_heading_text("kelime"));
-        for k in [25, 50, 100] {
-            let selected = state.kelime_hedef == Some(k);
-            let btn = egui::Button::new(theme::button_text(&format!("{}", k)))
-            .selected(selected)
-            .min_size(egui::vec2(40.0, 24.0));
-            if ui.add(btn).clicked() {
-                let needs_reload = state.kelime_hedef != Some(k) || state.sure_secenek != 0;
-                state.kelime_hedef = Some(k);
-                state.sure_secenek = 0;
-                if needs_reload {
-                    reload_engine(state, json_data);
-                }
-            }
-        }
-
-        ui.add_space(16.0);
-
-        let harf_label = if state.show_next_key { "harf: goster" } else { "harf: gizle" };
-        let harf_btn = egui::Button::new(theme::button_text(harf_label))
-            .selected(state.show_next_key)
-            .min_size(egui::vec2(80.0, 24.0));
-        if ui.add(harf_btn).clicked() {
-            state.show_next_key = !state.show_next_key;
-        }
-
-        ui.add_space(8.0);
-        let parmak_label = if state.show_finger { "parmak: goster" } else { "parmak: gizle" };
-        let parmak_btn = egui::Button::new(theme::button_text(parmak_label))
-            .selected(state.show_finger)
-            .min_size(egui::vec2(90.0, 24.0));
-        if ui.add(parmak_btn).clicked() {
-            state.show_finger = !state.show_finger;
-        }
-
-        ui.add_space(8.0);
-        let gecmis_btn = egui::Button::new(theme::button_text("gecmis"));
-        if ui.add(gecmis_btn).clicked() {
-            state.show_history = true;
-        }
-    });
-
-    ui.add_space(4.0);
-
-    // === DURUM BILGISI ===
-    if state.started {
-        ui.horizontal(|ui| {
-            let engine = state.engine.as_ref().unwrap();
-            let elapsed = engine.elapsed_secs();
-            if state.sure_secenek > 0 {
-                let remaining = state.sure_secenek as f64 - elapsed;
-                ui.label(theme::body_text(&format!("{:.0} sn kaldi", remaining.max(0.0))));
-            } else {
-                ui.label(theme::body_text(&format!(
-                    "{}/{} kelime",
-                    engine.words_completed,
-                    state.kelime_hedef.unwrap_or(0)
-                )));
-            }
-            ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                let toplam = engine.dogru_tus + engine.yanlis_tus;
-                let dogruluk = if toplam > 0 {
-                    (engine.dogru_tus as f64 / toplam as f64 * 100.0) as u32
-                } else {
-                    100
-                };
-                ui.label(theme::body_text(&format!("%{}", dogruluk)));
-            });
-        });
-    } else if state.just_finished {
-        if let Some(ref metrics) = state.last_metrics {
-            let mut open = true;
-            egui::Window::new("sonuclar")
-                .open(&mut open)
-                .resizable(false)
-                .anchor(egui::Align2::CENTER_CENTER, [0.0, 0.0])
-                .fixed_size([320.0, 200.0])
-                .show(ui.ctx(), |ui| {
-                    ui.vertical_centered(|ui| {
-                        ui.add_space(8.0);
-                        ui.label(theme::sub_heading_text(&format!("mod: {}", state.test_modu_str)));
-                        ui.label(theme::body_text(&format!("sure: {}sn", state.sure_secenek)));
-                        ui.add_space(8.0);
-                        ui.label(theme::body_text(&format!("wpm: {:.1}", metrics.wpm)));
-                        ui.label(theme::body_text(&format!("cpm: {:.1}", metrics.cpm)));
-
-                        let dogruluk_rengi = if metrics.dogruluk_yuzde >= 90.0 {
-                            theme::WHITE
-                        } else if metrics.dogruluk_yuzde >= 70.0 {
-                            theme::LIGHT_GRAY
-                        } else {
-                            egui::Color32::from_rgb(200, 100, 100)
-                        };
-                        ui.label(
-                            egui::RichText::new(format!("dogruluk: {:.1}%", metrics.dogruluk_yuzde))
-                                .family(egui::FontFamily::Name("spacemono".into()))
-                                .size(14.0)
-                                .color(dogruluk_rengi),
-                        );
-                        ui.label(theme::body_text(&format!("dogru: {} | yanlis: {}", metrics.dogru_tus, metrics.yanlis_tus)));
-                        ui.add_space(8.0);
-                        ui.label(theme::small_text("ESC ile kapat, tekrar basla"));
-                    });
-                });
-            if !open {
-                state.just_finished = false;
-                state.last_metrics = None;
-            }
-        }
-    }
+    // Sonuc penceresi
+    show_results_window(ui.ctx(), state);
 
     // ESC ile sonucu kapat ve yeniden baslat
     ui.ctx().input(|i| {
@@ -264,13 +115,6 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             state.last_metrics = None;
         }
     });
-
-    ui.add_space(4.0);
-
-    // === YAZI ALANI ===
-    let total_w = ui.available_width();
-    let kw = total_w * 0.6;
-    let side_pad = (total_w - kw) / 2.0;
 
     // dim_hand her zaman moda göre: sağ el seçince sol kaybolsun, sol seçince sağ kaybolsun, iki elde geri gelsin
     let dim_hand = match state.mode {
@@ -346,62 +190,53 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
     };
     ui.ctx().request_repaint();
 
-    ui.add_space(32.0);
+    // === YERLESIM: sol ayarlar | orta test alani | sag gecmis ===
+    let layout = column_layout(ui.available_size());
+    let typing_w = (layout.center_w * TYPING_WIDTH_RATIO).min(layout.center_w);
+    let keyboard_w = typing_w;
 
-    ui.vertical_centered(|ui| {
-        ui.set_min_width(kw);
-        ui.set_max_width(kw);
+    ui.vertical(|ui| {
+        ui.spacing_mut().item_spacing.y = 0.0;
+        ui.add_space(LAYOUT_MARGIN);
+        ui.horizontal_top(|ui| {
+            ui.spacing_mut().item_spacing.x = 0.0;
+            ui.add_space(LAYOUT_MARGIN);
 
-        show_typing_area(ui, state, kw);
-    });
-
-    // Parmak adı — kelime kutucuğu ile klavye arasında, üstten/alttan eşit ortalanmış, aşırı büyük (iki katı)
-    let kb_height = 52.0 * 5.0 + 4.0 * 4.0 + 16.0;
-    let finger_height = 72.0;
-    let remaining = ui.available_height();
-    let bottom_pad = side_pad / 2.0;
-    // kelime kutusu ile klavye arasındaki boşluğu parmak etiketi ortalayacak şekilde böl
-    let gap = (remaining - kb_height - bottom_pad - finger_height).max(0.0);
-    let top_gap = gap / 2.0;
-    let bottom_gap = gap - top_gap;
-    ui.add_space(top_gap);
-    {
-        let finger_text = if state.show_finger {
-            if let Some(ch) = next_char {
-                let f = keyboard_widget::finger_of(ch);
-                f.display_name().to_string()
-            } else {
-                "".to_string()
-            }
-        } else {
-            "".to_string()
-        };
-        let avail = ui.available_width();
-        let (rect, _) = ui.allocate_exact_size(egui::vec2(avail, finger_height), egui::Sense::hover());
-        if !finger_text.is_empty() {
-            ui.allocate_new_ui(egui::UiBuilder::new().max_rect(rect), |ui| {
-                ui.centered_and_justified(|ui| {
-                    ui.label(
-                        egui::RichText::new(finger_text)
-                            .family(egui::FontFamily::Name("rajdhani_bold".into()))
-                            .size(64.0)
-                            .color(theme::WHITE),
-                    );
-                });
+            draw_card(ui, egui::vec2(layout.card_w, layout.card_h), |ui| {
+                show_settings_panel(ui, state, json_data, sound);
             });
-        }
-    }
-    ui.add_space(bottom_gap);
 
-    let (kb_alloc, _) = ui.allocate_exact_size(egui::vec2(total_w, kb_height), egui::Sense::hover());
-    let centered_kb_rect = egui::Rect::from_min_size(
-        kb_alloc.min + egui::vec2(side_pad, 0.0),
-        egui::vec2(kw, kb_height),
-    );
-    ui.allocate_new_ui(egui::UiBuilder::new().max_rect(centered_kb_rect), |ui| {
-        keyboard_widget::draw_keyboard_sized(ui, kb_active_key, dim_hand, Some(kw));
+            ui.add_space(LAYOUT_GAP);
+
+            let (center_rect, _) = ui.allocate_exact_size(
+                egui::vec2(layout.center_w, layout.card_h),
+                egui::Sense::hover(),
+            );
+            let mut center_ui =
+                ui.new_child(egui::UiBuilder::new().max_rect(center_rect));
+            center_ui.with_layout(egui::Layout::top_down(egui::Align::Center), |ui| {
+                show_test_panel(
+                    ui,
+                    state,
+                    layout.center_w,
+                    layout.card_h,
+                    typing_w,
+                    keyboard_w,
+                    next_char,
+                    kb_active_key,
+                    dim_hand,
+                );
+            });
+
+            ui.add_space(LAYOUT_GAP);
+
+            draw_card(ui, egui::vec2(layout.card_w, layout.card_h), |ui| {
+                show_history_panel(ui, state);
+            });
+
+            ui.add_space(LAYOUT_MARGIN);
+        });
     });
-    ui.add_space(bottom_pad);
 
     // Her frame'de kelime doldur
     if state.started {
@@ -440,6 +275,7 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             state.started = true;
             state.just_finished = false;
             state.last_metrics = None;
+            state.result_saved = false;
         }
         // Hic baslamadiysa yeni test baslat
         else if !state.started {
@@ -476,11 +312,433 @@ pub fn show(ui: &mut egui::Ui, state: &mut TestState, json_data: &str, _finger_i
             state.last_metrics = Some(metrics);
             state.just_finished = true;
             state.started = false;
+            state.result_saved = false;
         }
 
         ui.ctx().request_repaint();
     } else if state.started {
         ui.ctx().request_repaint();
+    }
+}
+
+fn draw_card(ui: &mut egui::Ui, size: egui::Vec2, add: impl FnOnce(&mut egui::Ui)) {
+    let (rect, _) = ui.allocate_exact_size(size, egui::Sense::hover());
+    let radius = egui::CornerRadius::same(10);
+
+    ui.painter()
+        .rect_filled(rect, radius, theme::DARK_GRAY);
+    ui.painter().rect_stroke(
+        rect,
+        radius,
+        egui::Stroke::new(1.0_f32, theme::GRAY),
+        egui::StrokeKind::Inside,
+    );
+
+    let inner = rect.shrink(14.0);
+    let mut child = ui.new_child(
+        egui::UiBuilder::new()
+            .max_rect(inner)
+            .layout(egui::Layout::top_down(egui::Align::Min)),
+    );
+    child.set_clip_rect(inner);
+    add(&mut child);
+}
+
+fn show_settings_panel(
+    ui: &mut egui::Ui,
+    state: &mut TestState,
+    json_data: &str,
+    sound: Option<&crate::sound::SoundManager>,
+) {
+    egui::ScrollArea::vertical()
+        .id_salt("ayarlar_panel")
+        .auto_shrink([false, false])
+        .show(ui, |ui| {
+            ui.set_width(ui.available_width());
+
+            ui.label(theme::heading_text("FastShi"));
+            ui.add_space(2.0);
+            ui.label(theme::small_text("hizli yazma uygulamasi"));
+            ui.add_space(22.0);
+
+            ui.label(theme::sub_heading_text("mod"));
+            ui.add_space(10.0);
+            let btn_w = (ui.available_width() - 12.0) / 3.0;
+            ui.horizontal(|ui| {
+                ui.spacing_mut().item_spacing.x = 6.0;
+                for (mode, label) in [
+                    (TestMode::TwoHand, "iki el"),
+                    (TestMode::RightHand, "sag el"),
+                    (TestMode::LeftHand, "sol el"),
+                ] {
+                    let selected = state.mode == mode;
+                    if option_button(ui, label, selected, btn_w).clicked() && state.mode != mode {
+                        state.mode = mode;
+                        reload_engine(state, json_data);
+                    }
+                }
+            });
+            ui.add_space(18.0);
+
+            ui.label(theme::sub_heading_text("zorluk"));
+            ui.add_space(10.0);
+            ui.horizontal(|ui| {
+                ui.spacing_mut().item_spacing.x = 6.0;
+                for (z, label) in [
+                    (Zorluk::Kolay, "kolay"),
+                    (Zorluk::Orta, "orta"),
+                    (Zorluk::Zor, "zor"),
+                ] {
+                    let selected = state.zorluk == z;
+                    if option_button(ui, label, selected, btn_w).clicked() && state.zorluk != z {
+                        state.zorluk = z;
+                        reload_engine(state, json_data);
+                    }
+                }
+            });
+            ui.add_space(18.0);
+
+            ui.label(theme::sub_heading_text("sure"));
+            ui.add_space(10.0);
+            ui.horizontal(|ui| {
+                ui.spacing_mut().item_spacing.x = 6.0;
+                for sn in [30, 60, 120] {
+                    let selected = state.sure_secenek == sn && state.kelime_hedef.is_none();
+                    let label = format!("{}sn", sn);
+                    if option_button(ui, &label, selected, btn_w).clicked() {
+                        let needs_reload =
+                            state.sure_secenek != sn || state.kelime_hedef.is_some();
+                        state.sure_secenek = sn;
+                        state.kelime_hedef = None;
+                        if needs_reload {
+                            reload_engine(state, json_data);
+                        }
+                    }
+                }
+            });
+            ui.add_space(18.0);
+
+            ui.label(theme::sub_heading_text("kelime"));
+            ui.add_space(10.0);
+            ui.horizontal(|ui| {
+                ui.spacing_mut().item_spacing.x = 6.0;
+                for k in [25, 50, 100] {
+                    let selected = state.kelime_hedef == Some(k);
+                    let label = format!("{}", k);
+                    if option_button(ui, &label, selected, btn_w).clicked() {
+                        let needs_reload =
+                            state.kelime_hedef != Some(k) || state.sure_secenek != 0;
+                        state.kelime_hedef = Some(k);
+                        state.sure_secenek = 0;
+                        if needs_reload {
+                            reload_engine(state, json_data);
+                        }
+                    }
+                }
+            });
+
+            ui.add_space(22.0);
+            ui.separator();
+            ui.add_space(16.0);
+
+            let full_w = ui.available_width();
+            let harf_label = if state.show_next_key {
+                "harf: acik"
+            } else {
+                "harf: kapali"
+            };
+            if option_button(ui, harf_label, state.show_next_key, full_w).clicked() {
+                state.show_next_key = !state.show_next_key;
+            }
+            ui.add_space(8.0);
+
+            let parmak_label = if state.show_finger {
+                "parmak: acik"
+            } else {
+                "parmak: kapali"
+            };
+            if option_button(ui, parmak_label, state.show_finger, full_w).clicked() {
+                state.show_finger = !state.show_finger;
+            }
+
+            ui.add_space(20.0);
+            ui.label(theme::sub_heading_text("ses"));
+            ui.add_space(10.0);
+            if let Some(snd) = sound {
+                let mut vol = snd.volume();
+                let slider = egui::Slider::new(&mut vol, 0.0..=1.0)
+                    .show_value(false)
+                    .trailing_fill(true);
+                let resp = ui.add_sized(egui::vec2(ui.available_width(), 18.0), slider);
+                if resp.changed() {
+                    snd.set_volume(vol);
+                }
+                ui.add_space(8.0);
+                ui.horizontal(|ui| {
+                    let icon = if snd.is_muted() {
+                        "🔇"
+                    } else if snd.volume() < 0.5 {
+                        "🔈"
+                    } else {
+                        "🔊"
+                    };
+                    if ui
+                        .add_sized(egui::vec2(44.0, 28.0), egui::Button::new(icon))
+                        .clicked()
+                    {
+                        snd.toggle_mute();
+                    }
+                    ui.label(theme::small_text(&format!(
+                        "%{}",
+                        (snd.volume() * 100.0) as i32
+                    )));
+                });
+            } else {
+                ui.label(theme::small_text("ses kapali"));
+            }
+        });
+}
+
+fn option_button(
+    ui: &mut egui::Ui,
+    label: &str,
+    selected: bool,
+    width: f32,
+) -> egui::Response {
+    let btn = egui::Button::new(theme::button_text(label))
+        .selected(selected)
+        .min_size(egui::vec2(width, 28.0));
+    ui.add(btn)
+}
+
+fn show_test_panel(
+    ui: &mut egui::Ui,
+    state: &mut TestState,
+    center_w: f32,
+    center_h: f32,
+    typing_w: f32,
+    keyboard_w: f32,
+    next_char: Option<char>,
+    kb_active_key: Option<char>,
+    dim_hand: Option<keyboard_widget::Hand>,
+) {
+    let status_h = 28.0;
+    let (status_rect, _) =
+        ui.allocate_exact_size(egui::vec2(center_w, status_h), egui::Sense::hover());
+    let mut status_ui = ui.new_child(egui::UiBuilder::new().max_rect(status_rect));
+    status_ui.with_layout(
+        egui::Layout::left_to_right(egui::Align::Center),
+        |ui| {
+                if state.started {
+                    let engine = state.engine.as_ref().unwrap();
+                    let elapsed = engine.elapsed_secs();
+                    if state.sure_secenek > 0 {
+                        let remaining = state.sure_secenek as f64 - elapsed;
+                        ui.label(theme::body_text(&format!(
+                            "{:.0} sn kaldi",
+                            remaining.max(0.0)
+                        )));
+                    } else {
+                        ui.label(theme::body_text(&format!(
+                            "{}/{} kelime",
+                            engine.words_completed,
+                            state.kelime_hedef.unwrap_or(0)
+                        )));
+                    }
+                    ui.with_layout(
+                        egui::Layout::right_to_left(egui::Align::Center),
+                        |ui| {
+                            let toplam = engine.dogru_tus + engine.yanlis_tus;
+                            let dogruluk = if toplam > 0 {
+                                (engine.dogru_tus as f64 / toplam as f64 * 100.0) as u32
+                            } else {
+                                100
+                            };
+                            ui.label(theme::body_text(&format!("%{}", dogruluk)));
+                        },
+                    );
+                } else if state.just_finished {
+                    ui.label(theme::small_text("ESC ile sonucu kapat"));
+                } else {
+                    ui.label(theme::small_text("yazmaya baslamak icin bir tusa bas"));
+                }
+            },
+        );
+
+    let group_h =
+        TYPING_BOX_HEIGHT + CENTER_GAP * 2.0 + FINGER_HEIGHT + KEYBOARD_HEIGHT;
+    let free = (center_h - status_h - group_h).max(0.0);
+    ui.add_space(free / 2.0);
+
+    show_typing_area(ui, state, typing_w);
+    ui.add_space(CENTER_GAP);
+
+    let finger_text = if state.show_finger {
+        if let Some(ch) = next_char {
+            keyboard_widget::finger_of(ch).display_name().to_string()
+        } else {
+            String::new()
+        }
+    } else {
+        String::new()
+    };
+
+    let (finger_rect, _) =
+        ui.allocate_exact_size(egui::vec2(center_w, FINGER_HEIGHT), egui::Sense::hover());
+    if !finger_text.is_empty() {
+        let mut finger_ui = ui.new_child(egui::UiBuilder::new().max_rect(finger_rect));
+        finger_ui.centered_and_justified(|ui| {
+            ui.label(
+                egui::RichText::new(finger_text)
+                    .family(egui::FontFamily::Name("rajdhani_bold".into()))
+                    .size(64.0)
+                    .color(theme::WHITE),
+            );
+        });
+    }
+
+    ui.add_space(CENTER_GAP);
+    keyboard_widget::draw_keyboard_sized(ui, kb_active_key, dim_hand, Some(keyboard_w));
+}
+
+fn show_history_panel(ui: &mut egui::Ui, state: &TestState) {
+    ui.label(theme::heading_text("gecmis"));
+    ui.add_space(2.0);
+    ui.label(theme::small_text(&format!("{} kayit", state.history.len())));
+    ui.add_space(14.0);
+
+    if state.history.is_empty() {
+        ui.label(theme::body_text("henuz test sonucu yok"));
+        return;
+    }
+
+    let mut iki_el: Vec<&TestResult> = Vec::new();
+    let mut sag_el: Vec<&TestResult> = Vec::new();
+    let mut sol_el: Vec<&TestResult> = Vec::new();
+
+    for r in &state.history {
+        match r.modu.as_str() {
+            "sag_el" => sag_el.push(r),
+            "sol_el" => sol_el.push(r),
+            _ => iki_el.push(r),
+        }
+    }
+
+    for (label, group) in [
+        ("iki el", &iki_el),
+        ("sag el", &sag_el),
+        ("sol el", &sol_el),
+    ] {
+        if group.is_empty() {
+            continue;
+        }
+
+        let count = group.len();
+        let avg_wpm: f64 = group.iter().map(|r| r.wpm).sum::<f64>() / count as f64;
+        let avg_dog: f64 =
+            group.iter().map(|r| r.dogruluk_yuzde).sum::<f64>() / count as f64;
+        let best_wpm = group.iter().map(|r| r.wpm).fold(0.0_f64, f64::max);
+
+        ui.label(theme::sub_heading_text(label));
+        ui.add_space(3.0);
+        ui.horizontal_wrapped(|ui| {
+            ui.spacing_mut().item_spacing.x = 8.0;
+            ui.label(theme::small_text(&format!("test: {}", count)));
+            ui.label(theme::small_text(&format!("ort.wpm: {:.1}", avg_wpm)));
+        });
+        ui.horizontal_wrapped(|ui| {
+            ui.spacing_mut().item_spacing.x = 8.0;
+            ui.label(theme::small_text(&format!("en iyi: {:.1}", best_wpm)));
+            ui.label(theme::small_text(&format!("dog: {:.1}%", avg_dog)));
+        });
+        ui.add_space(8.0);
+    }
+
+    ui.separator();
+    ui.add_space(8.0);
+
+    egui::ScrollArea::vertical()
+        .id_salt("gecmis_panel")
+        .auto_shrink([false, false])
+        .show(ui, |ui| {
+            for (i, r) in state.history.iter().enumerate() {
+                if i > 0 {
+                    ui.add_space(8.0);
+                }
+                show_result_entry(ui, r);
+            }
+        });
+}
+
+fn show_result_entry(ui: &mut egui::Ui, r: &TestResult) {
+    ui.horizontal(|ui| {
+        ui.label(theme::small_text(&r.tarih));
+        ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+            ui.label(theme::small_text(&format!("%{:.0}", r.dogruluk_yuzde)));
+        });
+    });
+    ui.horizontal(|ui| {
+        ui.spacing_mut().item_spacing.x = 10.0;
+        ui.label(theme::body_text(&format!("{:.1} wpm", r.wpm)));
+        ui.label(theme::small_text(&format!("{:.0} cpm", r.cpm)));
+    });
+    ui.label(theme::small_text(&format!("{} · {}", r.modu, r.zorluk)));
+}
+
+fn show_results_window(ctx: &egui::Context, state: &mut TestState) {
+    if !state.just_finished {
+        return;
+    }
+    let Some(metrics) = state.last_metrics.clone() else {
+        return;
+    };
+
+    let mut open = true;
+    egui::Window::new("sonuclar")
+        .open(&mut open)
+        .resizable(false)
+        .anchor(egui::Align2::CENTER_CENTER, [0.0, 0.0])
+        .fixed_size([320.0, 200.0])
+        .show(ctx, |ui| {
+            ui.vertical_centered(|ui| {
+                ui.add_space(8.0);
+                ui.label(theme::sub_heading_text(&format!(
+                    "mod: {}",
+                    state.test_modu_str
+                )));
+                ui.label(theme::body_text(&format!("sure: {}sn", state.sure_secenek)));
+                ui.add_space(8.0);
+                ui.label(theme::body_text(&format!("wpm: {:.1}", metrics.wpm)));
+                ui.label(theme::body_text(&format!("cpm: {:.1}", metrics.cpm)));
+
+                let dogruluk_rengi = if metrics.dogruluk_yuzde >= 90.0 {
+                    theme::WHITE
+                } else if metrics.dogruluk_yuzde >= 70.0 {
+                    theme::LIGHT_GRAY
+                } else {
+                    egui::Color32::from_rgb(200, 100, 100)
+                };
+                ui.label(
+                    egui::RichText::new(format!(
+                        "dogruluk: {:.1}%",
+                        metrics.dogruluk_yuzde
+                    ))
+                    .family(egui::FontFamily::Name("spacemono".into()))
+                    .size(14.0)
+                    .color(dogruluk_rengi),
+                );
+                ui.label(theme::body_text(&format!(
+                    "dogru: {} | yanlis: {}",
+                    metrics.dogru_tus, metrics.yanlis_tus
+                )));
+                ui.add_space(8.0);
+                ui.label(theme::small_text("ESC ile kapat, tekrar basla"));
+            });
+        });
+
+    if !open {
+        state.just_finished = false;
+        state.last_metrics = None;
     }
 }
 
@@ -518,6 +776,7 @@ fn reload_engine(state: &mut TestState, json_data: &str) {
     state.started = false;
     state.just_finished = false;
     state.last_metrics = None;
+    state.result_saved = false;
     init_engine(state, json_data);
 }
 
@@ -554,10 +813,11 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
         egui::vec2(content_w, total_height - 24.0),
     );
 
-    ui.allocate_new_ui(egui::UiBuilder::new().max_rect(content_rect), |ui| {
-        ui.set_clip_rect(content_rect);
-        ui.set_max_width(content_w);
-
+    let mut content_ui = ui.new_child(egui::UiBuilder::new().max_rect(content_rect));
+    content_ui.set_clip_rect(content_rect);
+    content_ui.set_max_width(content_w);
+    {
+        let ui = &mut content_ui;
         let available_width = content_w;
         let space_width = measure_word_width(ui, " ") * 1.5;
         let word_index = engine.word_index;
@@ -638,7 +898,7 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
             }
             y_offset += line_height;
         }
-    });
+    }
 }
 
 fn show_results_inline(ui: &mut egui::Ui, metrics: &Metrics, modu: &str, sure_sn: u64) {
@@ -679,86 +939,28 @@ fn show_results_inline(ui: &mut egui::Ui, metrics: &Metrics, modu: &str, sure_sn
     });
 }
 
-fn show_history_window(ctx: &egui::Context, open: &mut bool) {
-    egui::Window::new("gecmis")
-    .open(open)
-    .resizable(true)
-    .default_width(500.0)
-    .default_height(400.0)
-    .show(ctx, |ui| {
-        let db = Database::open();
-        let results = db.getir_tum();
-
-        if results.is_empty() {
-            ui.label(theme::body_text("henuz test sonucu yok"));
-            return;
-        }
-
-        egui::ScrollArea::vertical().show(ui, |ui| {
-            // Gruplama
-            let mut iki_el: Vec<&crate::storage::models::TestResult> = Vec::new();
-            let mut sag_el: Vec<&crate::storage::models::TestResult> = Vec::new();
-            let mut sol_el: Vec<&crate::storage::models::TestResult> = Vec::new();
-
-            for r in &results {
-                match r.modu.as_str() {
-                    "sag_el" => sag_el.push(r),
-                                          "sol_el" => sol_el.push(r),
-                                          _ => iki_el.push(r),
-                }
-            }
-
-            for (label, group) in [("iki el", &iki_el), ("sag el", &sag_el), ("sol el", &sol_el)] {
-                if group.is_empty() { continue; }
-                ui.label(theme::sub_heading_text(label));
-                ui.add_space(4.0);
-
-                let count = group.len();
-                let avg_wpm: f64 = group.iter().map(|r| r.wpm).sum::<f64>() / count as f64;
-                let avg_dog: f64 = group.iter().map(|r| r.dogruluk_yuzde).sum::<f64>() / count as f64;
-                let best_wpm = group.iter().map(|r| r.wpm).fold(0.0_f64, f64::max);
-
-                ui.horizontal_wrapped(|ui| {
-                    ui.label(theme::body_text(&format!(
-                        "test:{} ort.wpm:{:.1} en.iyi:{:.1} dogruluk:{:.1}%",
-                        count, avg_wpm, best_wpm, avg_dog
-                    )));
-                });
-    ui.add_space(6.0);
-            }
-
-            ui.add_space(8.0);
-            ui.separator();
-            ui.add_space(4.0);
-
-            egui::Grid::new("history_grid")
-            .striped(true)
-            .num_columns(6)
-            .show(ui, |ui| {
-                ui.label(theme::small_text("tarih"));
-                ui.label(theme::small_text("mod"));
-                ui.label(theme::small_text("wpm"));
-                ui.label(theme::small_text("cpm"));
-                ui.label(theme::small_text("dogruluk"));
-                ui.label(theme::small_text("zorluk"));
-                ui.end_row();
-
-                for r in results.iter().rev() {
-                    ui.label(theme::body_text(&r.tarih));
-                    ui.label(theme::body_text(&r.modu));
-                    ui.label(theme::body_text(&format!("{:.1}", r.wpm)));
-                    ui.label(theme::body_text(&format!("{:.1}", r.cpm)));
-                    ui.label(theme::body_text(&format!("{:.1}%", r.dogruluk_yuzde)));
-                    ui.label(theme::body_text(&r.zorluk));
-                    ui.end_row();
-                }
-            });
-        });
-    });
-}
-
 fn measure_word_width(ui: &egui::Ui, word: &str) -> f32 {
     let font_id = egui::FontId::new(24.0, egui::FontFamily::Name("spacemono".into()));
     let galley = ui.fonts(|f| f.layout_no_wrap(word.to_string(), font_id, egui::Color32::WHITE));
     galley.size().x
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn uc_sutun_duzeni_esit_ve_ortali() {
+        let layout = column_layout(egui::vec2(1920.0, 1080.0));
+        let total = layout.card_w * 2.0
+            + layout.center_w
+            + LAYOUT_GAP * 2.0
+            + LAYOUT_MARGIN * 2.0;
+
+        assert!((total - 1920.0).abs() < 0.01);
+        assert!(layout.card_w > 0.0);
+        assert!(layout.card_h > 0.0);
+        assert!(layout.center_w > 0.0);
+    }
+}
+
