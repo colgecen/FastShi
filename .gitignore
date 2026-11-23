@@ -1,4 +1,5 @@
 /target/
+/build/
 *.AppImage
 squashfs-root/
 FastShi-x86_64.AppImage

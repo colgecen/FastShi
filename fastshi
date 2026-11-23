@@ -1,0 +1,559 @@
+#!/usr/bin/env bash
+#
+# fastshi - run and build tool
+#
+# Behaviour:
+#   ./fastshi                  Run the app from source. Stop it with Ctrl+C.
+#   fastshi                    Open the build menu (after one-time --install).
+#
+# Commands (reserved flags; every other argument is passed to the app):
+#   ./fastshi --install        Install the `fastshi` command into ~/.local/bin
+#                              and register the app (icon + launcher entry).
+#   ./fastshi --uninstall      Remove that command, the launcher entry and icon.
+#   ./fastshi --build          Interactive build menu.
+#   ./fastshi --build <os> <format> [arch]
+#   ./fastshi --build --list   List all build targets.
+#
+# Targets:
+#   linux   : appimage | targz | rpm | source | binary | all
+#   windows : exe | all
+#   arch    : x86_64 | aarch64 | all          (default: all)
+#
+# Assets are written to build/dist/ as <project>-<version>-<os>-<arch>.<ext>
+# and a SHA256SUMS file is generated next to them.
+#
+set -euo pipefail
+
+# ---- per-project settings (the only part that changes between projects) ----
+APP="fastshi"                     # lowercase command name
+BIN="fastshi"                     # name used by the packaged binary
+CARGO_BIN="typing_trainer"        # cargo binary target
+DISPLAY_NAME="FastShi"
+SUMMARY="Turkish QWERTY touch-typing trainer with timed tests, one-hand modes and local history"
+LICENSE_ID="MIT"                  # SPDX identifier, must match the LICENSE file
+WINDOWS_SUPPORTED="yes"           # "no" -> Linux-only releases
+ICON="assets/icon.png"            # 512x512 PNG provided by the owner
+ICON_RADIUS_PCT="20"              # corner radius as % of icon size (square icons get rounded)
+ARCHS_DEFAULT="x86_64 aarch64"
+
+# ---- locate the repository root (resolves symlinks) ----
+resolve_root() {
+  local src="${BASH_SOURCE[0]}"
+  while [ -L "$src" ]; do
+    local dir
+    dir="$(cd -P "$(dirname "$src")" && pwd)"
+    src="$(readlink "$src")"
+    [[ "$src" != /* ]] && src="$dir/$src"
+  done
+  cd -P "$(dirname "$src")" && pwd
+}
+ROOT="$(resolve_root)"
+
+VERSION="${VERSION:-$(sed -n 's/^version = "\([^"]*\)".*/\1/p' "$ROOT/Cargo.toml" | head -n1)}"
+[ -n "$VERSION" ] || VERSION="0.1.0"
+
+DIST="$ROOT/build/dist"
+STAGE="$ROOT/build/.stage"
+CACHE="$ROOT/build/.cache"
+
+die() { echo "ERROR: $*" >&2; exit 1; }
+
+find_cargo() {
+  CARGO=$(command -v cargo 2>/dev/null || command -v "$HOME/.cargo/bin/cargo" 2>/dev/null || true)
+  [ -n "$CARGO" ] || die "Cargo not found. Install Rust first: https://rustup.rs"
+}
+
+host_arch() {
+  case "$(uname -m)" in
+    x86_64|amd64) echo x86_64 ;;
+    aarch64|arm64) echo aarch64 ;;
+    *) die "Unsupported host architecture: $(uname -m)" ;;
+  esac
+}
+
+host_os() {
+  case "$(uname -s)" in
+    Linux*) echo linux ;;
+    MINGW*|MSYS*|CYGWIN*) echo windows ;;
+    Darwin*) echo macos ;;
+    *) die "Unsupported host OS: $(uname -s)" ;;
+  esac
+}
+
+# =====================================================================
+# Run mode: start the unbuilt app straight from source
+# =====================================================================
+run_app() {
+  find_cargo
+  cd "$ROOT"
+  # exec replaces this shell, so Ctrl+C reaches the app directly.
+  exec "$CARGO" run -- "$@"
+}
+
+# =====================================================================
+# Install / uninstall the bare `fastshi` command
+# =====================================================================
+WRAPPER_MARK="# fastshi-wrapper"
+DESKTOP_MARK="# fastshi-desktop"
+
+# prepare_icon <dest>: copy the 512x512 icon, rounding square corners.
+image_info() { # image_info <file> <format>
+  if command -v magick >/dev/null 2>&1; then
+    magick identify -format "$2" "$1"
+  else
+    identify -format "$2" "$1"
+  fi
+}
+
+prepare_icon() {
+  local src="$ROOT/$ICON" dest="$1" im="" w h r corner
+  [ -f "$src" ] || die "Icon not found: $ICON (expected a 512x512 PNG)"
+  if command -v magick >/dev/null 2>&1; then im="magick"
+  elif command -v convert >/dev/null 2>&1; then im="convert"; fi
+  [ -n "$im" ] || die "ImageMagick not found (install ImageMagick to prepare the icon)."
+
+  w="$(image_info "$src" '%w')"
+  h="$(image_info "$src" '%h')"
+  [ "$w" = "512" ] && [ "$h" = "512" ] || die "$ICON must be exactly 512x512 (found ${w}x${h})."
+
+  r=$(( w * ICON_RADIUS_PCT / 100 ))
+  corner="$(image_info "$src" '%[pixel:p{0,0}]' 2>/dev/null || true)"
+  case "$corner" in
+    *",0)"|*none*) cp "$src" "$dest" ;;
+    *)
+      $im "$src" -alpha set \
+        \( -size "${w}x${h}" xc:none -fill white \
+           -draw "roundrectangle 0,0 $((w-1)),$((h-1)) $r,$r" \) \
+        -compose DstIn -composite "$dest"
+      ;;
+  esac
+}
+
+install_desktop_entry() {
+  local apps="$HOME/.local/share/applications"
+  local icons="$HOME/.local/share/icons/hicolor/512x512/apps"
+  mkdir -p "$apps" "$icons"
+  prepare_icon "$icons/$APP.png"
+  cat > "$apps/$APP.desktop" << DESKTOP
+$DESKTOP_MARK
+[Desktop Entry]
+Type=Application
+Name=$DISPLAY_NAME
+Comment=$SUMMARY
+Exec="$ROOT/$APP"
+Icon=$APP
+Terminal=false
+Categories=Education;
+DESKTOP
+  command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "$apps" 2>/dev/null || true
+  command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache -f -t "$HOME/.local/share/icons/hicolor" 2>/dev/null || true
+  echo "Installed: $apps/$APP.desktop (appears in the application launcher)"
+}
+
+uninstall_desktop_entry() {
+  local f="$HOME/.local/share/applications/$APP.desktop"
+  if [ -f "$f" ] && grep -q "$DESKTOP_MARK" "$f"; then
+    rm -f "$f" "$HOME/.local/share/icons/hicolor/512x512/apps/$APP.png"
+    echo "Removed: $f"
+  fi
+}
+
+do_install() {
+  local bindir="$HOME/.local/bin"
+  mkdir -p "$bindir"
+  printf '#!/usr/bin/env bash\n%s\nexec "%s/%s" --build "$@"\n' \
+    "$WRAPPER_MARK" "$ROOT" "$APP" > "$bindir/$APP"
+  chmod +x "$bindir/$APP"
+  install_desktop_entry
+  echo "Installed: $bindir/$APP"
+  case ":$PATH:" in
+    *":$bindir:"*) echo "Done. Type '$APP' in any folder to open the build menu." ;;
+    *)
+      echo "NOTE: $bindir is not in PATH. Add this line to ~/.bashrc:"
+      echo '  export PATH="$HOME/.local/bin:$PATH"'
+      echo "Then open a new terminal or run: source ~/.bashrc"
+      ;;
+  esac
+}
+
+do_uninstall() {
+  local f="$HOME/.local/bin/$APP"
+  if [ -f "$f" ] && grep -q "$WRAPPER_MARK" "$f"; then
+    rm -f "$f"
+    echo "Removed: $f"
+  else
+    echo "Nothing to remove."
+  fi
+  uninstall_desktop_entry
+}
+
+# =====================================================================
+# Helpers
+# =====================================================================
+banner() {
+  echo "=============================================="
+  echo "  $APP build tool  v$VERSION"
+  echo "=============================================="
+}
+
+list_targets() {
+  echo "linux   : appimage | targz | rpm | source | binary | all"
+  if [ "$WINDOWS_SUPPORTED" = "yes" ]; then
+    echo "windows : exe | all"
+  fi
+  echo "arch    : x86_64 | aarch64 | all (default)"
+}
+
+usage() {
+  banner
+  echo
+  echo "Usage:"
+  echo "  $APP                          Interactive build menu"
+  echo "  $APP <os> <format> [arch]     Build directly"
+  echo "  $APP --list                   List targets"
+  echo
+  list_targets
+}
+
+rust_target() {
+  case "$1:$2" in
+    linux:x86_64) echo "x86_64-unknown-linux-gnu" ;;
+    linux:aarch64) echo "aarch64-unknown-linux-gnu" ;;
+    windows:x86_64) echo "x86_64-pc-windows-msvc" ;;
+    windows:aarch64) echo "aarch64-pc-windows-msvc" ;;
+    *) die "Unsupported target: $1/$2" ;;
+  esac
+}
+
+linux_linker_setup() {
+  local arch="$1"
+  if [ "$arch" = "aarch64" ] && [ "$(host_arch)" != "aarch64" ]; then
+    command -v aarch64-linux-gnu-gcc >/dev/null 2>&1 ||
+      die "aarch64 cross linker not found (install gcc-aarch64-linux-gnu, or build on an ARM machine)."
+    export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
+  fi
+}
+
+windows_linker_setup() {
+  local arch="$1"
+  if [ "$(host_os)" = "linux" ]; then
+    [ "$arch" = "x86_64" ] ||
+      die "Windows arm64 must be built on Windows."
+    command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1 ||
+      die "MinGW cross compiler not found (install mingw64-gcc, or build on Windows)."
+    export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc
+  fi
+}
+
+# Windows assets use "arm64"; Linux assets use "aarch64".
+arch_label() {
+  if [ "$1" = "windows" ] && [ "$2" = "aarch64" ]; then echo arm64; else echo "$2"; fi
+}
+
+asset() { echo "$DIST/$APP-$VERSION-$1-$(arch_label "$1" "$2").$3"; }
+
+# compile <os> <arch> <output>
+compile() {
+  local os="$1" arch="$2" out="$3" target src
+  find_cargo
+  echo "==> Compiling $os/$arch"
+
+  if [ "$os" = "linux" ]; then
+    linux_linker_setup "$arch"
+  else
+    windows_linker_setup "$arch"
+  fi
+
+  # A native build keeps Cargo's default target directory; other targets are
+  # built through a Rust target triple.
+  if [ "$os" = "$(host_os)" ] && [ "$arch" = "$(host_arch)" ]; then
+    ( cd "$ROOT" && "$CARGO" build --release --locked )
+    if [ "$os" = "windows" ]; then
+      src="$ROOT/target/release/$CARGO_BIN.exe"
+    else
+      src="$ROOT/target/release/$CARGO_BIN"
+    fi
+  else
+    case "$os:$arch" in
+      windows:x86_64) target="x86_64-pc-windows-gnu" ;;
+      *) target="$(rust_target "$os" "$arch")" ;;
+    esac
+    if [ "$os" = "windows" ]; then
+      src="$ROOT/target/$target/release/$CARGO_BIN.exe"
+    else
+      src="$ROOT/target/$target/release/$CARGO_BIN"
+    fi
+    ( cd "$ROOT" && "$CARGO" build --release --locked --target "$target" )
+  fi
+
+  [ -f "$src" ] || die "Build output not found: $src"
+  mkdir -p "$(dirname "$out")"
+  cp "$src" "$out"
+  chmod +x "$out" 2>/dev/null || true
+}
+
+# =====================================================================
+# Linux
+# =====================================================================
+fetch() { # fetch <url> <dest>
+  local url="$1" dest="$2"
+  [ -s "$dest" ] && return 0
+  rm -f "$dest"
+  if command -v curl >/dev/null 2>&1; then
+    curl -fL --retry 3 --retry-delay 2 --connect-timeout 15 --max-time 120 "$url" -o "$dest" || rm -f "$dest"
+  fi
+  if [ ! -s "$dest" ] && command -v wget >/dev/null 2>&1; then
+    wget -O "$dest" "$url" || rm -f "$dest"
+  fi
+  [ -s "$dest" ] || die "Download failed: $url"
+  chmod +x "$dest"
+}
+
+linux_appimage() {
+  local arch="$1"
+  local appdir="$STAGE/$APP-$arch.AppDir"
+  local tool="$CACHE/appimagetool-$(host_arch).AppImage"
+  local runtime="$CACHE/runtime-$arch"
+  mkdir -p "$CACHE"
+
+  if command -v appimagetool >/dev/null 2>&1; then
+    tool="$(command -v appimagetool)"
+  else
+    fetch "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$(host_arch).AppImage" "$tool"
+  fi
+  fetch "https://github.com/AppImage/type2-runtime/releases/download/continuous/runtime-$arch" "$runtime"
+
+  rm -rf "$appdir"
+  mkdir -p "$appdir/usr/bin" "$appdir/usr/share/applications" "$appdir/usr/share/icons/hicolor/512x512/apps"
+  compile linux "$arch" "$appdir/usr/bin/$BIN"
+  prepare_icon "$appdir/$APP.png"
+  cp "$appdir/$APP.png" "$appdir/usr/share/icons/hicolor/512x512/apps/$APP.png"
+  ln -sf "$APP.png" "$appdir/.DirIcon"
+
+  cat > "$appdir/AppRun" << APPRUN
+#!/bin/sh
+HERE="\$(dirname "\$(readlink -f "\$0")")"
+export APPDIR="\$HERE"
+exec "\$HERE/usr/bin/$BIN" "\$@"
+APPRUN
+  chmod +x "$appdir/AppRun"
+
+  cat > "$appdir/$APP.desktop" << DESKTOP
+[Desktop Entry]
+Name=$DISPLAY_NAME
+Comment=$SUMMARY
+Exec=$BIN
+Icon=$APP
+Terminal=false
+Type=Application
+Categories=Education;
+DESKTOP
+  cp "$appdir/$APP.desktop" "$appdir/usr/share/applications/"
+
+  mkdir -p "$DIST"
+  local out
+  out="$(asset linux "$arch" AppImage)"
+  rm -f "$out"
+  # Extract the tool so it also works where FUSE is unavailable.
+  ( cd "$STAGE" && "$tool" --appimage-extract >/dev/null 2>&1 || true )
+  if [ -x "$STAGE/squashfs-root/AppRun" ]; then
+    ARCH="$arch" "$STAGE/squashfs-root/AppRun" --runtime-file "$runtime" -n "$appdir" "$out"
+    rm -rf "$STAGE/squashfs-root"
+  else
+    ARCH="$arch" "$tool" --runtime-file "$runtime" -n "$appdir" "$out"
+  fi
+  echo "==> $out"
+}
+
+linux_targz() {
+  local arch="$1"
+  local name="$APP-$VERSION-linux-$arch" dir
+  dir="$STAGE/$name"
+  rm -rf "$dir"; mkdir -p "$dir" "$DIST"
+  compile linux "$arch" "$dir/$BIN"
+  cp "$ROOT/README.md" "$ROOT/LICENSE" "$dir/" 2>/dev/null || true
+  tar -C "$STAGE" -czf "$(asset linux "$arch" tar.gz)" "$name"
+  echo "==> $(asset linux "$arch" tar.gz)"
+}
+
+linux_rpm() {
+  local arch="$1"
+  local top="$STAGE/rpm-$arch"
+  command -v rpmbuild >/dev/null 2>&1 || die "rpmbuild not found (sudo dnf install rpm-build)."
+  rm -rf "$top"
+  mkdir -p "$top"/{BUILD,RPMS,SOURCES,SPECS,SRPMS} "$DIST"
+  compile linux "$arch" "$top/SOURCES/$BIN"
+  prepare_icon "$top/SOURCES/$APP.png"
+  cp "$ROOT/README.md" "$ROOT/LICENSE" "$top/SOURCES/"
+  cat > "$top/SOURCES/$APP.desktop" << DESKTOP
+[Desktop Entry]
+Type=Application
+Name=$DISPLAY_NAME
+Comment=$SUMMARY
+Exec=$BIN
+Icon=$APP
+Terminal=false
+Categories=Education;
+DESKTOP
+  cat > "$top/SPECS/$APP.spec" << SPEC
+%global debug_package %{nil}
+Name: $APP
+Version: $VERSION
+Release: 1
+Summary: $SUMMARY
+License: $LICENSE_ID
+BuildArch: $arch
+%description
+$SUMMARY
+%install
+mkdir -p %{buildroot}/usr/bin
+mkdir -p %{buildroot}/usr/share/applications
+mkdir -p %{buildroot}/usr/share/icons/hicolor/512x512/apps
+mkdir -p %{buildroot}/usr/share/doc/$APP
+install -m 0755 %{_sourcedir}/$BIN %{buildroot}/usr/bin/$BIN
+install -m 0644 %{_sourcedir}/$APP.desktop %{buildroot}/usr/share/applications/$APP.desktop
+install -m 0644 %{_sourcedir}/$APP.png %{buildroot}/usr/share/icons/hicolor/512x512/apps/$APP.png
+install -m 0644 %{_sourcedir}/README.md %{buildroot}/usr/share/doc/$APP/README.md
+install -m 0644 %{_sourcedir}/LICENSE %{buildroot}/usr/share/doc/$APP/LICENSE
+%files
+/usr/bin/$BIN
+/usr/share/applications/$APP.desktop
+/usr/share/icons/hicolor/512x512/apps/$APP.png
+/usr/share/doc/$APP/README.md
+/usr/share/doc/$APP/LICENSE
+SPEC
+  rpmbuild --define "_topdir $top" --target "$arch" -bb "$top/SPECS/$APP.spec" >/dev/null
+  cp "$top/RPMS/$arch/"*.rpm "$(asset linux "$arch" rpm)"
+  echo "==> $(asset linux "$arch" rpm)"
+}
+
+linux_binary() {
+  local arch="$1"
+  mkdir -p "$DIST"
+  compile linux "$arch" "$(asset linux "$arch" bin)"
+}
+
+linux_source() {
+  mkdir -p "$DIST"
+  ( cd "$ROOT" && git archive --format=tar.gz --prefix="$APP-$VERSION/" \
+      -o "$DIST/$APP-$VERSION-source.tar.gz" HEAD )
+  echo "==> $DIST/$APP-$VERSION-source.tar.gz"
+}
+
+# =====================================================================
+# Windows
+# =====================================================================
+windows_exe() {
+  local arch="$1"
+  mkdir -p "$DIST"
+  compile windows "$arch" "$(asset windows "$arch" exe)"
+  echo "==> $(asset windows "$arch" exe)"
+}
+
+# =====================================================================
+# Dispatch
+# =====================================================================
+build_target() {
+  local os="$1" fmt="$2" archsel="${3:-all}" archs a f
+  find_cargo
+  mkdir -p "$STAGE" "$DIST"
+  banner
+  echo "Target: os=$os format=$fmt arch=$archsel version=$VERSION"
+  echo
+
+  if [ "$archsel" = "all" ]; then archs="$ARCHS_DEFAULT"; else archs="$archsel"; fi
+
+  case "$os" in
+    linux)
+      [ "$fmt" = "all" ] && fmt="appimage targz rpm source"
+      for f in $fmt; do
+        case "$f" in
+          source) linux_source ;;
+          appimage|targz|rpm|binary) for a in $archs; do "linux_$f" "$a"; done ;;
+          *) die "Unknown linux format: $f (valid: appimage | targz | rpm | source | binary | all)" ;;
+        esac
+      done
+      ;;
+    windows)
+      [ "$WINDOWS_SUPPORTED" = "yes" ] || die "This project is Linux-only; Windows builds are disabled."
+      [ "$fmt" = "all" ] && fmt="exe"
+      case "$fmt" in
+        exe) for a in $archs; do windows_exe "$a"; done ;;
+        *) die "Unknown windows format: $fmt (valid: exe | all)" ;;
+      esac
+      ;;
+    *) die "Unknown OS: $os (valid: linux | windows)" ;;
+  esac
+
+  # Checksums for every asset in build/dist
+  ( cd "$DIST" && rm -f SHA256SUMS && sha256sum -- * > SHA256SUMS )
+  echo
+  echo "Done. Assets are in build/dist/ (SHA256SUMS included)."
+}
+
+interactive() {
+  local os fmt
+  banner
+  echo
+  echo "Select target operating system:"
+  if [ "$WINDOWS_SUPPORTED" = "yes" ]; then
+    select c in "Linux" "Windows" "Cancel"; do
+      case "$c" in
+        Linux) os="linux"; break ;;
+        Windows) os="windows"; break ;;
+        Cancel|"") echo "Cancelled."; exit 0 ;;
+        *) echo "Invalid choice." ;;
+      esac
+    done
+  else
+    os="linux"
+    echo "  (Linux only)"
+  fi
+
+  echo
+  echo "Select package format:"
+  if [ "$os" = "linux" ]; then
+    select c in "All (AppImage, tar.gz, rpm, source)" "AppImage" "tar.gz" "rpm" "Source code" "Binary only" "Cancel"; do
+      case "$REPLY" in
+        1) fmt="all"; break ;;
+        2) fmt="appimage"; break ;;
+        3) fmt="targz"; break ;;
+        4) fmt="rpm"; break ;;
+        5) fmt="source"; break ;;
+        6) fmt="binary"; break ;;
+        7|"") echo "Cancelled."; exit 0 ;;
+        *) echo "Invalid choice." ;;
+      esac
+    done
+  else
+    select c in "All (.exe x86_64 + arm64)" "Cancel"; do
+      case "$REPLY" in
+        1) fmt="exe"; break ;;
+        2|"") echo "Cancelled."; exit 0 ;;
+        *) echo "Invalid choice." ;;
+      esac
+    done
+  fi
+  build_target "$os" "$fmt" all
+}
+
+build_main() {
+  case "${1:-}" in
+    "") interactive ;;
+    -h|--help|help) usage ;;
+    -l|--list|list) list_targets ;;
+    linux|windows)
+      [ $# -ge 2 ] || { echo "Format missing."; list_targets; exit 1; }
+      build_target "$1" "$2" "${3:-all}"
+      ;;
+    *) echo "Unknown command: $1"; echo; usage; exit 1 ;;
+  esac
+}
+
+# ---- entry point ----
+case "${1:-}" in
+  --build)     shift; build_main "$@" ;;
+  --install)   do_install ;;
+  --uninstall) do_uninstall ;;
+  *)           run_app "$@" ;;   # "./fastshi" (+ any app arguments)
+esac
