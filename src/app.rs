@@ -90,7 +90,9 @@ impl eframe::App for TypingApp {
                     let db = Database::open();
                     let result = TestResult {
                         id: None,
-                        tarih: chrono::Utc::now().format("%Y-%m-%d %H:%M").to_string(),
+                        tarih: chrono::Local::now()
+                            .format("%Y-%m-%d %H:%M:%S")
+                            .to_string(),
                         modu: self.test_state.test_modu_str.clone(),
                         sure_sn: self.test_state.sure_secenek,
                         hedef_kelime_sayisi: self.test_state.kelime_hedef,
