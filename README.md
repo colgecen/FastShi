@@ -1,71 +1,52 @@
-# FastShi — Hızlı Yazım Antrenörü
+<h1 align="center">FastShi</h1>
 
-Türkçe Q klavye düzeninde 10 parmak hızlı yazım becerisini geliştirmek için geliştirilmiş
-masaüstü uygulaması. Tek el modu, WPM/CPM istatistikleri ve yerel kelime haznesi desteği sunar.
+<p align="center">Turkish QWERTY touch-typing trainer with timed tests, one-hand modes and local history.</p>
 
-## Özellikler
+## Screenshots
 
-- Turkish Q klavye düzeninde yazım pratiği
-- Süreli veya kelime sayılı test modları
-- Sol el / sağ el / iki el modu
-- WPM, CPM ve doğruluk oranı istatistikleri
-- Yerel kelime haznesi (çevrimdışı çalışır)
-- SQLite ile kalıcı istatistik depolama
-- Koyu/açık tema desteği
+<p align="center">
+  <img src="docs/img/app.svg" alt="FastShi typing test screen" width="800">
+</p>
 
-## Teknolojiler
+## Features
 
-- [Rust](https://www.rust-lang.org/)
-- [egui / eframe](https://github.com/emilk/egui) — immediate-mode GUI
-- [rusqlite](https://github.com/rusqlite/rusqlite) — SQLite bağımlılığı
-- [serde / serde_json](https://serde.rs/) — JSON serileştirme
+- Timed tests of 30, 60 or 120 seconds and word-goal tests of 25, 50 or 100 words
+- Two-hand, right-hand-only and left-hand-only practice modes
+- Three difficulty levels that filter the built-in Turkish word list
+- Live WPM, CPM, accuracy and correct/wrong key counters
+- On-screen keyboard with next-key and finger guidance
+- Click and space sounds with an adjustable volume control
+- Local SQLite history with per-mode summaries and the last 50 results
+- Native desktop app built with Rust, egui and SQLite
 
-## Kurulum
+## Installation
+
+Build and run from source:
 
 ```bash
-# Depoyu klonlayın
 git clone https://github.com/colgecen/FastShi.git
 cd FastShi
-
-# Derleyin ve çalıştırın
-cargo run
+./fastshi --install
 ```
 
-## Proje Yapısı
-
-```
-FastShi/
-├── assets/word_lists/    # Kelime haznesi dosyaları (JSON)
-├── src/
-│   ├── main.rs           # Uygulama giriş noktası
-│   ├── app.rs            # Ana uygulama döngüsü
-│   ├── typing/           # Yazım motoru ve metrikler
-│   ├── hand_mode/        # Sol/sağ el filtresi
-│   ├── storage/          # SQLite depolama
-│   ├── ui/               # Arayüz ekranları
-│   └── config.rs         # Kullanıcı ayarları
-├── ARCHITECTURE.md       # Mimari kararlar
-├── DATA_MODEL.md         # Veri modeli tanımları
-├── HAND_MAPPING.md       # Tuş haritası
-├── REQUIREMENTS.md       # Gereksinimler
-└── ROADMAP.md            # Geliştirme yol haritası
-```
-
-## Geliştirme
-
-Geliştirme süreci ve kurallar için `ROADMAP.md` dosyasına bakın.
+`--install` is a one-time step that lets you type `fastshi` (no `./`) to open the build menu:
 
 ```bash
-# Testleri çalıştırın
-cargo test
-
-# Derlemeyi kontrol edin
-cargo build
-
-# Lint kontrolü
-cargo clippy
+fastshi
 ```
 
-## Lisans
+Prebuilt binaries are available on the [Releases](https://github.com/colgecen/FastShi/releases) page.
 
-Bu proje [MIT Lisansı](LICENSE) altında dağıtılır.
+## Usage
+
+Run the app straight from source (press `Ctrl+C` to stop):
+
+```bash
+./fastshi
+```
+
+Choose a mode, difficulty and session length from the left panel, then start typing the highlighted Turkish words. The next finger is shown above the on-screen keyboard; the right panel keeps your recent results. Results are stored in `~/.local/share/typing_trainer/stats.sqlite`.
+
+## License
+
+This project is licensed under the [MIT](LICENSE) license.
