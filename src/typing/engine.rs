@@ -1,3 +1,4 @@
+#[allow(clippy::enum_variant_names)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TestMode {
     TwoHand,
@@ -155,9 +156,7 @@ impl TypingEngine {
         self.hatali_tuslar.clear();
         for tw in &mut self.typed_words {
             tw.completed = false;
-            for c in &mut tw.typed_chars {
-                *c = None;
-            }
+            tw.typed_chars.fill(None);
         }
     }
 }

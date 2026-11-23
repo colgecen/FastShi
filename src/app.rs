@@ -7,7 +7,7 @@ use crate::ui::test_screen::TestState;
 use crate::ui::theme;
 
 pub struct TypingApp {
-    config: Config,
+    _config: Config,
     test_state: TestState,
     json_data: String,
     finger_image: Option<egui::TextureHandle>,
@@ -27,7 +27,7 @@ impl TypingApp {
         let finger_image = None;
 
         Self {
-            config,
+            _config: config,
             test_state: TestState::default(),
             json_data,
             finger_image,

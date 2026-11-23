@@ -15,6 +15,7 @@ pub fn hand_of_char(c: char) -> Option<Hand> {
     }
 }
 
+#[allow(dead_code)]
 pub fn word_is_single_hand(word: &str, hand: Hand) -> bool {
     word.chars().all(|c| match hand_of_char(c) {
         Some(h) => h == hand,

@@ -517,6 +517,7 @@ fn option_button(ui: &mut egui::Ui, label: &str, selected: bool, width: f32) -> 
     ui.add(btn)
 }
 
+#[allow(clippy::too_many_arguments)]
 fn show_test_panel(
     ui: &mut egui::Ui,
     state: &mut TestState,
@@ -536,8 +537,8 @@ fn show_test_panel(
         if state.started {
             let engine = state.engine.as_ref().unwrap();
             let elapsed = engine.elapsed_secs();
-            if state.sure_secenek > 0 {
-                let remaining = state.sure_secenek as f64 - elapsed;
+            if engine.sure_saniye > 0 {
+                let remaining = engine.sure_saniye as f64 - elapsed;
                 ui.label(theme::body_text(&format!(
                     "{:.0} sn kaldi",
                     remaining.max(0.0)
@@ -546,7 +547,7 @@ fn show_test_panel(
                 ui.label(theme::body_text(&format!(
                     "{}/{} kelime",
                     engine.words_completed,
-                    state.kelime_hedef.unwrap_or(0)
+                    engine.total_words.unwrap_or(0)
                 )));
             }
             ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
@@ -866,9 +867,7 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
                 }
 
                 for (ci, ch) in tw.word.chars().enumerate() {
-                    let color = if tw.completed {
-                        theme::WHITE
-                    } else if i == word_index && ci < engine.cursor_in_word {
+                    let color = if tw.completed || (i == word_index && ci < engine.cursor_in_word) {
                         theme::WHITE
                     } else if i == word_index && ci == engine.cursor_in_word && engine.has_error {
                         egui::Color32::from_rgb(255, 80, 80)
@@ -894,50 +893,6 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
             y_offset += line_height;
         }
     }
-}
-
-fn show_results_inline(ui: &mut egui::Ui, metrics: &Metrics, modu: &str, sure_sn: u64) {
-    let frame = egui::Frame::NONE
-        .fill(theme::DARK_GRAY)
-        .corner_radius(egui::CornerRadius::same(6))
-        .inner_margin(egui::Margin::same(12))
-        .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
-
-    frame.show(ui, |ui| {
-        ui.label(theme::sub_heading_text("sonuclar"));
-        ui.add_space(4.0);
-        ui.horizontal_wrapped(|ui| {
-            ui.label(theme::body_text(&format!(
-                "mod: {} | sure: {}sn",
-                modu, sure_sn
-            )));
-        });
-        ui.horizontal_wrapped(|ui| {
-            ui.label(theme::body_text(&format!("wpm: {:.1}", metrics.wpm)));
-            ui.add_space(12.0);
-            ui.label(theme::body_text(&format!("cpm: {:.1}", metrics.cpm)));
-            ui.add_space(12.0);
-
-            let dogruluk_rengi = if metrics.dogruluk_yuzde >= 90.0 {
-                theme::WHITE
-            } else if metrics.dogruluk_yuzde >= 70.0 {
-                theme::LIGHT_GRAY
-            } else {
-                egui::Color32::from_rgb(200, 100, 100)
-            };
-            ui.label(
-                egui::RichText::new(format!("dogruluk: {:.1}%", metrics.dogruluk_yuzde))
-                    .family(egui::FontFamily::Name("spacemono".into()))
-                    .size(14.0)
-                    .color(dogruluk_rengi),
-            );
-            ui.add_space(12.0);
-            ui.label(theme::body_text(&format!(
-                "dogru: {} | yanlis: {}",
-                metrics.dogru_tus, metrics.yanlis_tus
-            )));
-        });
-    });
 }
 
 fn measure_word_width(ui: &egui::Ui, word: &str) -> f32 {

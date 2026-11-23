@@ -64,13 +64,6 @@ pub fn small_text(text: &str) -> egui::RichText {
         .color(GRAY)
 }
 
-pub fn typing_text(text: &str) -> egui::RichText {
-    egui::RichText::new(text)
-        .family(egui::FontFamily::Name("spacemono".into()))
-        .size(20.0)
-        .color(WHITE)
-}
-
 pub fn button_text(text: &str) -> egui::RichText {
     egui::RichText::new(text.to_uppercase())
         .family(egui::FontFamily::Name("rajdhani".into()))

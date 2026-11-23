@@ -1,6 +1,4 @@
-use eframe::egui::{
-    Align2, Color32, CornerRadius, FontId, Pos2, Rect, Stroke, StrokeKind, Ui, Vec2,
-};
+use eframe::egui::{Align2, Color32, CornerRadius, FontId, Pos2, Rect, Ui, Vec2};
 
 pub const C_GREEN: Color32 = Color32::from_rgb(172, 237, 16);
 pub const C_LAVENDER: Color32 = Color32::from_rgb(192, 211, 255);
@@ -133,10 +131,6 @@ fn row5() -> Vec<Key> {
     ]
 }
 
-pub fn draw_keyboard(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Hand>) {
-    draw_keyboard_sized(ui, active_key, dim_hand, None);
-}
-
 pub fn draw_keyboard_sized(
     ui: &mut Ui,
     active_key: Option<char>,
@@ -181,7 +175,7 @@ pub fn draw_keyboard_sized(
 }
 
 fn draw_key(ui: &mut Ui, rect: Rect, key: &Key, active_key: Option<char>, dim_hand: Option<Hand>) {
-    let is_active = key.id.map_or(false, |c| Some(c) == active_key);
+    let is_active = key.id.is_some_and(|c| Some(c) == active_key);
 
     // Boşluk tuşu her zaman görünür
     let is_space = key.id == Some(' ');
@@ -214,11 +208,7 @@ fn draw_key(ui: &mut Ui, rect: Rect, key: &Key, active_key: Option<char>, dim_ha
     ui.painter().rect_filled(rect, rounding, fill);
     // border istenmiyor — hiç stroke çizme
 
-    let text_color = if is_active {
-        Color32::BLACK
-    } else {
-        Color32::BLACK
-    };
+    let text_color = Color32::BLACK;
 
     if let Some(top) = key.top {
         ui.painter().text(

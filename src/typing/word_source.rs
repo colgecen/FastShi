@@ -100,8 +100,4 @@ impl WordSource {
         self.last_word = Some(word.clone());
         word
     }
-
-    pub fn available_count(&self) -> usize {
-        self.current_filtered.len()
-    }
 }

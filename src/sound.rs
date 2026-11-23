@@ -1,6 +1,6 @@
 use rand::Rng;
 use rodio::buffer::SamplesBuffer;
-use rodio::{OutputStream, OutputStreamHandle, Sink, Source};
+use rodio::{OutputStream, OutputStreamHandle, Sink};
 
 pub struct SoundManager {
     _stream: OutputStream,
@@ -26,7 +26,7 @@ fn generate_click(sample_rate: u32) -> Vec<f32> {
         let harmonic = (2.0 * std::f32::consts::PI * base_freq * 2.3 * t).sin() * 0.3;
         let noise = rand::thread_rng().gen_range(-0.5..0.5_f32) * 0.15;
         let value = (click * 0.6 + harmonic * 0.25 + noise) * envelope * 0.4;
-        samples.push(value.max(-1.0).min(1.0));
+        samples.push(value.clamp(-1.0, 1.0));
     }
     samples
 }
@@ -45,7 +45,7 @@ fn generate_space(sample_rate: u32) -> Vec<f32> {
         let rattle = (2.0 * std::f32::consts::PI * base_freq * 3.7 * t).sin() * 0.15;
         let noise = rand::thread_rng().gen_range(-0.3..0.3_f32) * 0.2;
         let value = (thock * 0.5 + deep * 0.35 + rattle * 0.1 + noise) * envelope * 0.5;
-        samples.push(value.max(-1.0).min(1.0));
+        samples.push(value.clamp(-1.0, 1.0));
     }
     samples
 }
@@ -84,10 +84,6 @@ impl SoundManager {
         } else {
             self.volume.get()
         }
-    }
-
-    pub fn raw_volume(&self) -> f32 {
-        self.volume.get()
     }
 
     pub fn is_muted(&self) -> bool {
