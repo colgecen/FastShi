@@ -6,10 +6,11 @@ pub enum Hand {
 
 pub fn hand_of_char(c: char) -> Option<Hand> {
     match c.to_ascii_lowercase() {
-        'q' | 'w' | 'e' | 'r' | 't' | 'a' | 's' | 'd' | 'f' | 'g' | 'z' | 'x' | 'c' | 'v'
-        | 'b' => Some(Hand::Left),
-        'y' | 'u' | 'ı' | 'i' | 'o' | 'p' | 'ğ' | 'ü' | 'h' | 'j' | 'k' | 'l' | 'ş' | 'n'
-        | 'm' | 'ö' | 'ç' => Some(Hand::Right),
+        'q' | 'w' | 'e' | 'r' | 't' | 'a' | 's' | 'd' | 'f' | 'g' | 'z' | 'x' | 'c' | 'v' | 'b' => {
+            Some(Hand::Left)
+        }
+        'y' | 'u' | 'ı' | 'i' | 'o' | 'p' | 'ğ' | 'ü' | 'h' | 'j' | 'k' | 'l' | 'ş' | 'n' | 'm'
+        | 'ö' | 'ç' => Some(Hand::Right),
         _ => None,
     }
 }

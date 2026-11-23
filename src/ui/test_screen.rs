@@ -1,5 +1,6 @@
 use eframe::egui;
 
+use super::theme;
 use crate::hand_mode::key_map::Hand;
 use crate::storage::db::Database;
 use crate::storage::models::TestResult;
@@ -7,7 +8,6 @@ use crate::typing::engine::{TestMode, TypingEngine, Zorluk};
 use crate::typing::metrics::Metrics;
 use crate::typing::word_source::WordSource;
 use crate::ui::keyboard_widget;
-use super::theme;
 
 const LAYOUT_MARGIN: f32 = 14.0;
 const LAYOUT_GAP: f32 = 14.0;
@@ -34,8 +34,7 @@ struct ColumnLayout {
 fn column_layout(avail: egui::Vec2) -> ColumnLayout {
     let card_w = (avail.x * 0.17).clamp(230.0, 300.0);
     let card_h = (avail.y - LAYOUT_MARGIN * 2.0).max(360.0);
-    let center_w =
-        (avail.x - card_w * 2.0 - LAYOUT_GAP * 2.0 - LAYOUT_MARGIN * 2.0).max(320.0);
+    let center_w = (avail.x - card_w * 2.0 - LAYOUT_GAP * 2.0 - LAYOUT_MARGIN * 2.0).max(320.0);
 
     ColumnLayout {
         card_w,
@@ -162,7 +161,12 @@ pub fn show(
                         }
                     }
                 }
-                egui::Event::Key { key, pressed, repeat, .. } => {
+                egui::Event::Key {
+                    key,
+                    pressed,
+                    repeat,
+                    ..
+                } => {
                     if *pressed && !*repeat && *key == egui::Key::Space {
                         space_pressed = true;
                         text_char = Some(' ');
@@ -217,8 +221,7 @@ pub fn show(
                 egui::vec2(layout.center_w, layout.card_h),
                 egui::Sense::hover(),
             );
-            let mut center_ui =
-                ui.new_child(egui::UiBuilder::new().max_rect(center_rect));
+            let mut center_ui = ui.new_child(egui::UiBuilder::new().max_rect(center_rect));
             center_ui.with_layout(egui::Layout::top_down(egui::Align::Center), |ui| {
                 show_test_panel(
                     ui,
@@ -313,7 +316,8 @@ pub fn show(
         }
 
         if engine.is_finished() {
-            let metrics = Metrics::hesapla(engine.dogru_tus, engine.yanlis_tus, engine.elapsed_secs());
+            let metrics =
+                Metrics::hesapla(engine.dogru_tus, engine.yanlis_tus, engine.elapsed_secs());
             state.last_metrics = Some(metrics);
             state.just_finished = true;
             state.started = false;
@@ -330,8 +334,7 @@ fn draw_card(ui: &mut egui::Ui, size: egui::Vec2, add: impl FnOnce(&mut egui::Ui
     let (rect, _) = ui.allocate_exact_size(size, egui::Sense::hover());
     let radius = egui::CornerRadius::same(10);
 
-    ui.painter()
-        .rect_filled(rect, radius, theme::DARK_GRAY);
+    ui.painter().rect_filled(rect, radius, theme::DARK_GRAY);
     ui.painter().rect_stroke(
         rect,
         radius,
@@ -411,8 +414,7 @@ fn show_settings_panel(
                     let selected = state.sure_secenek == sn && state.kelime_hedef.is_none();
                     let label = format!("{}sn", sn);
                     if option_button(ui, &label, selected, btn_w).clicked() {
-                        let needs_reload =
-                            state.sure_secenek != sn || state.kelime_hedef.is_some();
+                        let needs_reload = state.sure_secenek != sn || state.kelime_hedef.is_some();
                         state.sure_secenek = sn;
                         state.kelime_hedef = None;
                         if needs_reload {
@@ -431,8 +433,7 @@ fn show_settings_panel(
                     let selected = state.kelime_hedef == Some(k);
                     let label = format!("{}", k);
                     if option_button(ui, &label, selected, btn_w).clicked() {
-                        let needs_reload =
-                            state.kelime_hedef != Some(k) || state.sure_secenek != 0;
+                        let needs_reload = state.kelime_hedef != Some(k) || state.sure_secenek != 0;
                         state.kelime_hedef = Some(k);
                         state.sure_secenek = 0;
                         if needs_reload {
@@ -509,12 +510,7 @@ fn show_settings_panel(
         });
 }
 
-fn option_button(
-    ui: &mut egui::Ui,
-    label: &str,
-    selected: bool,
-    width: f32,
-) -> egui::Response {
+fn option_button(ui: &mut egui::Ui, label: &str, selected: bool, width: f32) -> egui::Response {
     let btn = egui::Button::new(theme::button_text(label))
         .selected(selected)
         .min_size(egui::vec2(width, 28.0));
@@ -536,47 +532,40 @@ fn show_test_panel(
     let (status_rect, _) =
         ui.allocate_exact_size(egui::vec2(center_w, status_h), egui::Sense::hover());
     let mut status_ui = ui.new_child(egui::UiBuilder::new().max_rect(status_rect));
-    status_ui.with_layout(
-        egui::Layout::left_to_right(egui::Align::Center),
-        |ui| {
-                if state.started {
-                    let engine = state.engine.as_ref().unwrap();
-                    let elapsed = engine.elapsed_secs();
-                    if state.sure_secenek > 0 {
-                        let remaining = state.sure_secenek as f64 - elapsed;
-                        ui.label(theme::body_text(&format!(
-                            "{:.0} sn kaldi",
-                            remaining.max(0.0)
-                        )));
-                    } else {
-                        ui.label(theme::body_text(&format!(
-                            "{}/{} kelime",
-                            engine.words_completed,
-                            state.kelime_hedef.unwrap_or(0)
-                        )));
-                    }
-                    ui.with_layout(
-                        egui::Layout::right_to_left(egui::Align::Center),
-                        |ui| {
-                            let toplam = engine.dogru_tus + engine.yanlis_tus;
-                            let dogruluk = if toplam > 0 {
-                                (engine.dogru_tus as f64 / toplam as f64 * 100.0) as u32
-                            } else {
-                                100
-                            };
-                            ui.label(theme::body_text(&format!("%{}", dogruluk)));
-                        },
-                    );
-                } else if state.just_finished {
-                    ui.label(theme::small_text("ESC ile sonucu kapat"));
+    status_ui.with_layout(egui::Layout::left_to_right(egui::Align::Center), |ui| {
+        if state.started {
+            let engine = state.engine.as_ref().unwrap();
+            let elapsed = engine.elapsed_secs();
+            if state.sure_secenek > 0 {
+                let remaining = state.sure_secenek as f64 - elapsed;
+                ui.label(theme::body_text(&format!(
+                    "{:.0} sn kaldi",
+                    remaining.max(0.0)
+                )));
+            } else {
+                ui.label(theme::body_text(&format!(
+                    "{}/{} kelime",
+                    engine.words_completed,
+                    state.kelime_hedef.unwrap_or(0)
+                )));
+            }
+            ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                let toplam = engine.dogru_tus + engine.yanlis_tus;
+                let dogruluk = if toplam > 0 {
+                    (engine.dogru_tus as f64 / toplam as f64 * 100.0) as u32
                 } else {
-                    ui.label(theme::small_text("yazmaya baslamak icin bir tusa bas"));
-                }
-            },
-        );
+                    100
+                };
+                ui.label(theme::body_text(&format!("%{}", dogruluk)));
+            });
+        } else if state.just_finished {
+            ui.label(theme::small_text("ESC ile sonucu kapat"));
+        } else {
+            ui.label(theme::small_text("yazmaya baslamak icin bir tusa bas"));
+        }
+    });
 
-    let group_h =
-        TYPING_BOX_HEIGHT + CENTER_GAP * 2.0 + FINGER_HEIGHT + KEYBOARD_HEIGHT;
+    let group_h = TYPING_BOX_HEIGHT + CENTER_GAP * 2.0 + FINGER_HEIGHT + KEYBOARD_HEIGHT;
     let free = (center_h - status_h - group_h).max(0.0);
     ui.add_space(free / 2.0);
 
@@ -645,8 +634,7 @@ fn show_history_panel(ui: &mut egui::Ui, state: &TestState) {
 
         let count = group.len();
         let avg_wpm: f64 = group.iter().map(|r| r.wpm).sum::<f64>() / count as f64;
-        let avg_dog: f64 =
-            group.iter().map(|r| r.dogruluk_yuzde).sum::<f64>() / count as f64;
+        let avg_dog: f64 = group.iter().map(|r| r.dogruluk_yuzde).sum::<f64>() / count as f64;
         let best_wpm = group.iter().map(|r| r.wpm).fold(0.0_f64, f64::max);
 
         ui.label(theme::sub_heading_text(label));
@@ -730,13 +718,10 @@ fn show_results_window(ctx: &egui::Context, state: &mut TestState) {
                     egui::Color32::from_rgb(200, 100, 100)
                 };
                 ui.label(
-                    egui::RichText::new(format!(
-                        "dogruluk: {:.1}%",
-                        metrics.dogruluk_yuzde
-                    ))
-                    .family(egui::FontFamily::Name("spacemono".into()))
-                    .size(14.0)
-                    .color(dogruluk_rengi),
+                    egui::RichText::new(format!("dogruluk: {:.1}%", metrics.dogruluk_yuzde))
+                        .family(egui::FontFamily::Name("spacemono".into()))
+                        .size(14.0)
+                        .color(dogruluk_rengi),
                 );
                 ui.label(theme::body_text(&format!(
                     "dogru: {} | yanlis: {}",
@@ -764,7 +749,11 @@ fn init_engine(state: &mut TestState, json_data: &str) {
     ws.filter(hand, state.zorluk.as_str());
 
     let total = state.kelime_hedef;
-    let sure = if state.kelime_hedef.is_some() { 0 } else { state.sure_secenek };
+    let sure = if state.kelime_hedef.is_some() {
+        0
+    } else {
+        state.sure_secenek
+    };
 
     let mut engine = TypingEngine::new(total, sure);
     let initial_words: Vec<String> = (0..200).map(|_| ws.next_word()).collect();
@@ -801,17 +790,11 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
     let max_lines = 6usize;
     let total_height = line_height * max_lines as f32 + padding_top_bottom;
 
-    let (alloc_rect, _) = ui.allocate_exact_size(
-        egui::vec2(container_w, total_height),
-        egui::Sense::hover(),
-    );
+    let (alloc_rect, _) =
+        ui.allocate_exact_size(egui::vec2(container_w, total_height), egui::Sense::hover());
 
     let painter = ui.painter();
-    painter.rect_filled(
-        alloc_rect,
-        egui::CornerRadius::same(6),
-        theme::DARK_GRAY,
-    );
+    painter.rect_filled(alloc_rect, egui::CornerRadius::same(6), theme::DARK_GRAY);
     painter.rect_stroke(
         alloc_rect,
         egui::CornerRadius::same(6),
@@ -899,7 +882,8 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
                     };
 
                     let text = ch.to_string();
-                    let font_id = egui::FontId::new(24.0, egui::FontFamily::Name("spacemono".into()));
+                    let font_id =
+                        egui::FontId::new(24.0, egui::FontFamily::Name("spacemono".into()));
                     let galley = ui.fonts(|f| f.layout_no_wrap(text, font_id, color));
                     let gw = galley.size().x;
                     let pos = content_rect.min + egui::vec2(x_offset, y_offset);
@@ -914,16 +898,19 @@ fn show_typing_area(ui: &mut egui::Ui, state: &mut TestState, container_w: f32) 
 
 fn show_results_inline(ui: &mut egui::Ui, metrics: &Metrics, modu: &str, sure_sn: u64) {
     let frame = egui::Frame::NONE
-    .fill(theme::DARK_GRAY)
-    .corner_radius(egui::CornerRadius::same(6))
-    .inner_margin(egui::Margin::same(12))
-    .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
+        .fill(theme::DARK_GRAY)
+        .corner_radius(egui::CornerRadius::same(6))
+        .inner_margin(egui::Margin::same(12))
+        .stroke(egui::Stroke::new(1.0_f32, theme::GRAY));
 
     frame.show(ui, |ui| {
         ui.label(theme::sub_heading_text("sonuclar"));
         ui.add_space(4.0);
         ui.horizontal_wrapped(|ui| {
-            ui.label(theme::body_text(&format!("mod: {} | sure: {}sn", modu, sure_sn)));
+            ui.label(theme::body_text(&format!(
+                "mod: {} | sure: {}sn",
+                modu, sure_sn
+            )));
         });
         ui.horizontal_wrapped(|ui| {
             ui.label(theme::body_text(&format!("wpm: {:.1}", metrics.wpm)));
@@ -940,12 +927,15 @@ fn show_results_inline(ui: &mut egui::Ui, metrics: &Metrics, modu: &str, sure_sn
             };
             ui.label(
                 egui::RichText::new(format!("dogruluk: {:.1}%", metrics.dogruluk_yuzde))
-                .family(egui::FontFamily::Name("spacemono".into()))
-                .size(14.0)
-                .color(dogruluk_rengi),
+                    .family(egui::FontFamily::Name("spacemono".into()))
+                    .size(14.0)
+                    .color(dogruluk_rengi),
             );
             ui.add_space(12.0);
-            ui.label(theme::body_text(&format!("dogru: {} | yanlis: {}", metrics.dogru_tus, metrics.yanlis_tus)));
+            ui.label(theme::body_text(&format!(
+                "dogru: {} | yanlis: {}",
+                metrics.dogru_tus, metrics.yanlis_tus
+            )));
         });
     });
 }
@@ -963,10 +953,7 @@ mod tests {
     #[test]
     fn uc_sutun_duzeni_esit_ve_ortali() {
         let layout = column_layout(egui::vec2(1920.0, 1080.0));
-        let total = layout.card_w * 2.0
-            + layout.center_w
-            + LAYOUT_GAP * 2.0
-            + LAYOUT_MARGIN * 2.0;
+        let total = layout.card_w * 2.0 + layout.center_w + LAYOUT_GAP * 2.0 + LAYOUT_MARGIN * 2.0;
 
         assert!((total - 1920.0).abs() < 0.01);
         assert!(layout.card_w > 0.0);
@@ -980,4 +967,3 @@ mod tests {
         assert!((keyboard_width(600.0, 620.0) - 620.0).abs() < 0.01);
     }
 }
-

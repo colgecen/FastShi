@@ -1,6 +1,6 @@
-use rodio::{OutputStream, OutputStreamHandle, Sink, Source};
-use rodio::buffer::SamplesBuffer;
 use rand::Rng;
+use rodio::buffer::SamplesBuffer;
+use rodio::{OutputStream, OutputStreamHandle, Sink, Source};
 
 pub struct SoundManager {
     _stream: OutputStream,

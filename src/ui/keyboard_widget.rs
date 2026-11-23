@@ -1,4 +1,6 @@
-use eframe::egui::{Align2, Color32, CornerRadius, FontId, Pos2, Rect, Stroke, StrokeKind, Ui, Vec2};
+use eframe::egui::{
+    Align2, Color32, CornerRadius, FontId, Pos2, Rect, Stroke, StrokeKind, Ui, Vec2,
+};
 
 pub const C_GREEN: Color32 = Color32::from_rgb(172, 237, 16);
 pub const C_LAVENDER: Color32 = Color32::from_rgb(192, 211, 255);
@@ -34,7 +36,14 @@ const fn k(
     width: f32,
     hand: Option<Hand>,
 ) -> Key {
-    Key { id, bottom, top, color, width, hand }
+    Key {
+        id,
+        bottom,
+        top,
+        color,
+        width,
+        hand,
+    }
 }
 
 fn row1() -> Vec<Key> {
@@ -128,7 +137,12 @@ pub fn draw_keyboard(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Han
     draw_keyboard_sized(ui, active_key, dim_hand, None);
 }
 
-pub fn draw_keyboard_sized(ui: &mut Ui, active_key: Option<char>, dim_hand: Option<Hand>, width: Option<f32>) {
+pub fn draw_keyboard_sized(
+    ui: &mut Ui,
+    active_key: Option<char>,
+    dim_hand: Option<Hand>,
+    width: Option<f32>,
+) {
     let row_height = 52.0;
     let row_gap = 4.0;
     let key_gap = 3.0;
@@ -139,10 +153,8 @@ pub fn draw_keyboard_sized(ui: &mut Ui, active_key: Option<char>, dim_hand: Opti
     let total_height = row_height * 5.0 + row_gap * 4.0 + padding * 2.0;
     let total_width = width.unwrap_or_else(|| ui.available_width());
 
-    let (alloc_rect, _) = ui.allocate_exact_size(
-        Vec2::new(total_width, total_height),
-        egui::Sense::hover(),
-    );
+    let (alloc_rect, _) =
+        ui.allocate_exact_size(Vec2::new(total_width, total_height), egui::Sense::hover());
 
     let origin = Pos2::new(alloc_rect.min.x + padding, alloc_rect.min.y + padding);
     let draw_width = total_width - padding * 2.0;
@@ -168,13 +180,7 @@ pub fn draw_keyboard_sized(ui: &mut Ui, active_key: Option<char>, dim_hand: Opti
     }
 }
 
-fn draw_key(
-    ui: &mut Ui,
-    rect: Rect,
-    key: &Key,
-    active_key: Option<char>,
-    dim_hand: Option<Hand>,
-) {
+fn draw_key(ui: &mut Ui, rect: Rect, key: &Key, active_key: Option<char>, dim_hand: Option<Hand>) {
     let is_active = key.id.map_or(false, |c| Some(c) == active_key);
 
     // Boşluk tuşu her zaman görünür
@@ -196,17 +202,14 @@ fn draw_key(
         // ancak tamamen görünmez yapmak için sadece çerçevesiz transparent kullanıyoruz
         // Burada hafif koyu dolgu kullanıp yazı çizmemek kaybolma hissi verir.
         // En temiz: fill TRANSPARENT + stroke TRANSPARENT + yazı yok.
-        ui.painter().rect_filled(rect, rounding, Color32::TRANSPARENT);
+        ui.painter()
+            .rect_filled(rect, rounding, Color32::TRANSPARENT);
         // Yazı çizme — kaybolsun
         return;
     }
 
     // Aktif tuş: kendi renginin karşıtı olarak beyaz dolgu + siyah yazı
-    let fill = if is_active {
-        Color32::WHITE
-    } else {
-        key.color
-    };
+    let fill = if is_active { Color32::WHITE } else { key.color };
 
     ui.painter().rect_filled(rect, rounding, fill);
     // border istenmiyor — hiç stroke çizme
@@ -233,7 +236,11 @@ fn draw_key(
             text_color,
         );
     } else {
-        let font_size = if key.bottom.chars().count() > 3 { 12.0 } else { 18.0 };
+        let font_size = if key.bottom.chars().count() > 3 {
+            12.0
+        } else {
+            18.0
+        };
         ui.painter().text(
             rect.center(),
             Align2::CENTER_CENTER,

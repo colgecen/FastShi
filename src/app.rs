@@ -22,8 +22,7 @@ impl TypingApp {
 
         let config = Config::load();
 
-        let json_data =
-            include_str!("../assets/word_lists/genel_tr.json").to_string();
+        let json_data = include_str!("../assets/word_lists/genel_tr.json").to_string();
 
         let finger_image = None;
 
@@ -48,7 +47,8 @@ impl TypingApp {
             let rgba = img.to_rgba8();
             let pixels = rgba.into_raw();
             let color_image = egui::ColorImage::from_rgba_unmultiplied(size, &pixels);
-            let handle = ctx.load_texture("finger_map", color_image, egui::TextureOptions::default());
+            let handle =
+                ctx.load_texture("finger_map", color_image, egui::TextureOptions::default());
             self.finger_image = Some(handle);
         }
     }
@@ -90,9 +90,7 @@ impl eframe::App for TypingApp {
                     let db = Database::open();
                     let result = TestResult {
                         id: None,
-                        tarih: chrono::Local::now()
-                            .format("%Y-%m-%d %H:%M:%S")
-                            .to_string(),
+                        tarih: chrono::Local::now().format("%Y-%m-%d %H:%M:%S").to_string(),
                         modu: self.test_state.test_modu_str.clone(),
                         sure_sn: self.test_state.sure_secenek,
                         hedef_kelime_sayisi: self.test_state.kelime_hedef,
@@ -119,27 +117,27 @@ fn configure_fonts(ctx: &egui::Context) {
 
     fonts.font_data.insert(
         "rajdhani".to_owned(),
-        std::sync::Arc::new(
-            FontData::from_owned(include_bytes!("../assets/fonts/Rajdhani-SemiBold.ttf").to_vec()),
-        ),
+        std::sync::Arc::new(FontData::from_owned(
+            include_bytes!("../assets/fonts/Rajdhani-SemiBold.ttf").to_vec(),
+        )),
     );
     fonts.font_data.insert(
         "rajdhani_bold".to_owned(),
-        std::sync::Arc::new(
-            FontData::from_owned(include_bytes!("../assets/fonts/Rajdhani-Bold.ttf").to_vec()),
-        ),
+        std::sync::Arc::new(FontData::from_owned(
+            include_bytes!("../assets/fonts/Rajdhani-Bold.ttf").to_vec(),
+        )),
     );
     fonts.font_data.insert(
         "spacemono".to_owned(),
-        std::sync::Arc::new(
-            FontData::from_owned(include_bytes!("../assets/fonts/SpaceMono-Regular.ttf").to_vec()),
-        ),
+        std::sync::Arc::new(FontData::from_owned(
+            include_bytes!("../assets/fonts/SpaceMono-Regular.ttf").to_vec(),
+        )),
     );
     fonts.font_data.insert(
         "spacemono_bold".to_owned(),
-        std::sync::Arc::new(
-            FontData::from_owned(include_bytes!("../assets/fonts/SpaceMono-Bold.ttf").to_vec()),
-        ),
+        std::sync::Arc::new(FontData::from_owned(
+            include_bytes!("../assets/fonts/SpaceMono-Bold.ttf").to_vec(),
+        )),
     );
 
     fonts

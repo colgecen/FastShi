@@ -58,9 +58,7 @@ fn apply_rounded_corners(pixels: &mut [u8], width: u32, height: u32, radius: f32
 
     let w = width as usize;
     let h = height as usize;
-    let r = radius
-        .min(width as f32 / 2.0)
-        .min(height as f32 / 2.0);
+    let r = radius.min(width as f32 / 2.0).min(height as f32 / 2.0);
 
     for y in 0..h {
         for x in 0..w {
@@ -73,8 +71,7 @@ fn apply_rounded_corners(pixels: &mut [u8], width: u32, height: u32, radius: f32
 
             if coverage < 1.0 {
                 let alpha_idx = (y * w + x) * 4 + 3;
-                pixels[alpha_idx] =
-                    (pixels[alpha_idx] as f32 * coverage).round() as u8;
+                pixels[alpha_idx] = (pixels[alpha_idx] as f32 * coverage).round() as u8;
             }
         }
     }
