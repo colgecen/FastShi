@@ -19,6 +19,11 @@ const KEYBOARD_ROW_HEIGHT: f32 = 52.0;
 const KEYBOARD_HEIGHT: f32 = KEYBOARD_ROW_HEIGHT * 5.0 + 4.0 * 4.0 + 16.0;
 const CENTER_GAP: f32 = 30.0;
 const TYPING_WIDTH_RATIO: f32 = 0.60;
+const KEYBOARD_WIDTH_FACTOR: f32 = 1.10;
+
+fn keyboard_width(typing_w: f32, center_w: f32) -> f32 {
+    (typing_w * KEYBOARD_WIDTH_FACTOR).min(center_w)
+}
 
 struct ColumnLayout {
     card_w: f32,
@@ -193,7 +198,7 @@ pub fn show(
     // === YERLESIM: sol ayarlar | orta test alani | sag gecmis ===
     let layout = column_layout(ui.available_size());
     let typing_w = (layout.center_w * TYPING_WIDTH_RATIO).min(layout.center_w);
-    let keyboard_w = typing_w;
+    let keyboard_w = keyboard_width(typing_w, layout.center_w);
 
     ui.vertical(|ui| {
         ui.spacing_mut().item_spacing.y = 0.0;
@@ -961,6 +966,12 @@ mod tests {
         assert!(layout.card_w > 0.0);
         assert!(layout.card_h > 0.0);
         assert!(layout.center_w > 0.0);
+    }
+
+    #[test]
+    fn klavye_yazi_alanindan_yuzde_on_genis() {
+        assert!((keyboard_width(600.0, 2000.0) - 660.0).abs() < 0.01);
+        assert!((keyboard_width(600.0, 620.0) - 620.0).abs() < 0.01);
     }
 }
 
