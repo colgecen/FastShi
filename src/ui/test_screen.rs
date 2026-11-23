@@ -684,6 +684,7 @@ fn show_result_entry(ui: &mut egui::Ui, r: &TestResult) {
     ui.horizontal(|ui| {
         ui.label(theme::small_text(&r.tarih));
         ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+            ui.add_space(24.0);
             ui.label(theme::small_text(&format!("%{:.0}", r.dogruluk_yuzde)));
         });
     });
